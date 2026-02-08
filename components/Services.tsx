@@ -18,7 +18,7 @@ const services: ServiceItem[] = [
       '도어 투 도어(Door-to-Door) 연계 서비스'
     ],
     icon: Plane,
-    image: 'https://picsum.photos/id/2/600/400'
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&q=80&w=1200'
   },
   {
     id: 'ocean',
@@ -33,7 +33,7 @@ const services: ServiceItem[] = [
       '복합 운송(Sea & Air) 솔루션 제공'
     ],
     icon: Ship,
-    image: 'https://picsum.photos/id/21/600/400'
+    image: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&q=80&w=1200'
   },
   {
     id: 'land',
@@ -48,7 +48,7 @@ const services: ServiceItem[] = [
       '당일 배송 및 예약 배송 시스템'
     ],
     icon: Truck,
-    image: 'https://picsum.photos/id/111/600/400'
+    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200'
   },
   {
     id: 'warehouse',
@@ -63,7 +63,7 @@ const services: ServiceItem[] = [
       '365일 24시간 철저한 보안 시스템'
     ],
     icon: Warehouse,
-    image: 'https://picsum.photos/id/201/600/400'
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200'
   },
 ];
 
@@ -124,6 +124,17 @@ const Services: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedService]);
+
+  const handleInquiryClick = () => {
+    setSelectedService(null);
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      // Use a timeout to allow the modal close animation to start before scrolling
+      setTimeout(() => {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+  };
 
   return (
     <Section id="services" bg="light" className="relative">
@@ -270,7 +281,25 @@ const Services: React.FC = () => {
                         layoutId={`icon-${service.id}`}
                         className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-jways-blue text-white flex items-center justify-center shadow-lg"
                       >
-                        <service.icon size={24} aria-hidden="true" />
+                         {service.id === 'ocean' ? (
+                            <motion.div
+                                variants={{
+                                    hover: {
+                                        y: [0, -3, 0, 3, 0],
+                                        rotate: [0, -2, 0, 2, 0],
+                                        transition: {
+                                            duration: 2.5,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }
+                                    }
+                                }}
+                            >
+                                <service.icon size={24} aria-hidden="true" />
+                            </motion.div>
+                         ) : (
+                            <service.icon size={24} aria-hidden="true" />
+                         )}
                       </motion.div>
                       <motion.h3 layoutId={`title-${service.id}`} className="text-xl md:text-2xl font-bold text-white">{service.title}</motion.h3>
                     </div>
@@ -345,7 +374,7 @@ const Services: React.FC = () => {
                 <X size={24} aria-hidden="true" />
               </button>
 
-              {/* Modal Image Section */}
+              {/* Modal Image Section - Larger Image */}
               <div className="md:w-1/2 h-64 md:h-auto relative">
                 <motion.img
                   layoutId={`image-${selectedService.id}`}
@@ -361,7 +390,7 @@ const Services: React.FC = () => {
                 </div>
               </div>
 
-              {/* Modal Content Section */}
+              {/* Modal Content Section - Detailed Information */}
               <div className="md:w-1/2 p-8 md:p-12 bg-white relative">
                 <div className="hidden md:flex items-center gap-4 mb-6">
                     <motion.div 
@@ -433,6 +462,7 @@ const Services: React.FC = () => {
                         }
                     }}
                   >
+                      {/* Expanded Description */}
                       <motion.p 
                         variants={{
                             hidden: { opacity: 0, y: 20 },
@@ -468,6 +498,7 @@ const Services: React.FC = () => {
                       </motion.div>
 
                       <motion.button 
+                         onClick={handleInquiryClick}
                          variants={{
                             hidden: { opacity: 0, y: 20 },
                             visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }

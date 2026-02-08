@@ -45,10 +45,16 @@ const Header: React.FC = () => {
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth'
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
+        
+        // Move focus to the element for accessibility
+        element.focus({ preventScroll: true });
       }
     } else {
       // For external links or other pages, just close the menu
@@ -64,16 +70,24 @@ const Header: React.FC = () => {
           : 'bg-transparent py-6'
       }`}
     >
+      {/* Skip Link for Keyboard Accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[60] px-4 py-2 bg-jways-blue text-white rounded-lg font-bold shadow-lg"
+      >
+        Skip to content
+      </a>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <a 
           href="#" 
           onClick={(e) => handleNavClick(e, '#')}
-          className="flex items-center gap-2 group" 
+          className="flex items-center gap-2 group rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue focus-visible:ring-offset-2 focus-visible:ring-offset-jways-navy" 
           aria-label="Jways Home"
         >
           <div className="w-8 h-8 bg-jways-blue rounded-tr-xl rounded-bl-xl flex items-center justify-center">
-            <span className="text-white font-bold text-lg">J</span>
+            <span className="text-white font-bold text-lg" aria-hidden="true">J</span>
           </div>
           <span className="text-2xl font-bold tracking-tight text-white">
             Jways
@@ -81,45 +95,49 @@ const Header: React.FC = () => {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Main Navigation">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="px-4 py-2 text-sm font-medium text-slate-300 rounded-full transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95"
-            >
-              {item.label}
-            </a>
-          ))}
+        <nav className="hidden md:block" aria-label="Main Navigation">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="px-4 py-2 text-sm font-medium text-slate-300 rounded-full transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           <button 
-            className="text-slate-300 hover:text-white transition-colors"
+            className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
             aria-label="Select Language"
           >
-            <Globe size={20} />
+            <Globe size={20} aria-hidden="true" />
           </button>
           <a
             href="#track"
             onClick={(e) => handleNavClick(e, '#track')}
-            className="px-5 py-2.5 bg-white text-jways-navy rounded-full text-sm font-semibold hover:bg-jways-blue hover:text-white transition-all flex items-center gap-2 hover:scale-105 active:scale-95"
+            className="px-5 py-2.5 bg-white text-jways-navy rounded-full text-sm font-semibold hover:bg-jways-blue hover:text-white transition-all flex items-center gap-2 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue focus-visible:ring-offset-2 focus-visible:ring-offset-jways-navy"
           >
             화물 추적
-            <ChevronRight size={16} />
+            <ChevronRight size={16} aria-hidden="true" />
           </a>
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </div>
 
@@ -127,31 +145,35 @@ const Header: React.FC = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-jways-navy border-b border-white/10 overflow-hidden"
           >
-            <div className="px-6 py-8 flex flex-col gap-6">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-lg font-medium text-slate-300 hover:text-white"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <div className="h-px bg-white/10 w-full my-2" />
+            <nav className="px-6 py-8 flex flex-col gap-6" aria-label="Mobile Navigation">
+              <ul className="flex flex-col gap-6">
+                {navItems.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      className="text-lg font-medium text-slate-300 hover:text-white block focus:outline-none focus-visible:text-jways-blue"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div className="h-px bg-white/10 w-full my-2" aria-hidden="true" />
               <a
                 href="#track"
-                className="flex items-center justify-center w-full py-3 bg-jways-blue text-white rounded-lg font-semibold"
+                className="flex items-center justify-center w-full py-3 bg-jways-blue text-white rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-jways-navy"
                 onClick={(e) => handleNavClick(e, '#track')}
               >
                 화물 추적하기
               </a>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

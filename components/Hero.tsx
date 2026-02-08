@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2 } from 'lucide-react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Container } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import QuoteModal from './QuoteModal';
 
@@ -344,7 +344,8 @@ const Hero: React.FC = () => {
                 whileHover={{ 
                   scale: 1.05, 
                   backgroundColor: "#1e40af", // blue-800
-                  boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.4)" 
+                  boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.4)",
+                  y: -2
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -358,7 +359,8 @@ const Hero: React.FC = () => {
                 whileHover={{ 
                   scale: 1.05, 
                   backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  borderColor: "rgba(255, 255, 255, 0.3)"
+                  borderColor: "rgba(255, 255, 255, 0.3)",
+                  y: -2
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -374,35 +376,13 @@ const Hero: React.FC = () => {
                 disabled={isQuoteLoading}
                 className={`w-full sm:w-auto px-10 py-4 bg-jways-accent text-white rounded-full font-bold shadow-lg shadow-orange-500/20 flex items-center justify-center gap-3 text-lg z-10 ${isQuoteLoading ? 'cursor-not-allowed opacity-90' : ''}`}
                 whileHover={!isQuoteLoading ? { 
-                  scale: 1.05, 
-                  y: -2,
+                  scale: 1.08, 
+                  y: -4,
                   backgroundColor: '#c2410c', // orange-700
-                  boxShadow: "0 20px 25px -5px rgba(234, 88, 12, 0.4), 0 8px 10px -6px rgba(234, 88, 12, 0.4)"
+                  boxShadow: "0 20px 25px -5px rgba(234, 88, 12, 0.5)"
                 } : {}}
                 whileTap={!isQuoteLoading ? { scale: 0.95 } : {}}
-                animate={!isQuoteLoading ? { 
-                  scale: [1, 1.03, 1],
-                  boxShadow: [
-                    "0 10px 15px -3px rgba(249, 115, 22, 0.2)",
-                    "0 0 0 4px rgba(249, 115, 22, 0.1)",
-                    "0 10px 15px -3px rgba(249, 115, 22, 0.2)"
-                  ]
-                } : {}}
-                transition={{
-                  scale: {
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  },
-                  boxShadow: {
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  },
-                  default: { type: "spring", stiffness: 300, damping: 15 }
-                }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
                 {isQuoteLoading ? (
                     <Loader2 className="w-6 h-6 animate-spin" />
@@ -420,8 +400,9 @@ const Hero: React.FC = () => {
                 className={`w-full sm:w-auto px-10 py-4 border border-white/20 text-white rounded-full font-bold flex items-center justify-center gap-2 text-lg transition-colors ${isTrackLoading ? 'cursor-not-allowed opacity-80' : ''}`}
                 whileHover={!isTrackLoading ? { 
                   scale: 1.05, 
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  borderColor: "rgba(255, 255, 255, 0.4)"
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  borderColor: "rgba(255, 255, 255, 0.5)",
+                  y: -2
                 } : {}}
                 whileTap={!isTrackLoading ? { scale: 0.95 } : {}}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -440,8 +421,9 @@ const Hero: React.FC = () => {
                 className="w-full sm:w-auto px-10 py-4 border border-white/20 text-white rounded-full font-bold flex items-center justify-center gap-2 text-lg transition-colors"
                 whileHover={{ 
                   scale: 1.05, 
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  borderColor: "rgba(255, 255, 255, 0.4)"
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  borderColor: "rgba(255, 255, 255, 0.5)",
+                  y: -2
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -454,7 +436,7 @@ const Hero: React.FC = () => {
 
         {/* Right Visual (3D Logistics Graphic) */}
         <motion.div 
-          className="flex-1 w-full max-w-md md:max-w-full relative perspective-1000"
+          className="flex-1 w-full max-w-md md:max-w-full relative"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -476,65 +458,83 @@ const Hero: React.FC = () => {
                />
                <div className="absolute inset-0 bg-gradient-to-br from-jways-navy/80 via-transparent to-black/60 pointer-events-none" />
 
-               {/* 2. Central 3D Globe Visualization */}
-               <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-64 h-64 md:w-80 md:h-80">
-                     {/* Core Glow */}
-                     <div className="absolute inset-0 bg-blue-500/20 blur-[60px] rounded-full animate-pulse" />
+               {/* 2. Central 3D Globe Visualization - ENHANCED */}
+               <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: '1000px' }}>
+                  <div className="relative w-64 h-64 md:w-80 md:h-80" style={{ transformStyle: 'preserve-3d' }}>
                      
-                     {/* Rotating Globe Wireframe */}
+                     {/* Core Sphere Construct */}
                      <motion.div 
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                        className="w-full h-full relative"
+                        animate={{ rotateY: 360, rotateX: 10 }} 
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-0"
+                        style={{ transformStyle: 'preserve-3d' }}
                      >
-                        {/* Outer Ring */}
-                        <div className="absolute inset-0 rounded-full border border-white/10 border-dashed" />
+                        {/* Wireframe Longitudes */}
+                        {[0, 45, 90, 135].map((deg) => (
+                           <div key={deg} 
+                                className="absolute inset-0 rounded-full border border-blue-500/20"
+                                style={{ transform: `rotateY(${deg}deg)` }} 
+                           />
+                        ))}
+                        {/* Wireframe Latitudes */}
+                        <div className="absolute inset-0 rounded-full border border-blue-500/30 border-dashed" style={{ transform: 'rotateX(90deg)' }} />
+                        <div className="absolute inset-0 rounded-full border border-blue-500/10" style={{ transform: 'rotateX(45deg)' }} />
+                        <div className="absolute inset-0 rounded-full border border-blue-500/10" style={{ transform: 'rotateX(-45deg)' }} />
                         
-                        {/* Inner Globe Representation */}
-                        <div className="absolute inset-[15%] rounded-full bg-gradient-to-br from-blue-600/30 to-indigo-900/30 backdrop-blur-sm border border-blue-400/30 overflow-hidden">
-                           {/* Decorative Longitude/Latitude lines */}
-                           {[0, 45, 90, 135].map(deg => (
-                               <div key={deg} className="absolute inset-0 border border-white/10 rounded-full" 
-                                   style={{ transform: `rotate(${deg}deg) scaleX(0.4)` }} 
-                               />
-                           ))}
-                           <div className="absolute top-1/2 left-0 w-full h-px bg-blue-400/20" />
-                           <div className="absolute left-1/2 top-0 w-px h-full bg-blue-400/20" />
-                           
-                           {/* Center Core */}
-                           <div className="absolute inset-[40%] bg-blue-500/30 rounded-full blur-md" />
-                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                               <Globe className="text-white/80 w-8 h-8" />
-                           </div>
+                        {/* Inner Core Glow */}
+                        <div className="absolute inset-[20%] rounded-full bg-blue-600/20 blur-2xl" />
+                        
+                        {/* Center Globe Icon (Floating) */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'translateZ(20px)' }}>
+                             <Globe className="w-12 h-12 text-white/90 drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" strokeWidth={1} />
                         </div>
-
-                        {/* Orbiting Plane */}
-                        <motion.div 
-                            className="absolute inset-0"
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                        >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                <div className="bg-white p-2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)] z-10">
-                                    <Plane className="w-4 h-4 text-jways-blue rotate-90" fill="currentColor" />
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Orbiting Ship (Counter-clockwise, larger orbit) */}
-                        <motion.div 
-                            className="absolute inset-[-10%]"
-                            animate={{ rotate: -360 }}
-                            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                        >
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                                <div className="bg-white p-2 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.6)] z-10">
-                                    <Ship className="w-4 h-4 text-indigo-600" fill="currentColor" />
-                                </div>
-                            </div>
-                        </motion.div>
                      </motion.div>
+
+                     {/* Orbit Ring 1 - Plane */}
+                     <motion.div
+                        animate={{ rotateZ: 360, rotateX: 65 }}
+                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-15%]"
+                        style={{ transformStyle: 'preserve-3d' }}
+                     >
+                        <div className="absolute inset-0 rounded-full border border-white/5 border-dashed" />
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'rotateX(-90deg)' }}>
+                            <div className="bg-slate-900/80 p-2 rounded-lg border border-cyan-400/50 shadow-[0_0_15px_rgba(34,211,238,0.4)] backdrop-blur-md">
+                                <Plane className="w-5 h-5 text-cyan-400" />
+                            </div>
+                        </div>
+                     </motion.div>
+
+                     {/* Orbit Ring 2 - Ship */}
+                     <motion.div
+                        animate={{ rotateZ: -360, rotateX: -60 }}
+                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-30%]"
+                        style={{ transformStyle: 'preserve-3d' }}
+                     >
+                        <div className="absolute inset-0 rounded-full border border-white/5 border-dashed" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" style={{ transform: 'rotateX(90deg)' }}>
+                             <div className="bg-slate-900/80 p-2 rounded-lg border border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.4)] backdrop-blur-md">
+                                <Ship className="w-5 h-5 text-indigo-400" />
+                            </div>
+                        </div>
+                     </motion.div>
+
+                     {/* Orbit Ring 3 - Truck */}
+                     <motion.div
+                        animate={{ rotateY: 360, rotateZ: 15 }}
+                        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[10%]"
+                        style={{ transformStyle: 'preserve-3d' }}
+                     >
+                        <div className="absolute inset-0 rounded-full border border-jways-accent/20 border-dotted" />
+                        <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2" style={{ transform: 'rotateY(-90deg)' }}>
+                             <div className="bg-slate-900/80 p-1.5 rounded-lg border border-jways-accent/50 shadow-[0_0_15px_rgba(249,115,22,0.4)] backdrop-blur-md">
+                                <Truck className="w-4 h-4 text-jways-accent" />
+                            </div>
+                        </div>
+                     </motion.div>
+
                   </div>
                </div>
 

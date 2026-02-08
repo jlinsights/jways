@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <Tracking />
         <Services />
