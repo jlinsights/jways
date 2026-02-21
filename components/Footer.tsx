@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -57,7 +58,7 @@ const Footer: React.FC = () => {
             <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleSubmit}>
               <div className="relative flex-grow">
                 <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${error ? 'text-red-500' : 'text-slate-500'}`} aria-hidden="true" />
-                <input 
+                <motion.input 
                   type="email" 
                   placeholder="이메일 주소를 입력해주세요" 
                   aria-label="Email address for newsletter"
@@ -71,6 +72,8 @@ const Footer: React.FC = () => {
                     setEmail(e.target.value);
                     if (error) setError('');
                   }}
+                  animate={error ? { x: [-10, 10, -10, 10, 0] } : {}}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
                 />
               </div>
               <button 
@@ -80,16 +83,28 @@ const Footer: React.FC = () => {
                 구독하기 <Send size={18} aria-hidden="true" />
               </button>
             </form>
-            {error && (
-              <p className="absolute left-0 -bottom-6 text-xs text-red-500 font-medium ml-1 mt-1">
-                {error}
-              </p>
-            )}
-            {success && (
-              <p className="absolute left-0 -bottom-6 text-xs text-green-500 font-medium ml-1 mt-1">
-                구독이 완료되었습니다!
-              </p>
-            )}
+            <AnimatePresence>
+                {error && (
+                <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute left-0 -bottom-6 text-xs text-red-500 font-medium ml-1 mt-1"
+                >
+                    {error}
+                </motion.p>
+                )}
+                {success && (
+                <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute left-0 -bottom-6 text-xs text-green-500 font-medium ml-1 mt-1"
+                >
+                    구독이 완료되었습니다!
+                </motion.p>
+                )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
