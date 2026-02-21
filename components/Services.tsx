@@ -202,12 +202,19 @@ const Services: React.FC = () => {
                   aria-controls="services-grid"
                   id={`tab-${cat}`}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  className={`relative px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 z-10 ${
                     activeCategory === cat
-                      ? 'bg-jways-blue text-white shadow-lg shadow-blue-500/30 ring-2 ring-jways-blue ring-offset-2'
-                      : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'
+                      ? 'text-white'
+                      : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                   }`}
                 >
+                  {activeCategory === cat && (
+                    <motion.div
+                      layoutId="activeCategory"
+                      className="absolute inset-0 bg-jways-blue rounded-full -z-10 shadow-lg shadow-blue-500/30"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                   {cat}
                 </button>
               ))}
@@ -242,7 +249,7 @@ const Services: React.FC = () => {
                     }
                   }}
                   whileHover="hover"
-                  className="group relative h-[400px] overflow-hidden rounded-3xl bg-slate-100 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+                  className="group relative h-[400px] overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
                   role="button"
                   tabIndex={0}
                   aria-label={`View details for ${service.title}`}
@@ -261,7 +268,7 @@ const Services: React.FC = () => {
                       alt=""
                       className="w-full h-full object-cover"
                       variants={{
-                        hover: { scale: 1.1, y: 5 }
+                        hover: { scale: 1.1 }
                       }}
                       transition={{ duration: 0.6 }}
                     />
@@ -281,14 +288,14 @@ const Services: React.FC = () => {
                         layoutId={`icon-${service.id}`}
                         className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-jways-blue text-white flex items-center justify-center shadow-lg"
                       >
-                         {service.id === 'ocean' ? (
+                         {service.id === 'air' && (
                             <motion.div
                                 variants={{
                                     hover: {
-                                        y: [0, -3, 0, 3, 0],
-                                        rotate: [0, -2, 0, 2, 0],
+                                        y: [-2, 2, -2],
+                                        rotate: [-5, 5, -5],
                                         transition: {
-                                            duration: 2.5,
+                                            duration: 2,
                                             repeat: Infinity,
                                             ease: "easeInOut"
                                         }
@@ -297,11 +304,69 @@ const Services: React.FC = () => {
                             >
                                 <service.icon size={24} aria-hidden="true" />
                             </motion.div>
-                         ) : (
-                            <service.icon size={24} aria-hidden="true" />
+                         )}
+
+                         {service.id === 'ocean' && (
+                            <motion.div
+                                variants={{
+                                    hover: {
+                                        x: [-2, 2, -2],
+                                        rotate: [-3, 3, -3],
+                                        transition: {
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }
+                                    }
+                                }}
+                            >
+                                <service.icon size={24} aria-hidden="true" />
+                            </motion.div>
+                         )}
+
+                         {service.id === 'land' && (
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="1" y="3" width="15" height="13" rx="2" ry="2" />
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                                <motion.g
+                                    variants={{ hover: { rotate: 360 } }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    style={{ originX: "5.5px", originY: "18.5px" }}
+                                >
+                                    <circle cx="5.5" cy="18.5" r="2.5" />
+                                    <path d="M5.5 17v3" strokeWidth="1.5" />
+                                </motion.g>
+                                <motion.g
+                                    variants={{ hover: { rotate: 360 } }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    style={{ originX: "18.5px", originY: "18.5px" }}
+                                >
+                                    <circle cx="18.5" cy="18.5" r="2.5" />
+                                    <path d="M18.5 17v3" strokeWidth="1.5" />
+                                </motion.g>
+                            </svg>
+                         )}
+
+                         {!['air', 'ocean', 'land'].includes(service.id) && (
+                            <motion.div
+                                variants={{
+                                    hover: { scale: [1, 1.1, 1] }
+                                }}
+                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                                <service.icon size={24} aria-hidden="true" />
+                            </motion.div>
                          )}
                       </motion.div>
-                      <motion.h3 layoutId={`title-${service.id}`} className="text-xl md:text-2xl font-bold text-white">{service.title}</motion.h3>
+                      <motion.h3 
+                        layoutId={`title-${service.id}`} 
+                        className="text-xl md:text-2xl font-bold text-white"
+                        variants={{
+                            hover: { y: -5 }
+                        }}
+                      >
+                        {service.title}
+                      </motion.h3>
                     </div>
                     
                     <p className="text-slate-200 mb-6 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2 text-sm md:text-base">
@@ -359,14 +424,14 @@ const Services: React.FC = () => {
             {/* Modal Card */}
             <motion.div
               layoutId={`card-${selectedService.id}`}
-              className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row"
+              className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row"
             >
               {/* Close Button - Optimized visibility for both mobile (over image) and desktop (over white bg) */}
               <button 
                 onClick={() => setSelectedService(null)}
                 className="absolute top-4 right-4 z-20 p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-jways-blue 
                            bg-black/20 text-white hover:bg-black/40 backdrop-blur-md
-                           md:bg-white md:text-slate-500 md:shadow-md md:hover:bg-slate-100"
+                           md:bg-white md:dark:bg-slate-800 md:text-slate-500 md:dark:text-slate-400 md:shadow-md md:hover:bg-slate-100 md:dark:hover:bg-slate-700"
                 aria-label="Close modal"
                 autoFocus 
                 type="button"
@@ -391,7 +456,7 @@ const Services: React.FC = () => {
               </div>
 
               {/* Modal Content Section - Detailed Information */}
-              <div className="md:w-1/2 p-8 md:p-12 bg-white relative">
+              <div className="md:w-1/2 p-8 md:p-12 bg-white dark:bg-slate-900 relative">
                 <div className="hidden md:flex items-center gap-4 mb-6">
                     <motion.div 
                         layoutId={`icon-${selectedService.id}`}
@@ -399,7 +464,7 @@ const Services: React.FC = () => {
                     >
                         <selectedService.icon size={28} aria-hidden="true" />
                     </motion.div>
-                    <motion.h3 id={`modal-title-${selectedService.id}`} layoutId={`title-desktop-${selectedService.id}`} className="text-3xl font-bold text-slate-900">
+                    <motion.h3 id={`modal-title-${selectedService.id}`} layoutId={`title-desktop-${selectedService.id}`} className="text-3xl font-bold text-slate-900 dark:text-white">
                         {selectedService.title}
                     </motion.h3>
                 </div>
@@ -414,7 +479,7 @@ const Services: React.FC = () => {
                     aria-label="Loading content"
                   >
                     {/* Progress Bar */}
-                    <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4">
+                    <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-4">
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
@@ -424,26 +489,26 @@ const Services: React.FC = () => {
                     </div>
 
                     <div className="space-y-3">
-                      <div className="h-4 bg-slate-200 rounded w-full animate-pulse" />
-                      <div className="h-4 bg-slate-200 rounded w-[90%] animate-pulse" />
-                      <div className="h-4 bg-slate-200 rounded w-[95%] animate-pulse" />
-                      <div className="h-4 bg-slate-200 rounded w-[80%] animate-pulse" />
+                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full animate-pulse" />
+                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-[90%] animate-pulse" />
+                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-[95%] animate-pulse" />
+                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-[80%] animate-pulse" />
                     </div>
 
                     <div className="space-y-4 pt-4">
-                      <div className="h-6 bg-slate-200 rounded w-32 animate-pulse" />
+                      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-32 animate-pulse" />
                       <div className="space-y-3">
                         {[1, 2, 3, 4].map((i) => (
                           <div key={i} className="flex items-center gap-3">
-                            <div className="w-5 h-5 rounded-full bg-slate-200 animate-pulse shrink-0" />
-                            <div className="h-4 bg-slate-200 rounded w-full animate-pulse" />
+                            <div className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse shrink-0" />
+                            <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full animate-pulse" />
                           </div>
                         ))}
                       </div>
                     </div>
 
                     <div className="pt-6">
-                      <div className="w-full h-14 bg-slate-200 rounded-xl animate-pulse" />
+                      <div className="w-full h-14 bg-slate-200 dark:bg-slate-700 rounded-xl animate-pulse" />
                     </div>
                   </motion.div>
                 ) : (
@@ -468,7 +533,7 @@ const Services: React.FC = () => {
                             hidden: { opacity: 0, y: 20 },
                             visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
                         }}
-                        className="text-lg text-slate-600 leading-relaxed mb-8"
+                        className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8"
                       >
                           {selectedService.longDescription}
                       </motion.p>
@@ -480,7 +545,7 @@ const Services: React.FC = () => {
                         }}
                         className="space-y-4 mb-10"
                       >
-                          <h4 className="font-bold text-slate-900 text-lg">주요 특징</h4>
+                          <h4 className="font-bold text-slate-900 dark:text-white text-lg">주요 특징</h4>
                           <ul className="space-y-3">
                               {selectedService.features.map((feature, idx) => (
                                   <motion.li 
@@ -488,7 +553,7 @@ const Services: React.FC = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.3 + (idx * 0.1), duration: 0.4 }}
-                                    className="flex items-start gap-3 text-slate-600"
+                                    className="flex items-start gap-3 text-slate-600 dark:text-slate-300"
                                   >
                                       <CheckCircle2 className="w-5 h-5 text-jways-blue shrink-0 mt-0.5" aria-hidden="true" />
                                       <span>{feature}</span>

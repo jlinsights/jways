@@ -19,12 +19,42 @@ const cargoTypes = [
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    origin: '',
+    destination: '',
+    cargoType: cargoTypes[0],
+    weight: '',
+    length: '',
+    width: '',
+    height: '',
+    targetDate: '',
+    message: ''
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Reset state when modal opens and lock body scroll
   useEffect(() => {
     if (isOpen) {
       setIsSuccess(false);
       setIsSubmitting(false);
+      setFormData({
+        name: '',
+        email: '',
+        origin: '',
+        destination: '',
+        cargoType: cargoTypes[0],
+        weight: '',
+        length: '',
+        width: '',
+        height: '',
+        targetDate: '',
+        message: ''
+      });
+      setErrors({});
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -34,8 +64,64 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) newErrors.name = '이름을 입력해주세요.';
+    if (!formData.email.trim()) {
+      newErrors.email = '이메일을 입력해주세요.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = '유효한 이메일 주소를 입력해주세요.';
+    }
+    if (!formData.origin.trim()) newErrors.origin = '출발지를 입력해주세요.';
+    if (!formData.destination.trim()) newErrors.destination = '도착지를 입력해주세요.';
+    
+    if (!formData.weight || isNaN(Number(formData.weight)) || Number(formData.weight) <= 0) {
+      newErrors.weight = '유효한 중량을 입력해주세요 (kg).';
+    }
+
+    if (!formData.length || isNaN(Number(formData.length)) || Number(formData.length) <= 0) {
+      newErrors.dimensions = '유효한 치수를 입력해주세요.';
+    }
+    if (!formData.width || isNaN(Number(formData.width)) || Number(formData.width) <= 0) {
+      newErrors.dimensions = '유효한 치수를 입력해주세요.';
+    }
+    if (!formData.height || isNaN(Number(formData.height)) || Number(formData.height) <= 0) {
+      newErrors.dimensions = '유효한 치수를 입력해주세요.';
+    }
+
+    if (!formData.targetDate) {
+      newErrors.targetDate = '희망 배송일을 선택해주세요.';
+    } else {
+      const selectedDate = new Date(formData.targetDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) {
+        newErrors.targetDate = '과거 날짜는 선택할 수 없습니다.';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user types
+    if (errors[name] || (['length', 'width', 'height'].includes(name) && errors.dimensions)) {
+       const newErrors = { ...errors };
+       delete newErrors[name];
+       if (['length', 'width', 'height'].includes(name)) delete newErrors.dimensions;
+       setErrors(newErrors);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
     // Simulate network request
     setTimeout(() => {
@@ -99,8 +185,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+              <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar bg-white dark:bg-slate-900">
                 <AnimatePresence mode="wait">
                   {isSuccess ? (
                     <motion.div
@@ -110,16 +195,16 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                       exit={{ opacity: 0, scale: 0.9 }}
                       className="flex flex-col items-center justify-center py-12 text-center"
                     >
-                      <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6 shadow-sm">
+                      <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-6 shadow-sm">
                         <CheckCircle2 size={40} />
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-2">견적 요청이 완료되었습니다!</h3>
-                      <p className="text-slate-600 mb-8 max-w-sm">
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">견적 요청이 완료되었습니다!</h3>
+                      <p className="text-slate-600 dark:text-slate-300 mb-8 max-w-sm">
                         담당자가 내용을 확인 후 입력하신 이메일로 24시간 이내에 상세 견적서를 보내드립니다.
                       </p>
                       <button
                         onClick={handleClose}
-                        className="px-8 py-3 bg-jways-navy text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg"
+                        className="px-8 py-3 bg-jways-navy dark:bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors shadow-lg"
                       >
                         확인
                       </button>
@@ -135,25 +220,62 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                     >
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">이름 (Name)</label>
-                          <input required type="text" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all" placeholder="홍길동" />
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">이름 (Name)</label>
+                          <input 
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            type="text" 
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.name ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                            placeholder="홍길동" 
+                          />
+                          {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">이메일 (Email)</label>
-                          <input required type="email" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all" placeholder="example@company.com" />
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">이메일 (Email)</label>
+                          <input 
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            type="email" 
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.email ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                            placeholder="example@company.com" 
+                          />
+                          {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">출발지 (Origin)</label>
-                          <input required type="text" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all" placeholder="City, Country" />
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">출발지 (Origin)</label>
+                          <input 
+                            name="origin"
+                            value={formData.origin}
+                            onChange={handleInputChange}
+                            type="text" 
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.origin ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                            placeholder="City, Country" 
+                          />
+                          {errors.origin && <p className="text-xs text-red-500">{errors.origin}</p>}
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">도착지 (Destination)</label>
-                          <input required type="text" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all" placeholder="City, Country" />
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">도착지 (Destination)</label>
+                          <input 
+                            name="destination"
+                            value={formData.destination}
+                            onChange={handleInputChange}
+                            type="text" 
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.destination ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                            placeholder="City, Country" 
+                          />
+                          {errors.destination && <p className="text-xs text-red-500">{errors.destination}</p>}
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">화물 종류 (Cargo Type)</label>
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 종류 (Cargo Type)</label>
                           <div className="relative">
-                              <select className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all appearance-none cursor-pointer">
+                              <select 
+                                name="cargoType"
+                                value={formData.cargoType}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all appearance-none cursor-pointer dark:text-white"
+                              >
                                 {cargoTypes.map((type) => (
                                   <option key={type} value={type}>{type}</option>
                                 ))}
@@ -164,22 +286,87 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">예상 중량 (Weight)</label>
-                          <input type="text" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all" placeholder="kg / tons" />
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">예상 중량 (Weight)</label>
+                          <div className="relative">
+                            <input 
+                                name="weight"
+                                value={formData.weight}
+                                onChange={handleInputChange}
+                                type="number" 
+                                min="0"
+                                className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.weight ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                                placeholder="0" 
+                            />
+                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">kg</span>
+                          </div>
+                          {errors.weight && <p className="text-xs text-red-500">{errors.weight}</p>}
                         </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-bold text-slate-700">희망 배송일 (Target Date)</label>
+                        
+                        {/* New Dimensions Fields */}
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 규격 (Dimensions - cm)</label>
+                            <div className="grid grid-cols-3 gap-4">
+                                <div>
+                                    <input 
+                                        name="length"
+                                        value={formData.length}
+                                        onChange={handleInputChange}
+                                        type="number" 
+                                        min="0"
+                                        className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.dimensions ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                                        placeholder="가로 (L)" 
+                                    />
+                                </div>
+                                <div>
+                                    <input 
+                                        name="width"
+                                        value={formData.width}
+                                        onChange={handleInputChange}
+                                        type="number" 
+                                        min="0"
+                                        className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.dimensions ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                                        placeholder="세로 (W)" 
+                                    />
+                                </div>
+                                <div>
+                                    <input 
+                                        name="height"
+                                        value={formData.height}
+                                        onChange={handleInputChange}
+                                        type="number" 
+                                        min="0"
+                                        className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all dark:text-white ${errors.dimensions ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+                                        placeholder="높이 (H)" 
+                                    />
+                                </div>
+                            </div>
+                            {errors.dimensions && <p className="text-xs text-red-500">{errors.dimensions}</p>}
+                        </div>
+
+                        <div className="space-y-2 md:col-span-2">
+                          <label className="text-sm font-bold text-slate-700 dark:text-slate-300">희망 배송일 (Target Date)</label>
                           <input 
+                            name="targetDate"
+                            value={formData.targetDate}
+                            onChange={handleInputChange}
                             type="date" 
                             min={new Date().toISOString().split('T')[0]}
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all text-slate-600 placeholder:text-slate-400" 
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all text-slate-600 dark:text-slate-300 placeholder:text-slate-400 ${errors.targetDate ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'}`}
                           />
+                          {errors.targetDate && <p className="text-xs text-red-500">{errors.targetDate}</p>}
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700">추가 요청사항 (Message)</label>
-                        <textarea rows={4} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all resize-none" placeholder="화물에 대한 상세 정보나 특별 요청사항을 적어주세요." />
+                        <label className="text-sm font-bold text-slate-700 dark:text-slate-300">추가 요청사항 (Message)</label>
+                        <textarea 
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            rows={4} 
+                            className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-jways-blue/20 focus:border-jways-blue transition-all resize-none dark:text-white" 
+                            placeholder="화물에 대한 상세 정보나 특별 요청사항을 적어주세요." 
+                        />
                       </div>
 
                       <button

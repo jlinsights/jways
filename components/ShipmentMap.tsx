@@ -113,14 +113,35 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
         </div>
 
         {/* Map Overlay Stats */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 to-transparent flex justify-between items-end">
-            <div className="text-white">
-                <p className="text-sm text-slate-400 mb-1">Estimated Arrival</p>
-                <p className="text-2xl font-bold">{shipment.estimatedDelivery}</p>
+        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent">
+            <div className="flex justify-between items-end mb-4">
+                <div className="text-white">
+                    <p className="text-sm text-slate-400 mb-1">Estimated Arrival</p>
+                    <p className="text-2xl font-bold">{shipment.estimatedDelivery}</p>
+                </div>
+                <div className="text-right">
+                    <p className="text-sm text-slate-400 mb-1">Distance Remaining</p>
+                    <p className="text-xl font-bold text-white">4,230 km</p>
+                </div>
             </div>
-            <div className="text-right">
-                <p className="text-sm text-slate-400 mb-1">Distance Remaining</p>
-                <p className="text-xl font-bold text-white">4,230 km</p>
+
+            {/* Progress Bar */}
+            <div className="relative">
+                <div className="flex justify-between text-xs text-slate-400 mb-2 font-medium uppercase tracking-wider">
+                    <span>{shipment.origin.code}</span>
+                    <span className="text-jways-blue">{shipment.current.progress}% Complete</span>
+                    <span>{shipment.destination.code}</span>
+                </div>
+                <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden backdrop-blur-sm border border-white/5">
+                    <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${shipment.current.progress}%` }}
+                        transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+                        className="h-full bg-gradient-to-r from-blue-500 to-jways-accent relative"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full -translate-x-full animate-shimmer" />
+                    </motion.div>
+                </div>
             </div>
         </div>
     </div>

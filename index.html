@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -23,6 +24,15 @@
                 accent: '#f97316',
                 gray: '#f8fafc'
               }
+            },
+            keyframes: {
+              shimmer: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' },
+              }
+            },
+            animation: {
+              shimmer: 'shimmer 2s infinite',
             }
           }
         }
@@ -31,8 +41,6 @@
     <style>
       body {
         font-family: 'Inter', 'Noto Sans KR', sans-serif;
-        background-color: #0f172a;
-        color: #f8fafc;
         overflow-x: hidden;
       }
       /* Custom scrollbar */
@@ -62,8 +70,10 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

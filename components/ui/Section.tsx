@@ -8,16 +8,16 @@ interface SectionProps {
 }
 
 const Section = forwardRef<HTMLElement, SectionProps>(({ children, className = '', id, bg = 'dark' }, ref) => {
-  let bgClass = 'bg-jways-navy text-white';
+  let bgClass = 'bg-jways-navy text-white dark:bg-slate-950';
   
   if (bg === 'light') {
-    bgClass = 'bg-white text-slate-900';
+    bgClass = 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100';
   } else if (bg === 'image') {
     bgClass = 'bg-transparent text-white relative';
   }
 
   return (
-    <section ref={ref} id={id} className={`py-20 md:py-32 px-6 md:px-12 lg:px-24 overflow-hidden ${bgClass} ${className}`}>
+    <section ref={ref} id={id} className={`py-20 md:py-32 px-6 md:px-12 lg:px-24 overflow-hidden transition-colors duration-300 ${bgClass} ${className}`}>
       {children}
     </section>
   );

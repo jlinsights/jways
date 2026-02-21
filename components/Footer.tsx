@@ -2,12 +2,41 @@ import React from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const [email, setEmail] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState(false);
+
   const socialLinks = [
     { Icon: Facebook, label: 'Facebook' },
     { Icon: Twitter, label: 'Twitter' },
     { Icon: Instagram, label: 'Instagram' },
     { Icon: Linkedin, label: 'LinkedIn' }
   ];
+
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess(false);
+
+    if (!email) {
+      setError('이메일 주소를 입력해주세요.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError('유효한 이메일 주소를 입력해주세요.');
+      return;
+    }
+
+    // Simulate API call
+    setSuccess(true);
+    setEmail('');
+    setTimeout(() => setSuccess(false), 3000);
+  };
 
   return (
     <footer id="contact" className="bg-[#050b14] text-slate-400 py-16 px-6 border-t border-white/5">
@@ -24,24 +53,44 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          <form className="relative z-10 w-full md:w-auto flex flex-col sm:flex-row gap-3 min-w-[320px] lg:min-w-[450px]" onSubmit={(e) => e.preventDefault()}>
-            <div className="relative flex-grow">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" aria-hidden="true" />
-              <input 
-                type="email" 
-                placeholder="이메일 주소를 입력해주세요" 
-                aria-label="Email address for newsletter"
-                className="w-full pl-12 pr-4 py-3.5 bg-[#0a1120] border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-jways-blue focus:ring-1 focus:ring-jways-blue transition-all"
-                required
-              />
-            </div>
-            <button 
-              type="submit"
-              className="px-6 py-3.5 bg-jways-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 active:scale-95"
-            >
-              구독하기 <Send size={18} aria-hidden="true" />
-            </button>
-          </form>
+          <div className="relative z-10 w-full md:w-auto min-w-[320px] lg:min-w-[450px]">
+            <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleSubmit}>
+              <div className="relative flex-grow">
+                <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${error ? 'text-red-500' : 'text-slate-500'}`} aria-hidden="true" />
+                <input 
+                  type="email" 
+                  placeholder="이메일 주소를 입력해주세요" 
+                  aria-label="Email address for newsletter"
+                  className={`w-full pl-12 pr-4 py-3.5 bg-[#0a1120] border rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-all ${
+                    error 
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                      : 'border-white/10 focus:border-jways-blue focus:ring-jways-blue'
+                  }`}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError('');
+                  }}
+                />
+              </div>
+              <button 
+                type="submit"
+                className="px-6 py-3.5 bg-jways-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 active:scale-95 whitespace-nowrap"
+              >
+                구독하기 <Send size={18} aria-hidden="true" />
+              </button>
+            </form>
+            {error && (
+              <p className="absolute left-0 -bottom-6 text-xs text-red-500 font-medium ml-1 mt-1">
+                {error}
+              </p>
+            )}
+            {success && (
+              <p className="absolute left-0 -bottom-6 text-xs text-green-500 font-medium ml-1 mt-1">
+                구독이 완료되었습니다!
+              </p>
+            )}
+          </div>
         </div>
       </div>
 

@@ -9,7 +9,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Header />
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Hero />
@@ -17,7 +17,7 @@ function App() {
         <Services />
         
         {/* Call to Action Section inserted between major blocks */}
-        <section className="bg-white py-24 px-6">
+        <section className="bg-white dark:bg-slate-900 py-24 px-6 transition-colors duration-300">
            <div className="max-w-5xl mx-auto bg-gradient-to-r from-jways-blue to-indigo-600 rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
              <div className="relative z-10">

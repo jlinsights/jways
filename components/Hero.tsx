@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Container } from 'lucide-react';
+import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Container, Play, Pause, RefreshCw } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import QuoteModal from './QuoteModal';
 
@@ -11,6 +11,8 @@ const Hero: React.FC = () => {
   const [videoUri, setVideoUri] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [generationStatus, setGenerationStatus] = useState('');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollY } = useScroll();
   
@@ -168,6 +170,22 @@ const Hero: React.FC = () => {
     };
   };
 
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleRegenerate = () => {
+    setVideoUri(null);
+    generateBackgroundVideo();
+  };
+
   const generateBackgroundVideo = async () => {
     if (isGeneratingVideo) return;
 
@@ -269,6 +287,7 @@ const Hero: React.FC = () => {
                     className="absolute inset-0 z-0"
                 >
                     <video 
+                        ref={videoRef}
                         src={videoUri} 
                         autoPlay 
                         loop 
@@ -595,24 +614,55 @@ const Hero: React.FC = () => {
       </div>
       
       {/* Video Generation Control - Subtle placement */}
-      <motion.button
-        onClick={generateBackgroundVideo}
-        disabled={isGeneratingVideo}
-        initial={{ opacity: 0.5 }}
-        whileHover={{ opacity: 1, scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="absolute bottom-6 right-6 z-20 p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white/70 hover:text-white border border-white/10 transition-all flex items-center gap-2 group"
-        title="Generate AI Background Video"
-      >
-        {isGeneratingVideo ? (
-           <Loader2 size={18} className="animate-spin text-jways-blue" />
-        ) : (
-           <Wand2 size={18} />
+      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
+        {videoUri && (
+          <>
+            <motion.button
+              onClick={togglePlayPause}
+              initial={{ opacity: 0.5 }}
+              whileHover={{ opacity: 1, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white/70 hover:text-white border border-white/10 transition-all"
+              title={isPlaying ? "Pause Video" : "Play Video"}
+            >
+              {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+            </motion.button>
+
+            <motion.button
+              onClick={handleRegenerate}
+              disabled={isGeneratingVideo}
+              initial={{ opacity: 0.5 }}
+              whileHover={{ opacity: 1, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white/70 hover:text-white border border-white/10 transition-all"
+              title="Regenerate Video"
+            >
+              <RefreshCw size={18} className={isGeneratingVideo ? "animate-spin" : ""} />
+            </motion.button>
+          </>
         )}
-        <span className="text-xs font-medium max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap">
-            {generationStatus || 'AI Background'}
-        </span>
-      </motion.button>
+
+        {!videoUri && (
+            <motion.button
+                onClick={generateBackgroundVideo}
+                disabled={isGeneratingVideo}
+                initial={{ opacity: 0.5 }}
+                whileHover={{ opacity: 1, scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white/70 hover:text-white border border-white/10 transition-all flex items-center gap-2 group"
+                title="Generate AI Background Video"
+            >
+                {isGeneratingVideo ? (
+                <Loader2 size={18} className="animate-spin text-jways-blue" />
+                ) : (
+                <Wand2 size={18} />
+                )}
+                <span className="text-xs font-medium max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap">
+                    {generationStatus || 'AI Background'}
+                </span>
+            </motion.button>
+        )}
+      </div>
 
       <QuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} />
     </section>

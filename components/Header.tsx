@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Globe, ChevronRight } from 'lucide-react';
+import { Menu, X, Globe, ChevronRight, Sun, Moon } from 'lucide-react';
 import { NavItem } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,14 +13,37 @@ const navItems: NavItem[] = [
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
+    
+    // Initialize theme
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    } else {
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    }
+  };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     // Only prevent default and handle scrolling for hash links or root
@@ -114,11 +137,25 @@ const Header: React.FC = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           <button 
+            onClick={toggleTheme}
+            className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+            aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
+          </button>
+          <button 
             className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
             aria-label="Select Language"
           >
             <Globe size={20} aria-hidden="true" />
           </button>
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="px-4 py-2 text-sm font-medium text-white border border-white/20 rounded-full hover:bg-white/10 transition-all"
+          >
+            Contact Us
+          </a>
           <a
             href="#track"
             onClick={(e) => handleNavClick(e, '#track')}
@@ -130,15 +167,24 @@ const Header: React.FC = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button
-          className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+            <button 
+                onClick={toggleTheme}
+                className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
+            >
+                {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
+            </button>
+            <button
+            className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            >
+            {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+            </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
