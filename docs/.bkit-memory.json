@@ -1,0 +1,10 @@
+{
+  "sessionCount": 3,
+  "lastSession": {
+    "startedAt": "2026-02-22T12:49:44.635Z",
+    "platform": "claude",
+    "level": "Dynamic"
+  },
+  "currentFeature": "CBM-Calculator",
+  "phase": "do"
+}

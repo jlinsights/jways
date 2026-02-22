@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Tracking from './components/Tracking';
+import CBMCalculator from './components/CBMCalculator';
 import Services from './components/Services';
 import WhyUs from './components/WhyUs';
 import Footer from './components/Footer';
@@ -14,6 +15,15 @@ function App() {
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <Tracking />
+        <section className="py-24 px-6 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">화물 부피 & 운임 중량 계산</h2>
+              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">가로, 세로, 높이와 무게를 입력하여 예상되는 CBM과 해상/항공 적용 운임 중량을 실시간으로 확인해 보세요.</p>
+            </div>
+            <CBMCalculator />
+          </div>
+        </section>
         <Services />
         
         {/* Call to Action Section inserted between major blocks */}

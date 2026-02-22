@@ -19,6 +19,7 @@ const cargoTypes = [
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [calculatedCBM, setCalculatedCBM] = useState<number | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -107,7 +108,26 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // For dimensions, prevent negative numbers
+    if (['length', 'width', 'height', 'weight'].includes(name) && Number(value) < 0) return;
+    
+    setFormData(prev => {
+      const newData = { ...prev, [name]: value };
+      
+      // Calculate CBM if dimensions are available
+      if (['length', 'width', 'height'].includes(name)) {
+        const l = parseFloat(newData.length) || 0;
+        const w = parseFloat(newData.width) || 0;
+        const h = parseFloat(newData.height) || 0;
+        if (l > 0 && w > 0 && h > 0) {
+          setCalculatedCBM(Number(((l * w * h) / 1000000).toFixed(3)));
+        } else {
+          setCalculatedCBM(null);
+        }
+      }
+      return newData;
+    });
+    
     // Clear error when user types
     if (errors[name] || (['length', 'width', 'height'].includes(name) && errors.dimensions)) {
        const newErrors = { ...errors };
@@ -340,7 +360,25 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                                     />
                                 </div>
                             </div>
-                            {errors.dimensions && <p className="text-xs text-red-500">{errors.dimensions}</p>}
+                            {errors.dimensions && <p className="text-xs text-red-500 mt-2">{errors.dimensions}</p>}
+                            
+                            {/* Real-time CBM Preview */}
+                            <AnimatePresence>
+                              {calculatedCBM !== null && (
+                                <motion.div 
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="mt-3 bg-jways-blue/10 dark:bg-jways-blue/20 p-3 rounded-lg border border-jways-blue/20 flex flex-col items-center justify-center text-center overflow-hidden"
+                                >
+                                  <span className="text-xs text-jways-blue dark:text-blue-300 font-semibold mb-1">예상 CBM (단위: 1 박스 기준)</span>
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-2xl font-bold text-jways-navy dark:text-white">{calculatedCBM}</span>
+                                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">CBM</span>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                         </div>
 
                         <div className="space-y-2 md:col-span-2">

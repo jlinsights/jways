@@ -54,3 +54,30 @@ export interface ShipmentData {
   current: GeoLocation & { progress: number };
   steps: TrackingStep[];
 }
+
+// ─── CBM Calculator Types ───
+
+export type UnitSystem = 'metric' | 'imperial';
+
+export interface CargoItem {
+  id: string;
+  length: string;
+  width: string;
+  height: string;
+  weight: string;
+  quantity: string;
+}
+
+export interface CBMResults {
+  totalCBM: number;
+  totalActualWeight: number;
+  airVolumeWeight: number;
+  airChargeableWeight: number;
+  seaVolumeWeight: number;
+  seaChargeableRT: number;
+}
+
+export interface UnitLabels {
+  dimension: string;
+  weight: string;
+}

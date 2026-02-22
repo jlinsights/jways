@@ -14,6 +14,9 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [language, setLanguage] = useState<'ko' | 'en'>('ko');
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,19 +139,6 @@ const Header: React.FC = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <button 
-            onClick={toggleTheme}
-            className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-            aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
-          >
-            {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
-          </button>
-          <button 
-            className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-            aria-label="Select Language"
-          >
-            <Globe size={20} aria-hidden="true" />
-          </button>
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
@@ -164,17 +154,85 @@ const Header: React.FC = () => {
             화물 추적
             <ChevronRight size={16} aria-hidden="true" />
           </a>
+          <div className="relative">
+            <button 
+              onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+              className="flex items-center gap-1 text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+              aria-label="Select Language"
+              aria-expanded={isLangMenuOpen}
+            >
+              <Globe size={20} aria-hidden="true" />
+              <span className="text-sm font-medium">{language === 'ko' ? 'KR' : 'EN'}</span>
+            </button>
+            <AnimatePresence>
+              {isLangMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden z-[60]"
+                >
+                  <button
+                    onClick={() => { setLanguage('ko'); setIsLangMenuOpen(false); }}
+                    className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'ko' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
+                  >
+                    한국어
+                  </button>
+                  <button
+                    onClick={() => { setLanguage('en'); setIsLangMenuOpen(false); }}
+                    className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'en' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
+                  >
+                    English
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          <button 
+            onClick={toggleTheme}
+            className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+            aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
+          </button>
         </div>
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 md:hidden">
-            <button 
-                onClick={toggleTheme}
-                className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-                aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
-            >
-                {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setIsMobileLangMenuOpen(!isMobileLangMenuOpen)}
+                className="flex items-center gap-1 text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                aria-label="Select Language"
+                aria-expanded={isMobileLangMenuOpen}
+              >
+                <Globe size={20} aria-hidden="true" />
+                <span className="text-sm font-medium">{language === 'ko' ? 'KR' : 'EN'}</span>
+              </button>
+              <AnimatePresence>
+                {isMobileLangMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden z-[60]"
+                  >
+                    <button
+                      onClick={() => { setLanguage('ko'); setIsMobileLangMenuOpen(false); }}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'ko' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
+                    >
+                      한국어
+                    </button>
+                    <button
+                      onClick={() => { setLanguage('en'); setIsMobileLangMenuOpen(false); }}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'en' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
+                    >
+                      English
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <button
             className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -183,6 +241,13 @@ const Header: React.FC = () => {
             aria-controls="mobile-menu"
             >
             {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+            </button>
+            <button 
+                onClick={toggleTheme}
+                className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                aria-label={theme === 'light' ? "Switch to dark mode" : "Switch to light mode"}
+            >
+                {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
             </button>
         </div>
       </div>

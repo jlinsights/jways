@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-22T12:48:32.861Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-02-22T12:00:00.000Z",
+    "activeFeatures": [
+      "CBM-Calculator"
+    ],
+    "primaryFeature": "CBM-Calculator",
+    "features": {
+      "CBM-Calculator": {
+        "phase": "plan",
+        "planPath": "docs/01-plan/features/CBM-Calculator.plan.md",
+        "designPath": null,
+        "analysisPath": null,
+        "reportPath": null,
+        "matchRate": null,
+        "iterations": 0,
+        "createdAt": "2026-02-22T12:00:00.000Z",
+        "updatedAt": "2026-02-22T12:00:00.000Z"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-02-22T07:19:35.727Z",
+      "onboardingCompleted": true,
+      "lastActivity": "2026-02-22T12:00:00.000Z"
+    },
+    "history": [
+      {
+        "action": "plan",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T12:00:00.000Z"
+      }
+    ]
+  }
+}
