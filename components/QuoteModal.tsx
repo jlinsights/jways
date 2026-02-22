@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Calculator, CheckCircle2 } from 'lucide-react';
+import { X, Send, Calculator, CheckCircle2, Box } from 'lucide-react';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -236,9 +236,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       onSubmit={handleSubmit}
-                      className="space-y-6"
+                      className="space-y-4 md:space-y-6"
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div className="space-y-2">
                           <label className="text-sm font-bold text-slate-700 dark:text-slate-300">이름 (Name)</label>
                           <input 
@@ -325,7 +325,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                         {/* New Dimensions Fields */}
                         <div className="space-y-2 md:col-span-2">
                             <label className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 규격 (Dimensions - cm)</label>
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-3 gap-2 sm:gap-4">
                                 <div>
                                     <input 
                                         name="length"
@@ -363,18 +363,47 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                             {errors.dimensions && <p className="text-xs text-red-500 mt-2">{errors.dimensions}</p>}
                             
                             {/* Real-time CBM Preview */}
-                            <AnimatePresence>
+                            <AnimatePresence mode="popLayout">
                               {calculatedCBM !== null && (
                                 <motion.div 
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: 'auto' }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  className="mt-3 bg-jways-blue/10 dark:bg-jways-blue/20 p-3 rounded-lg border border-jways-blue/20 flex flex-col items-center justify-center text-center overflow-hidden"
+                                  initial={{ opacity: 0, height: 0, y: -10 }}
+                                  animate={{ opacity: 1, height: 'auto', y: 0 }}
+                                  exit={{ opacity: 0, height: 0, y: -10 }}
+                                  className="mt-4 overflow-hidden"
                                 >
-                                  <span className="text-xs text-jways-blue dark:text-blue-300 font-semibold mb-1">예상 CBM (단위: 1 박스 기준)</span>
-                                  <div className="flex items-baseline gap-1">
-                                    <span className="text-2xl font-bold text-jways-navy dark:text-white">{calculatedCBM}</span>
-                                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">CBM</span>
+                                  <div className="bg-gradient-to-br from-jways-blue/10 to-indigo-500/10 dark:from-jways-blue/20 dark:to-indigo-500/20 p-4 md:p-5 rounded-2xl border border-jways-blue/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <div className="flex items-center gap-4 w-full sm:w-auto">
+                                      <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-jways-blue dark:text-blue-400 shrink-0 shadow-sm border border-slate-100 dark:border-slate-700">
+                                        <Box size={24} />
+                                      </div>
+                                      <div className="text-left">
+                                        <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-0.5">예상 부피 (1단위 기준)</span>
+                                        <div className="flex items-baseline gap-1.5">
+                                          <span className="text-2xl md:text-3xl font-bold text-jways-navy dark:text-white tabular-nums tracking-tight">
+                                            {calculatedCBM}
+                                          </span>
+                                          <span className="text-sm font-semibold text-jways-blue dark:text-blue-400">CBM</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    {Number(formData.weight) > 0 && (
+                                      <div className="w-full sm:w-auto bg-white/70 dark:bg-slate-900/70 rounded-xl p-3 flex flex-row gap-4 sm:gap-6 justify-center sm:justify-end border border-white/50 dark:border-slate-800 backdrop-blur-sm">
+                                        <div className="text-center sm:text-right">
+                                          <span className="block text-[10px] font-semibold text-slate-400 dark:text-slate-500 mb-1">항공 운임중량</span>
+                                          <span className="text-sm md:text-base font-bold text-slate-700 dark:text-slate-200 tabular-nums">
+                                            {Math.max(Number(formData.weight), calculatedCBM * 167).toFixed(1)} kg
+                                          </span>
+                                        </div>
+                                        <div className="w-px bg-slate-200 dark:bg-slate-700"></div>
+                                        <div className="text-center sm:text-right">
+                                          <span className="block text-[10px] font-semibold text-slate-400 dark:text-slate-500 mb-1">해상 운임톤</span>
+                                          <span className="text-sm md:text-base font-bold text-slate-700 dark:text-slate-200 tabular-nums">
+                                            {Math.max(calculatedCBM, Number(formData.weight) / 1000).toFixed(3)} RT
+                                          </span>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 </motion.div>
                               )}
