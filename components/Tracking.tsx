@@ -175,15 +175,15 @@ const Tracking: React.FC = () => {
                     </div>
 
                     {/* Right: Timeline & Status */}
-                    <div className="bg-slate-50 dark:bg-slate-950 p-6 lg:p-8 border-l border-slate-100 dark:border-slate-800 lg:h-[500px] overflow-y-auto custom-scrollbar">
-                        <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Status Updates</h3>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">Tracking ID: <span className="font-mono text-slate-700 dark:text-slate-300">{shipment.id}</span></p>
+                    <div className="bg-slate-50 dark:bg-slate-950 p-4 md:p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100 dark:border-slate-800 lg:h-[500px] overflow-y-auto custom-scrollbar">
+                        <div className="mb-4 md:mb-6 pb-4 md:pb-6 border-b border-slate-200 dark:border-slate-800">
+                            <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-1">Status Updates</h3>
+                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">Tracking ID: <span className="font-mono text-slate-700 dark:text-slate-300">{shipment.id}</span></p>
                         </div>
 
                         <div className="space-y-0 relative">
                             {/* Timeline Line */}
-                            <div className="absolute top-2 bottom-2 left-[19px] w-0.5 bg-slate-200 dark:bg-slate-800" />
+                            <div className="absolute top-2 bottom-2 left-[15px] md:left-[19px] w-0.5 bg-slate-200 dark:bg-slate-800" />
 
                             {shipment.steps.map((step, idx) => (
                                 <motion.div 
@@ -194,28 +194,28 @@ const Tracking: React.FC = () => {
                                     className="relative flex gap-4 pb-8 last:pb-0"
                                 >
                                     {/* Icon */}
-                                    <div className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-slate-950 shrink-0 transition-colors ${
+                                    <div className={`relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-slate-950 shrink-0 transition-colors ${
                                         step.status === 'completed' ? 'bg-blue-100 text-blue-600' :
                                         step.status === 'current' ? 'bg-jways-blue text-white shadow-lg shadow-blue-500/30' :
                                         'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
                                     }`}>
-                                        {step.status === 'completed' ? <CheckCircle2 size={18} /> :
-                                         step.status === 'current' ? <Truck size={18} /> :
-                                         <Clock size={18} />}
+                                        {step.status === 'completed' ? <CheckCircle2 size={16} className="md:w-[18px] md:h-[18px]" /> :
+                                         step.status === 'current' ? <Truck size={16} className="md:w-[18px] md:h-[18px]" /> :
+                                         <Clock size={16} className="md:w-[18px] md:h-[18px]" />}
                                     </div>
 
                                     {/* Content */}
-                                    <div className="pt-1 flex-1 min-w-0">
+                                    <div className="pt-0.5 md:pt-1 flex-1 min-w-0">
                                         <div className="flex justify-between items-start mb-1">
-                                            <p className={`font-bold text-sm ${
+                                            <p className={`font-bold text-sm md:text-base ${
                                                 step.status === 'current' ? 'text-jways-blue' : 'text-slate-900 dark:text-white'
                                             }`}>
                                                 {step.label}
                                             </p>
-                                            <span className="text-xs text-slate-400 whitespace-nowrap ml-2">{step.date}</span>
+                                            <span className="text-[10px] md:text-xs text-slate-400 whitespace-nowrap ml-2">{step.date}</span>
                                         </div>
-                                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{step.location}</p>
-                                        <p className="text-xs text-slate-400 font-mono">{step.time}</p>
+                                        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-1">{step.location}</p>
+                                        <p className="text-[10px] md:text-xs text-slate-400 font-mono">{step.time}</p>
                                     </div>
                                 </motion.div>
                             ))}
