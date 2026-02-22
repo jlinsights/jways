@@ -1,8 +1,8 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-02-22T17:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "lastUpdated": "2026-02-22T18:00:00.000Z",
+  "activeFeatures": ["milestone-tracking"],
+  "primaryFeature": "milestone-tracking",
   "features": {
     "CBM-Calculator": {
       "phase": "archived",
@@ -15,6 +15,17 @@
       "iterations": 0,
       "createdAt": "2026-02-22T12:00:00.000Z",
       "updatedAt": "2026-02-22T17:00:00.000Z"
+    },
+    "milestone-tracking": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/milestone-tracking.plan.md",
+      "designPath": null,
+      "analysisPath": null,
+      "reportPath": null,
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-22T18:00:00.000Z",
+      "updatedAt": "2026-02-22T18:00:00.000Z"
     }
   },
   "pipeline": {
@@ -25,7 +36,7 @@
   "session": {
     "startedAt": "2026-02-22T07:19:35.727Z",
     "onboardingCompleted": true,
-    "lastActivity": "2026-02-22T17:00:00.000Z"
+    "lastActivity": "2026-02-22T18:00:00.000Z"
   },
   "history": [
     {
@@ -59,6 +70,11 @@
       "feature": "CBM-Calculator",
       "archivedTo": "docs/archive/2026-02/CBM-Calculator/",
       "timestamp": "2026-02-22T17:00:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "milestone-tracking",
+      "timestamp": "2026-02-22T18:00:00.000Z"
     }
   ]
 }
