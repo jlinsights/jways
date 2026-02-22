@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-02-22T13:35:52.311Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-02-22T18:00:00.000Z",
+    "activeFeatures": [
+      "milestone-tracking"
+    ],
+    "primaryFeature": "milestone-tracking",
+    "features": {
+      "CBM-Calculator": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.plan.md",
+        "designPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.design.md",
+        "analysisPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.analysis.md",
+        "reportPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.report.md",
+        "archivedTo": "docs/archive/2026-02/CBM-Calculator/",
+        "matchRate": 97,
+        "iterations": 0,
+        "createdAt": "2026-02-22T12:00:00.000Z",
+        "updatedAt": "2026-02-22T17:00:00.000Z"
+      },
+      "milestone-tracking": {
+        "phase": "check",
+        "planPath": "docs/01-plan/features/milestone-tracking.plan.md",
+        "designPath": "docs/02-design/features/milestone-tracking.design.md",
+        "analysisPath": "docs/03-analysis/milestone-tracking.analysis.md",
+        "reportPath": null,
+        "matchRate": 87,
+        "iterations": 0,
+        "createdAt": "2026-02-22T18:00:00.000Z",
+        "updatedAt": "2026-02-22T21:00:00.000Z"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-02-22T07:19:35.727Z",
+      "onboardingCompleted": true,
+      "lastActivity": "2026-02-22T21:00:00.000Z"
+    },
+    "history": [
+      {
+        "action": "plan",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T12:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T13:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T14:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "CBM-Calculator",
+        "matchRate": 97,
+        "timestamp": "2026-02-22T15:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T16:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "CBM-Calculator",
+        "archivedTo": "docs/archive/2026-02/CBM-Calculator/",
+        "timestamp": "2026-02-22T17:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T18:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T19:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T20:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "milestone-tracking",
+        "matchRate": 87,
+        "timestamp": "2026-02-22T21:00:00.000Z"
+      }
+    ]
+  }
+}

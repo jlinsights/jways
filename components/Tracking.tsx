@@ -78,7 +78,7 @@ function createMockShipment(config: {
   const total = config.steps.length;
   const totalProgress = Math.round(((completedCount + currentCount * 0.5) / total) * 100);
 
-  const categoryOrder: MilestoneCategory[] = ['departure', 'customs', 'transit', 'arrival'];
+  const categoryOrder: MilestoneCategory[] = ['departure', 'transit', 'customs', 'arrival'];
   const categories: MilestoneCategoryGroup[] = categoryOrder
     .map(cat => ({
       category: cat,
@@ -212,10 +212,13 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ step, index, isExpanded, on
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-[10px] md:text-xs text-slate-400 font-mono">{step.time}</p>
           {step.eta && step.status !== 'completed' && (
-            <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 px-1.5 py-0.5 rounded font-medium">
+            <motion.span
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center gap-1 text-[10px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 px-1.5 py-0.5 rounded font-medium"
+            >
               <Timer size={10} />
               ETA {step.eta}
-            </span>
+            </motion.span>
           )}
           {step.vessel && (
             <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded font-mono">
@@ -433,7 +436,10 @@ const Tracking: React.FC = () => {
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Status Updates</h3>
                                 {shipment.mode && (
-                                  <span
+                                  <motion.span
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
                                     className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${
                                       shipment.mode === 'air'
                                         ? 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/20 dark:text-sky-300 dark:border-sky-800'
@@ -443,7 +449,7 @@ const Tracking: React.FC = () => {
                                   >
                                     {shipment.mode === 'air' ? <Plane size={12} /> : <Ship size={12} />}
                                     {shipment.mode === 'air' ? 'Air Freight' : 'Sea Freight'}
-                                  </span>
+                                  </motion.span>
                                 )}
                             </div>
                             <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-3">

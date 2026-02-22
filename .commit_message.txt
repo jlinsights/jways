@@ -1,1 +1,1 @@
-feat(Tracking): 마일스톤 카테고리 그룹핑, ETA, 상세 펼침, Air/Sea 다중 시나리오
+feat(Tracking): 마일스톤 카테고리 그룹핑, ETA hover, 모드 배지 페이드인, Gap 94% 달성
