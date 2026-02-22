@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Truck, Navigation, MapPin } from 'lucide-react';
+import { Truck, Navigation, MapPin, Ship, Plane } from 'lucide-react';
 import { ShipmentData } from '../types';
 
 interface ShipmentMapProps {
@@ -136,7 +136,9 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                         
                         {/* Core Icon */}
                         <div className="w-8 h-8 bg-jways-accent rounded-full flex items-center justify-center shadow-lg shadow-orange-500/50 border-2 border-white transition-transform hover:scale-110">
-                            <Truck size={14} className="text-white" />
+                            {shipment.mode === 'sea' ? <Ship size={14} className="text-white" /> :
+                             shipment.mode === 'air' ? <Plane size={14} className="text-white" /> :
+                             <Truck size={14} className="text-white" />}
                         </div>
 
                         {/* Tooltip */}

@@ -17,7 +17,7 @@
       "updatedAt": "2026-02-22T17:00:00.000Z"
     },
     "milestone-tracking": {
-      "phase": "design",
+      "phase": "do",
       "planPath": "docs/01-plan/features/milestone-tracking.plan.md",
       "designPath": "docs/02-design/features/milestone-tracking.design.md",
       "analysisPath": null,
@@ -25,7 +25,7 @@
       "matchRate": null,
       "iterations": 0,
       "createdAt": "2026-02-22T18:00:00.000Z",
-      "updatedAt": "2026-02-22T19:00:00.000Z"
+      "updatedAt": "2026-02-22T20:00:00.000Z"
     }
   },
   "pipeline": {
@@ -36,7 +36,7 @@
   "session": {
     "startedAt": "2026-02-22T07:19:35.727Z",
     "onboardingCompleted": true,
-    "lastActivity": "2026-02-22T19:00:00.000Z"
+    "lastActivity": "2026-02-22T20:00:00.000Z"
   },
   "history": [
     {
@@ -80,6 +80,11 @@
       "action": "design",
       "feature": "milestone-tracking",
       "timestamp": "2026-02-22T19:00:00.000Z"
+    },
+    {
+      "action": "do",
+      "feature": "milestone-tracking",
+      "timestamp": "2026-02-22T20:00:00.000Z"
     }
   ]
 }

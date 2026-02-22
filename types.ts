@@ -28,7 +28,11 @@ export interface FeatureItem {
   icon: LucideIcon;
 }
 
-// Tracking Types
+// ─── Tracking & Milestone Types ───
+
+export type MilestoneCategory = 'departure' | 'transit' | 'customs' | 'arrival';
+export type TransportMode = 'air' | 'sea';
+
 export interface TrackingStep {
   id: string;
   label: string;
@@ -36,6 +40,18 @@ export interface TrackingStep {
   time: string;
   status: 'completed' | 'current' | 'pending';
   location: string;
+  category?: MilestoneCategory;
+  eta?: string;
+  completedAt?: string;
+  detail?: string;
+  vessel?: string;
+  port?: string;
+}
+
+export interface MilestoneCategoryGroup {
+  category: MilestoneCategory;
+  label: string;
+  steps: TrackingStep[];
 }
 
 export interface GeoLocation {
@@ -53,6 +69,9 @@ export interface ShipmentData {
   destination: GeoLocation;
   current: GeoLocation & { progress: number };
   steps: TrackingStep[];
+  mode?: TransportMode;
+  totalProgress?: number;
+  categories?: MilestoneCategoryGroup[];
 }
 
 // ─── CBM Calculator Types ───
