@@ -5,6 +5,6 @@
     "platform": "claude",
     "level": "Dynamic"
   },
-  "currentFeature": "CBM-Calculator",
-  "phase": "completed"
+  "currentFeature": null,
+  "phase": "archived"
 }
