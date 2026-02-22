@@ -175,7 +175,7 @@ const Hero: React.FC = () => {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(e => console.error("Play failed:", e));
       }
       setIsPlaying(!isPlaying);
     }
@@ -183,6 +183,7 @@ const Hero: React.FC = () => {
 
   const handleRegenerate = () => {
     setVideoUri(null);
+    setIsPlaying(true);
     generateBackgroundVideo();
   };
 
@@ -229,6 +230,7 @@ const Hero: React.FC = () => {
             const blob = await response.blob();
             const videoUrl = URL.createObjectURL(blob);
             setVideoUri(videoUrl);
+            setIsPlaying(true);
         }
 
     } catch (error: any) {

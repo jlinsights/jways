@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Package, ArrowRight, Truck, CheckCircle2, Clock, X } from 'lucide-react';
+import { Search, MapPin, Package, ArrowRight, Truck, CheckCircle2, Clock, X, Loader2 } from 'lucide-react';
 import { ShipmentData } from '../types';
 import ShipmentMap from './ShipmentMap';
 
@@ -120,9 +120,9 @@ const Tracking: React.FC = () => {
                         className="w-full md:w-auto h-14 md:h-16 px-8 bg-jways-navy hover:bg-slate-800 text-white rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-jways-navy/20 whitespace-nowrap overflow-hidden"
                     >
                         {searchStatus === 'loading' ? (
-                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
-                            <>조회하기 <ArrowRight size={20} /></>
+                            <>Track Shipment <ArrowRight size={20} /></>
                         )}
                     </motion.button>
                 )}
