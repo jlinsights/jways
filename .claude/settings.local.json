@@ -1,4 +1,5 @@
 {
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "github",
     "postgres",
@@ -16,5 +17,9 @@
     "crates-search",
     "rust-analyzer"
   ],
-  "enableAllProjectMcpServers": true
+  "permissions": {
+    "allow": [
+      "Skill(bkit:pdca)"
+    ]
+  }
 }
