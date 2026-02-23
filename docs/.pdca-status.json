@@ -5,15 +5,15 @@
   "primaryFeature": "instant-quote",
   "features": {
     "instant-quote": {
-      "phase": "check",
+      "phase": "completed",
       "planPath": "docs/01-plan/features/instant-quote.plan.md",
       "designPath": "docs/02-design/features/instant-quote.design.md",
       "analysisPath": "docs/03-analysis/instant-quote.analysis.md",
-      "reportPath": null,
+      "reportPath": "docs/04-report/features/instant-quote.report.md",
       "matchRate": 96,
       "iterations": 0,
       "createdAt": "2026-02-24T07:30:00.000Z",
-      "updatedAt": "2026-02-24T10:00:00.000Z"
+      "updatedAt": "2026-02-24T11:00:00.000Z"
     },
     "customer-dashboard": {
       "phase": "archived",
@@ -463,6 +463,11 @@
       "feature": "instant-quote",
       "matchRate": 96,
       "timestamp": "2026-02-24T10:00:00.000Z"
+    },
+    {
+      "action": "report",
+      "feature": "instant-quote",
+      "timestamp": "2026-02-24T11:00:00.000Z"
     }
   ]
 }
