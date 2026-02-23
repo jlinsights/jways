@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems: NavItem[] = [
   { label: '서비스', href: '#services' },
+  { label: '빠른 견적', href: '/instant-quote' },
   { label: '회사소개', href: '#about' },
-  { label: '솔루션', href: '#services' },
   { label: '고객지원', href: '#contact' },
 ];
 
@@ -123,13 +123,22 @@ const Header: React.FC = () => {
           <ul className="flex items-center gap-1">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="px-4 py-2 text-sm font-medium text-slate-300 rounded-full transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-                >
-                  {item.label}
-                </a>
+                {item.href.startsWith('/') ? (
+                  <Link
+                    to={item.href}
+                    className="px-4 py-2 text-sm font-medium text-slate-300 rounded-full transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="px-4 py-2 text-sm font-medium text-slate-300 rounded-full transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -202,13 +211,23 @@ const Header: React.FC = () => {
               <ul className="flex flex-col gap-6">
                 {navItems.map((item) => (
                   <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className="text-lg font-medium text-slate-300 hover:text-white block focus:outline-none focus-visible:text-jways-blue"
-                      onClick={(e) => handleNavClick(e, item.href)}
-                    >
-                      {item.label}
-                    </a>
+                    {item.href.startsWith('/') ? (
+                      <Link
+                        to={item.href}
+                        className="text-lg font-medium text-slate-300 hover:text-white block focus:outline-none focus-visible:text-jways-blue"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className="text-lg font-medium text-slate-300 hover:text-white block focus:outline-none focus-visible:text-jways-blue"
+                        onClick={(e) => handleNavClick(e, item.href)}
+                      >
+                        {item.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

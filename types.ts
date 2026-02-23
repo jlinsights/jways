@@ -160,6 +160,7 @@ export interface QuoteFormData {
 export interface QuoteModalState {
   isOpen: boolean;
   preSelectedService?: ServiceType;
+  prefillData?: Partial<QuoteFormData>;
 }
 
 // ─── Dashboard / Auth Types ───
@@ -265,4 +266,67 @@ export interface UserProfile {
   company: string;
   phone: string;
   position?: string;
+}
+
+// ─── Instant Quote Types ───
+
+export type Incoterms = 'FOB' | 'CIF' | 'DDP' | 'EXW';
+export type ContainerType = '20ft' | '40ft' | '40ft-hc';
+
+export interface PortInfo {
+  code: string;
+  name: string;
+  nameEn: string;
+  country: string;
+  type: 'sea' | 'air' | 'both';
+}
+
+export interface TariffBreakdown {
+  baseFreight: number;
+  baf: number;
+  thc: number;
+  docFee: number;
+  insurance?: number;
+  customs?: number;
+  inland?: number;
+}
+
+export interface TariffResult {
+  mode: 'sea' | 'air';
+  totalPrice: number;
+  currency: string;
+  breakdown: TariffBreakdown;
+  transitDays: string;
+  co2Kg: number;
+  containerType?: ContainerType;
+  chargeableWeight?: number;
+}
+
+export interface QuoteComparisonResult {
+  sea: TariffResult | null;
+  air: TariffResult | null;
+  recommended: 'sea' | 'air' | null;
+  recommendReason: string;
+}
+
+export interface QuoteHistoryItem {
+  id: string;
+  timestamp: string;
+  origin: PortInfo;
+  destination: PortInfo;
+  weight: number;
+  cbm: number;
+  incoterms: Incoterms;
+  containerType?: ContainerType;
+  result: QuoteComparisonResult;
+}
+
+export interface InstantQuoteFormData {
+  origin: string;
+  destination: string;
+  weight: string;
+  cbm: string;
+  mode: 'sea' | 'air' | 'both';
+  incoterms: Incoterms;
+  containerType: ContainerType;
 }

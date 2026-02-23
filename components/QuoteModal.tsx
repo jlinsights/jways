@@ -7,6 +7,7 @@ interface QuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   preSelectedService?: ServiceType;
+  prefillData?: Partial<QuoteFormData>;
 }
 
 const cargoTypes = [
@@ -120,7 +121,7 @@ const stepVariants = {
 
 // ─── Main Component ───
 
-const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedService }) => {
+const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedService, prefillData }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -142,6 +143,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
       setFormData({
         ...initialFormData,
         serviceType: preSelectedService || '',
+        ...prefillData,
       });
       document.body.style.overflow = 'hidden';
     } else {
@@ -150,7 +152,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, preSelectedService]);
+  }, [isOpen, preSelectedService, prefillData]);
 
   // Escape key + focus trap
   useEffect(() => {

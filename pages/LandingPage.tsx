@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Tracking from '../components/Tracking';
@@ -51,12 +52,20 @@ const LandingPage: React.FC = () => {
                  제이웨이즈와 함께라면 전 세계 어디든 당신의 시장이 됩니다. <br/>
                  지금 바로 무료 견적을 받아보세요.
                </p>
-               <button
-                 onClick={() => openQuoteModal()}
-                 className="px-8 py-4 bg-white text-jways-blue font-bold rounded-full hover:bg-slate-100 transition-colors shadow-lg"
-               >
-                 무료 견적 요청하기
-               </button>
+               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                 <button
+                   onClick={() => openQuoteModal()}
+                   className="px-8 py-4 bg-white text-jways-blue font-bold rounded-full hover:bg-slate-100 transition-colors shadow-lg"
+                 >
+                   무료 견적 요청하기
+                 </button>
+                 <Link
+                   to="/instant-quote"
+                   className="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-jways-blue transition-all"
+                 >
+                   빠른 운임 조회
+                 </Link>
+               </div>
              </div>
            </div>
         </section>
