@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Container, Play, Pause, RefreshCw } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
-import QuoteModal from './QuoteModal';
 
-const Hero: React.FC = () => {
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+interface HeroProps {
+  onOpenQuote: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
   const [isQuoteLoading, setIsQuoteLoading] = useState(false);
   const [isTrackLoading, setIsTrackLoading] = useState(false);
   const [videoUri, setVideoUri] = useState<string | null>(null);
@@ -251,7 +253,7 @@ const Hero: React.FC = () => {
     // Simulate data preparation
     await new Promise(resolve => setTimeout(resolve, 800));
     setIsQuoteLoading(false);
-    setIsQuoteModalOpen(true);
+    onOpenQuote();
   };
 
   const handleTrackClick = async () => {
@@ -666,7 +668,6 @@ const Hero: React.FC = () => {
         )}
       </div>
 
-      <QuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} />
     </section>
   );
 };

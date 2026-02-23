@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plane, Ship, Truck, Warehouse, ArrowUpRight, X, CheckCircle2, Search } from 'lucide-react';
 import Section from './ui/Section';
-import { ServiceItem } from '../types';
+import { ServiceItem, ServiceType } from '../types';
 
 const services: ServiceItem[] = [
   {
@@ -69,7 +69,11 @@ const services: ServiceItem[] = [
 
 const categories = ['All', 'Air', 'Ocean', 'Land', 'Warehouse'];
 
-const Services: React.FC = () => {
+interface ServicesProps {
+  onOpenQuote: (service: ServiceType) => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -126,14 +130,10 @@ const Services: React.FC = () => {
   }, [selectedService]);
 
   const handleInquiryClick = () => {
-    setSelectedService(null);
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      // Use a timeout to allow the modal close animation to start before scrolling
-      setTimeout(() => {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+    if (selectedService) {
+      onOpenQuote(selectedService.id as ServiceType);
     }
+    setSelectedService(null);
   };
 
   return (

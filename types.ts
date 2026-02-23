@@ -100,3 +100,27 @@ export interface UnitLabels {
   dimension: string;
   weight: string;
 }
+
+// ─── Quote Wizard Types ───
+
+export type ServiceType = 'air' | 'ocean' | 'land' | 'warehouse';
+
+export interface QuoteFormData {
+  name: string;
+  email: string;
+  serviceType: ServiceType | '';
+  origin: string;
+  destination: string;
+  cargoType: string;
+  weight: string;
+  length: string;
+  width: string;
+  height: string;
+  targetDate: string;
+  message: string;
+}
+
+export interface QuoteModalState {
+  isOpen: boolean;
+  preSelectedService?: ServiceType;
+}

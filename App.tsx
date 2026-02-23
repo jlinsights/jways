@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Tracking from './components/Tracking';
@@ -7,13 +7,25 @@ import Services from './components/Services';
 import WhyUs from './components/WhyUs';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import QuoteModal from './components/QuoteModal';
+import { ServiceType, QuoteModalState } from './types';
 
 function App() {
+  const [quoteModal, setQuoteModal] = useState<QuoteModalState>({ isOpen: false });
+
+  const openQuoteModal = (preSelectedService?: ServiceType) => {
+    setQuoteModal({ isOpen: true, preSelectedService });
+  };
+
+  const closeQuoteModal = () => {
+    setQuoteModal({ isOpen: false });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Header />
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
-        <Hero />
+        <Hero onOpenQuote={() => openQuoteModal()} />
         <Tracking />
         <section className="py-24 px-6 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
           <div className="max-w-6xl mx-auto">
@@ -24,8 +36,8 @@ function App() {
             <CBMCalculator />
           </div>
         </section>
-        <Services />
-        
+        <Services onOpenQuote={(service: ServiceType) => openQuoteModal(service)} />
+
         {/* Call to Action Section inserted between major blocks */}
         <section className="bg-white dark:bg-slate-900 py-24 px-6 transition-colors duration-300">
            <div className="max-w-5xl mx-auto bg-gradient-to-r from-jways-blue to-indigo-600 rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
@@ -36,7 +48,10 @@ function App() {
                  제이웨이즈와 함께라면 전 세계 어디든 당신의 시장이 됩니다. <br/>
                  지금 바로 무료 견적을 받아보세요.
                </p>
-               <button className="px-8 py-4 bg-white text-jways-blue font-bold rounded-full hover:bg-slate-100 transition-colors shadow-lg">
+               <button
+                 onClick={() => openQuoteModal()}
+                 className="px-8 py-4 bg-white text-jways-blue font-bold rounded-full hover:bg-slate-100 transition-colors shadow-lg"
+               >
                  무료 견적 요청하기
                </button>
              </div>
@@ -47,6 +62,11 @@ function App() {
       </main>
       <Footer />
       <ScrollToTop />
+      <QuoteModal
+        isOpen={quoteModal.isOpen}
+        onClose={closeQuoteModal}
+        preSelectedService={quoteModal.preSelectedService}
+      />
     </div>
   );
 }
