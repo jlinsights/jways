@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": ["advanced-tracking-tracing"],
-  "primaryFeature": "advanced-tracking-tracing",
+  "activeFeatures": [],
+  "primaryFeature": null,
   "features": {
     "incoterms-guide": {
       "phase": "archived",
@@ -77,15 +77,16 @@
       "updatedAt": "2026-02-23T22:30:00.000Z"
     },
     "advanced-tracking-tracing": {
-      "phase": "completed",
-      "planPath": "docs/01-plan/features/advanced-tracking-tracing.plan.md",
-      "designPath": "docs/02-design/features/advanced-tracking-tracing.design.md",
-      "analysisPath": "docs/03-analysis/advanced-tracking-tracing.analysis.md",
-      "reportPath": "docs/04-report/features/advanced-tracking-tracing.report.md",
+      "phase": "archived",
+      "planPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.plan.md",
+      "designPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.design.md",
+      "analysisPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.analysis.md",
+      "reportPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.report.md",
+      "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
       "matchRate": 97,
       "iterations": 0,
       "createdAt": "2026-02-23T23:00:00.000Z",
-      "updatedAt": "2026-02-24T02:00:00.000Z"
+      "updatedAt": "2026-02-24T02:30:00.000Z"
     }
   },
   "pipeline": {
@@ -336,6 +337,12 @@
       "action": "report",
       "feature": "advanced-tracking-tracing",
       "timestamp": "2026-02-24T02:00:00.000Z"
+    },
+    {
+      "action": "archive",
+      "feature": "advanced-tracking-tracing",
+      "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
+      "timestamp": "2026-02-24T02:30:00.000Z"
     }
   ]
 }

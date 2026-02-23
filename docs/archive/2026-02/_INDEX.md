@@ -8,6 +8,7 @@
 | exchange-rate | 100% | 2026-02-23 | plan, design, analysis, report |
 | incoterms-guide | 100% | 2026-02-23 | plan, design, analysis, report |
 | logistics-wiki | 100% | 2026-02-23 | plan, design, analysis, report |
+| advanced-tracking-tracing | 97% | 2026-02-24 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -50,3 +51,10 @@
 - `logistics-wiki/logistics-wiki.design.md` — Design document
 - `logistics-wiki/logistics-wiki.analysis.md` — Gap analysis (100% match, 1 iteration)
 - `logistics-wiki/logistics-wiki.report.md` — Completion report
+
+## advanced-tracking-tracing
+
+- `advanced-tracking-tracing/advanced-tracking-tracing.plan.md` — Plan document
+- `advanced-tracking-tracing/advanced-tracking-tracing.design.md` — Design document
+- `advanced-tracking-tracing/advanced-tracking-tracing.analysis.md` — Gap analysis (97% match, 0 iterations)
+- `advanced-tracking-tracing/advanced-tracking-tracing.report.md` — Completion report

@@ -1,1 +1,1 @@
-feat(tracking): advanced-tracking-tracing PDCA 완료 — 97% Match Rate, 8 FRs, 5 컴포넌트 (Cycle #7 Report)
+chore(pdca): advanced-tracking-tracing 아카이브 완료 — PDCA Cycle #7 Archived (97% Match Rate)

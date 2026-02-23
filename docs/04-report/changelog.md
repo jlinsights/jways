@@ -199,6 +199,7 @@ All completed PDCA cycles are archived in `docs/archive/YYYY-MM/` with full docu
 - `exchange-rate/` (Cycle #4)
 - `incoterms-guide/` (Cycle #5)
 - `logistics-wiki/` (Cycle #6)
+- `advanced-tracking-tracing/` (Cycle #7)
 
 ## Contact
 
