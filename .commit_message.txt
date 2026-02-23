@@ -1,1 +1,1 @@
-docs(pdca): exchange-rate Design 문서 생성 (환율 위젯 UI/접근성 상세 명세)
+docs(pdca): exchange-rate Gap Analysis 완료 (Match Rate 95%, 접근성 Gap 5건)
