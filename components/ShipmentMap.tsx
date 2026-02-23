@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Truck, Navigation, MapPin, Ship, Plane } from 'lucide-react';
-import { ShipmentData } from '../types';
+import { ShipmentData, Waypoint } from '../types';
 
 interface ShipmentMapProps {
   shipment: ShipmentData;
@@ -37,17 +37,45 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                         </feMerge>
                     </filter>
                 </defs>
-                {/* Curved path approximation for demo */}
-                <motion.path 
-                    d={`M ${shipment.origin.x}% ${shipment.origin.y}% Q 50% 20% ${shipment.destination.x}% ${shipment.destination.y}%`}
-                    fill="none"
-                    stroke="url(#lineGradient)"
-                    strokeWidth="2"
-                    strokeDasharray="10 5"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 0.6 }}
-                    transition={{ duration: 2, ease: "easeInOut" }}
-                />
+                {/* Route path — segmented if waypoints exist */}
+                {shipment.waypoints && shipment.waypoints.length > 0 ? (
+                    (() => {
+                        const points = [
+                            { x: shipment.origin.x, y: shipment.origin.y },
+                            ...shipment.waypoints.map(w => ({ x: w.location.x, y: w.location.y })),
+                            { x: shipment.destination.x, y: shipment.destination.y },
+                        ];
+                        return points.slice(0, -1).map((p, i) => {
+                            const next = points[i + 1];
+                            const midX = (p.x + next.x) / 2;
+                            const midY = Math.min(p.y, next.y) - 8;
+                            return (
+                                <motion.path
+                                    key={`seg-${i}`}
+                                    d={`M ${p.x}% ${p.y}% Q ${midX}% ${midY}% ${next.x}% ${next.y}%`}
+                                    fill="none"
+                                    stroke="url(#lineGradient)"
+                                    strokeWidth="2"
+                                    strokeDasharray="10 5"
+                                    initial={{ pathLength: 0, opacity: 0 }}
+                                    animate={{ pathLength: 1, opacity: 0.6 }}
+                                    transition={{ duration: 1.5, ease: "easeInOut", delay: i * 0.4 }}
+                                />
+                            );
+                        });
+                    })()
+                ) : (
+                    <motion.path
+                        d={`M ${shipment.origin.x}% ${shipment.origin.y}% Q 50% 20% ${shipment.destination.x}% ${shipment.destination.y}%`}
+                        fill="none"
+                        stroke="url(#lineGradient)"
+                        strokeWidth="2"
+                        strokeDasharray="10 5"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: 0.6 }}
+                        transition={{ duration: 2, ease: "easeInOut" }}
+                    />
+                )}
                 </svg>
 
                 {/* Origin Dot */}
@@ -165,6 +193,47 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                         </AnimatePresence>
                     </div>
                 </motion.div>
+
+                {/* Waypoint Diamond Markers */}
+                {shipment.waypoints?.map((wp, idx) => (
+                    <motion.div
+                        key={wp.code}
+                        className="absolute z-10 cursor-pointer"
+                        style={{ left: `${wp.location.x}%`, top: `${wp.location.y}%`, transform: 'translate(-50%, -50%)' }}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 1 + idx * 0.3, type: 'spring' }}
+                        onHoverStart={() => setActiveTooltip(`wp-${wp.code}`)}
+                        onHoverEnd={() => setActiveTooltip(null)}
+                        onClick={() => setActiveTooltip(activeTooltip === `wp-${wp.code}` ? null : `wp-${wp.code}`)}
+                        aria-label={`${wp.name} 경유지`}
+                    >
+                        <div className="w-2.5 h-2.5 bg-sky-400 rotate-45 border border-slate-900 shadow-[0_0_6px_#38bdf8]" />
+                        <div className="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold text-sky-400 bg-slate-900/80 px-1.5 py-0.5 rounded backdrop-blur-sm">
+                            {wp.code}
+                        </div>
+
+                        <AnimatePresence>
+                            {activeTooltip === `wp-${wp.code}` && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: 10, scale: 0.8 }}
+                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-white text-slate-900 px-3 py-2 rounded-lg text-xs font-bold shadow-xl whitespace-nowrap z-20"
+                                >
+                                    <div className="text-[10px] text-sky-500 uppercase tracking-wider mb-0.5">Waypoint</div>
+                                    <div className="text-sm">{wp.name}</div>
+                                    {wp.arrivalDate && (
+                                        <div className="text-[10px] text-slate-400 mt-0.5">
+                                            {new Date(wp.arrivalDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                        </div>
+                                    )}
+                                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 border-4 border-transparent border-t-white" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                ))}
         </div>
 
         {/* Map Overlay Stats */}

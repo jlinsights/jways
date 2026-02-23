@@ -61,6 +61,39 @@ export interface GeoLocation {
   y: number; // Percentage 0-100
 }
 
+export interface ETAInfo {
+  estimatedArrival: string;
+  confidence: 'high' | 'medium' | 'low';
+  delayDays?: number;
+  lastUpdated: string;
+}
+
+export interface ShipmentDocument {
+  id: string;
+  type: 'bl' | 'invoice' | 'packing-list' | 'certificate';
+  name: string;
+  status: 'issued' | 'pending' | 'draft';
+  date?: string;
+  fileSize?: string;
+}
+
+export interface Waypoint {
+  name: string;
+  code: string;
+  location: GeoLocation;
+  arrivalDate?: string;
+  departureDate?: string;
+  type: 'port' | 'airport' | 'terminal';
+}
+
+export interface CargoDetails {
+  weight: string;
+  cbm: string;
+  containerType?: string;
+  packages: number;
+  hsCode?: string;
+}
+
 export interface ShipmentData {
   id: string;
   status: string;
@@ -72,6 +105,10 @@ export interface ShipmentData {
   mode?: TransportMode;
   totalProgress?: number;
   categories?: MilestoneCategoryGroup[];
+  eta?: ETAInfo;
+  documents?: ShipmentDocument[];
+  waypoints?: Waypoint[];
+  cargoDetails?: CargoDetails;
 }
 
 // ─── CBM Calculator Types ───

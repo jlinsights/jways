@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search, MapPin, Package, ArrowRight, Truck, CheckCircle2, Clock,
-  X, Loader2, Plane, Ship, FileCheck, ChevronDown, Timer, Bell,
+  Search, MapPin, Package, ArrowRight, Truck, FileCheck,
+  X, Loader2, Plane, Ship, ChevronDown, Bell, Scale, Box, Layers,
 } from 'lucide-react';
-import { ShipmentData, TrackingStep, MilestoneCategory, MilestoneCategoryGroup, TransportMode } from '../types';
+import { ShipmentData, TrackingStep, MilestoneCategory, MilestoneCategoryGroup, TransportMode, ETAInfo, ShipmentDocument, Waypoint, CargoDetails } from '../types';
 import ShipmentMap from './ShipmentMap';
+import TrackingDashboard from './TrackingDashboard';
+import ETACard from './ETACard';
+import EventTimeline from './EventTimeline';
+import ShipmentDocuments from './ShipmentDocuments';
+import ShipmentCompare from './ShipmentCompare';
 import type { LucideIcon } from 'lucide-react';
 
 // ─── Category Config ───
@@ -49,20 +54,6 @@ const CATEGORY_CONFIG: Record<MilestoneCategory, {
 
 // ─── Helpers ───
 
-function getRelativeTime(isoString: string): string {
-  const now = new Date();
-  const past = new Date(isoString);
-  const diffMs = now.getTime() - past.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHour = Math.floor(diffMin / 60);
-  const diffDay = Math.floor(diffHour / 24);
-
-  if (diffDay > 0) return `${diffDay}일 전`;
-  if (diffHour > 0) return `${diffHour}시간 전`;
-  if (diffMin > 0) return `${diffMin}분 전`;
-  return '방금 전';
-}
-
 function createMockShipment(config: {
   id: string;
   mode: TransportMode;
@@ -72,6 +63,10 @@ function createMockShipment(config: {
   destination: { city: string; code: string; x: number; y: number };
   current: { city: string; code: string; x: number; y: number; progress: number };
   steps: TrackingStep[];
+  eta?: ETAInfo;
+  documents?: ShipmentDocument[];
+  waypoints?: Waypoint[];
+  cargoDetails?: CargoDetails;
 }): ShipmentData {
   const completedCount = config.steps.filter(s => s.status === 'completed').length;
   const currentCount = config.steps.filter(s => s.status === 'current').length;
@@ -111,6 +106,27 @@ const MOCK_SHIPMENTS = new Map<string, ShipmentData>([
       { id: 'a7', label: '내륙 운송 출발', date: 'Estimated', time: '--:--', status: 'pending', location: 'LAX Cargo Terminal', category: 'arrival', eta: '1h 30m' },
       { id: 'a8', label: '배송 완료 (Delivered)', date: 'Estimated', time: '--:--', status: 'pending', location: 'Los Angeles, US', category: 'arrival', eta: '3h' },
     ],
+    eta: {
+      estimatedArrival: '2024-10-24T18:00:00Z',
+      confidence: 'high',
+      delayDays: 0,
+      lastUpdated: '2024-10-22T13:00:00Z',
+    },
+    documents: [
+      { id: 'd1', type: 'bl', name: 'Air Waybill (AWB)', status: 'issued', date: '2024-10-21', fileSize: '1.2 MB' },
+      { id: 'd2', type: 'invoice', name: 'Commercial Invoice', status: 'issued', date: '2024-10-21', fileSize: '0.8 MB' },
+      { id: 'd3', type: 'packing-list', name: 'Packing List', status: 'issued', date: '2024-10-21', fileSize: '0.5 MB' },
+      { id: 'd4', type: 'certificate', name: 'Certificate of Origin', status: 'pending' },
+    ],
+    waypoints: [
+      { name: 'Anchorage', code: 'ANC', location: { city: 'Anchorage, US', code: 'ANC', x: 12, y: 22 }, type: 'airport', arrivalDate: '2024-10-22T19:00:00Z', departureDate: '2024-10-22T20:30:00Z' },
+    ],
+    cargoDetails: {
+      weight: '450 kg',
+      cbm: '1.8 CBM',
+      packages: 12,
+      hsCode: '8542.31',
+    },
   })],
   ['JW-2201-SEA', createMockShipment({
     id: 'JW-2201-SEA',
@@ -131,125 +147,32 @@ const MOCK_SHIPMENTS = new Map<string, ShipmentData>([
       { id: 's8', label: '내륙 운송 (Inland Transport)', date: 'Estimated', time: '--:--', status: 'pending', location: 'Rotterdam → Amsterdam', category: 'arrival', eta: '6h' },
       { id: 's9', label: '배송 완료 (Delivered)', date: 'Estimated', time: '--:--', status: 'pending', location: 'Amsterdam, NL', category: 'arrival', eta: '2h' },
     ],
+    eta: {
+      estimatedArrival: '2024-11-28T00:00:00Z',
+      confidence: 'medium',
+      delayDays: 2,
+      lastUpdated: '2024-11-05T08:00:00Z',
+    },
+    documents: [
+      { id: 'd5', type: 'bl', name: 'Bill of Lading (B/L)', status: 'issued', date: '2024-10-30', fileSize: '1.5 MB' },
+      { id: 'd6', type: 'invoice', name: 'Commercial Invoice', status: 'issued', date: '2024-10-28', fileSize: '0.9 MB' },
+      { id: 'd7', type: 'packing-list', name: 'Packing List', status: 'issued', date: '2024-10-28', fileSize: '0.6 MB' },
+      { id: 'd8', type: 'certificate', name: 'Insurance Certificate', status: 'draft' },
+    ],
+    waypoints: [
+      { name: 'Singapore', code: 'SIN', location: { city: 'Singapore', code: 'SIN', x: 74, y: 55 }, type: 'port', arrivalDate: '2024-11-05T08:00:00Z', departureDate: '2024-11-07T06:00:00Z' },
+      { name: 'Colombo', code: 'CMB', location: { city: 'Colombo, LK', code: 'CMB', x: 64, y: 52 }, type: 'port', arrivalDate: '2024-11-12T00:00:00Z', departureDate: '2024-11-13T00:00:00Z' },
+      { name: 'Suez Canal', code: 'SUZ', location: { city: 'Suez, EG', code: 'SUZ', x: 44, y: 40 }, type: 'terminal', arrivalDate: '2024-11-18T00:00:00Z' },
+    ],
+    cargoDetails: {
+      weight: '8,500 kg',
+      cbm: '33.2 CBM',
+      containerType: '20ft FCL',
+      packages: 240,
+      hsCode: '8471.30',
+    },
   })],
 ]);
-
-// ─── Inline Sub-Components ───
-
-interface MilestoneRowProps {
-  step: TrackingStep;
-  index: number;
-  isExpanded: boolean;
-  onToggle: () => void;
-  mode?: TransportMode;
-}
-
-const MilestoneRow: React.FC<MilestoneRowProps> = ({ step, index, isExpanded, onToggle, mode }) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onToggle();
-    }
-  };
-
-  const hasExpandContent = step.detail || step.vessel || step.port;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.08 + 0.3 }}
-      className="relative flex gap-3 md:gap-4 pb-6 last:pb-0"
-    >
-      {/* Icon */}
-      <div className={`relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-4 border-slate-50 dark:border-slate-950 shrink-0 transition-colors ${
-        step.status === 'completed' ? 'bg-blue-100 text-blue-600' :
-        step.status === 'current' ? 'bg-jways-blue text-white shadow-lg shadow-blue-500/30' :
-        'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
-      }`}>
-        {step.status === 'completed' ? <CheckCircle2 size={16} className="md:w-[18px] md:h-[18px]" /> :
-         step.status === 'current' ? (
-           mode === 'sea' ? <Ship size={16} className="md:w-[18px] md:h-[18px]" /> :
-           mode === 'air' ? <Plane size={16} className="md:w-[18px] md:h-[18px]" /> :
-           <Truck size={16} className="md:w-[18px] md:h-[18px]" />
-         ) :
-         <Clock size={16} className="md:w-[18px] md:h-[18px]" />}
-      </div>
-
-      {/* Content */}
-      <div
-        className={`pt-0.5 md:pt-1 flex-1 min-w-0 ${hasExpandContent ? 'cursor-pointer' : ''}`}
-        role={hasExpandContent ? 'button' : undefined}
-        tabIndex={hasExpandContent ? 0 : undefined}
-        aria-expanded={hasExpandContent ? isExpanded : undefined}
-        aria-label={`${step.label} - ${step.status === 'completed' ? '완료' : step.status === 'current' ? '진행중' : '대기중'}`}
-        onClick={hasExpandContent ? onToggle : undefined}
-        onKeyDown={hasExpandContent ? handleKeyDown : undefined}
-      >
-        <div className="flex justify-between items-start mb-1">
-          <div className="flex items-center gap-2 min-w-0">
-            <p className={`font-bold text-sm md:text-base truncate ${
-              step.status === 'current' ? 'text-jways-blue' : 'text-slate-900 dark:text-white'
-            }`}>
-              {step.label}
-            </p>
-            {hasExpandContent && (
-              <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                <ChevronDown size={14} className="text-slate-400 shrink-0" />
-              </motion.div>
-            )}
-          </div>
-          <div className="flex items-center gap-2 shrink-0 ml-2">
-            {step.completedAt && step.status === 'completed' && (
-              <span className="text-[10px] text-slate-400 hidden md:inline">{getRelativeTime(step.completedAt)}</span>
-            )}
-            <span className="text-[10px] md:text-xs text-slate-400 whitespace-nowrap">{step.date}</span>
-          </div>
-        </div>
-
-        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-1">{step.location}</p>
-
-        <div className="flex items-center gap-2 flex-wrap">
-          <p className="text-[10px] md:text-xs text-slate-400 font-mono">{step.time}</p>
-          {step.eta && step.status !== 'completed' && (
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-1 text-[10px] bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 px-1.5 py-0.5 rounded font-medium"
-            >
-              <Timer size={10} />
-              ETA {step.eta}
-            </motion.span>
-          )}
-          {step.vessel && (
-            <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded font-mono">
-              {step.vessel}
-            </span>
-          )}
-        </div>
-
-        {/* Expand Panel */}
-        <AnimatePresence>
-          {isExpanded && hasExpandContent && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden"
-              role="region"
-              aria-label={`${step.label} 상세 정보`}
-            >
-              <div className="mt-2 p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                {step.detail && <p>{step.detail}</p>}
-                {step.port && <p className="font-mono text-slate-500">Port: {step.port}</p>}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
-  );
-};
 
 // ─── Main Component ───
 
@@ -262,6 +185,9 @@ const Tracking: React.FC = () => {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [searchType, setSearchType] = useState('bl');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [viewMode, setViewMode] = useState<'single' | 'compare'>('single');
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState<'documents' | 'cargo'>('documents');
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -308,9 +234,6 @@ const Tracking: React.FC = () => {
     label: 'Transit',
     steps: shipment.steps,
   }] : []);
-
-  const completedSteps = shipment?.steps.filter(s => s.status === 'completed').length ?? 0;
-  const totalSteps = shipment?.steps.length ?? 0;
 
   return (
     <div id="track" className="relative -mt-20 z-20 px-6">
@@ -410,6 +333,24 @@ const Tracking: React.FC = () => {
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                         Live Tracking Active
                     </div>
+                    <button
+                      onClick={() => {
+                        if (viewMode === 'compare') {
+                          setViewMode('single');
+                          setCompareIds([]);
+                        } else {
+                          setViewMode('compare');
+                          if (shipment) setCompareIds([shipment.id]);
+                        }
+                      }}
+                      className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${
+                        viewMode === 'compare'
+                          ? 'bg-jways-blue text-white border-jways-blue'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                      }`}
+                    >
+                      {viewMode === 'compare' ? '단일 보기' : '비교 모드'}
+                    </button>
                 </div>
             )}
           </div>
@@ -433,9 +374,24 @@ const Tracking: React.FC = () => {
             )}
           </AnimatePresence>
 
+          {/* Compare Mode */}
+          <AnimatePresence>
+            {viewMode === 'compare' && searchStatus === 'success' && (
+              <ShipmentCompare
+                shipments={compareIds.map(id => MOCK_SHIPMENTS.get(id)).filter((s): s is ShipmentData => !!s)}
+                onRemove={(id) => {
+                  const next = compareIds.filter(cid => cid !== id);
+                  if (next.length === 0) { setViewMode('single'); }
+                  setCompareIds(next);
+                }}
+                onClose={() => { setViewMode('single'); setCompareIds([]); }}
+              />
+            )}
+          </AnimatePresence>
+
           {/* Expanded Result Area */}
           <AnimatePresence>
-            {searchStatus === 'success' && shipment && (
+            {searchStatus === 'success' && shipment && viewMode === 'single' && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
@@ -443,6 +399,9 @@ const Tracking: React.FC = () => {
                 transition={{ duration: 0.5, ease: "circOut" }}
                 className="bg-white dark:bg-slate-900"
               >
+                {/* TrackingDashboard (FR-06) */}
+                <TrackingDashboard shipment={shipment} />
+
                 <div className="grid grid-cols-1 lg:grid-cols-3">
 
                     {/* Left: Map Visualization */}
@@ -450,117 +409,127 @@ const Tracking: React.FC = () => {
                       <ShipmentMap shipment={shipment} />
                     </div>
 
-                    {/* Right: Timeline & Status */}
+                    {/* Right: ETA + Timeline */}
                     <div className="bg-slate-50 dark:bg-slate-950 p-4 md:p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100 dark:border-slate-800 lg:h-[500px] overflow-y-auto custom-scrollbar" aria-live="polite">
 
-                        {/* ── ProgressHeader ── */}
-                        <div className="mb-4 md:mb-6 pb-4 md:pb-6 border-b border-slate-200 dark:border-slate-800">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Status Updates</h3>
-                                {shipment.mode && (
-                                  <motion.span
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${
-                                      shipment.mode === 'air'
-                                        ? 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/20 dark:text-sky-300 dark:border-sky-800'
-                                        : 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-900/20 dark:text-teal-300 dark:border-teal-800'
-                                    }`}
-                                    aria-label={shipment.mode === 'air' ? '항공 운송' : '해상 운송'}
-                                  >
-                                    {shipment.mode === 'air' ? <Plane size={12} /> : <Ship size={12} />}
-                                    {shipment.mode === 'air' ? 'Air Freight' : 'Sea Freight'}
-                              </motion.span>
-                            )}
-                        </div>
+                        {/* ── Header ── */}
                         <div className="flex items-center justify-between mb-3">
-                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                              Tracking ID: <span className="font-mono text-slate-700 dark:text-slate-300">{shipment.id}</span>
-                            </p>
+                            <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Status Updates</h3>
                             <button
                               onClick={() => setIsSubscribed(!isSubscribed)}
                               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${
-                                isSubscribed 
-                                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
+                                isSubscribed
+                                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
                                   : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                               }`}
                             >
-                              <Bell size={14} className={isSubscribed ? "fill-blue-500" : ""} />
+                              <Bell size={14} className={isSubscribed ? "fill-blue-500" : ""} aria-hidden="true" />
                               {isSubscribed ? '알림 설정됨' : '알림 받기'}
                             </button>
                         </div>
 
-                        {/* Progress Bar */}
-                            <div
-                              role="progressbar"
-                              aria-valuenow={shipment.totalProgress ?? 0}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                              aria-label="전체 운송 진행률"
-                            >
-                              <div className="flex justify-between text-[10px] md:text-xs text-slate-400 mb-1.5 font-medium">
-                                <span>{completedSteps}/{totalSteps} milestones</span>
-                                <span className="text-jways-blue font-bold">{shipment.totalProgress ?? 0}%</span>
-                              </div>
-                              <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${shipment.totalProgress ?? 0}%` }}
-                                  transition={{ duration: 1, ease: "easeOut" }}
-                                  className="h-full bg-gradient-to-r from-blue-500 to-jways-accent rounded-full"
-                                />
-                              </div>
-                              <p className="text-[10px] text-slate-400 mt-1">ETA: {shipment.estimatedDelivery}</p>
-                            </div>
-                        </div>
+                        {/* ── ETACard (FR-01) ── */}
+                        {shipment.eta ? (
+                          <ETACard eta={shipment.eta} estimatedDelivery={shipment.estimatedDelivery} mode={shipment.mode} />
+                        ) : (
+                          <div className="mb-4 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                            <p className="text-xs text-slate-400">ETA: {shipment.estimatedDelivery}</p>
+                          </div>
+                        )}
 
-                        {/* ── Milestone Groups ── */}
-                        <div className="space-y-0 relative">
-                            {/* Timeline Line */}
-                            <div className="absolute top-2 bottom-2 left-[15px] md:left-[19px] w-0.5 bg-slate-200 dark:bg-slate-800" />
-
-                            {milestoneGroups.map((group, groupIdx) => {
-                              const cfg = CATEGORY_CONFIG[group.category];
-                              const groupCompleted = group.steps.filter(s => s.status === 'completed').length;
-                              const groupTotal = group.steps.length;
-
-                              return (
-                                <div key={group.category} role="group" aria-label={`${cfg.label} 마일스톤`}>
-                                  {/* Category Header */}
-                                  <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: groupIdx * 0.15 + 0.2 }}
-                                    className="relative z-10 flex items-center gap-2 mb-3 mt-2 first:mt-0"
-                                  >
-                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700 border-dashed" />
-                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border ${cfg.color} ${cfg.darkColor}`}>
-                                      <cfg.icon size={10} aria-hidden="true" />
-                                      {cfg.label} ({cfg.labelEn})
-                                    </span>
-                                    <span className="text-[10px] text-slate-400 font-medium">
-                                      {groupCompleted}/{groupTotal}
-                                    </span>
-                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700 border-dashed" />
-                                  </motion.div>
-
-                                  {/* Steps */}
-                                  {group.steps.map((step, idx) => (
-                                    <MilestoneRow
-                                      key={step.id}
-                                      step={step}
-                                      index={groupIdx * 3 + idx}
-                                      isExpanded={expandedIds.has(step.id)}
-                                      onToggle={() => toggleExpand(step.id)}
-                                      mode={shipment.mode}
-                                    />
-                                  ))}
-                                </div>
-                              );
-                            })}
-                        </div>
+                        {/* ── EventTimeline (FR-03) ── */}
+                        <EventTimeline
+                          categories={milestoneGroups}
+                          expandedIds={expandedIds}
+                          onToggle={toggleExpand}
+                          mode={shipment.mode}
+                        />
                     </div>
+                </div>
+
+                {/* Bottom Tab Panels (FR-04, FR-08) */}
+                <div className="border-t border-slate-100 dark:border-slate-800">
+                  {/* Tab Buttons */}
+                  <div className="flex gap-0 bg-slate-50 dark:bg-slate-950">
+                    {(['documents', 'cargo'] as const).map(tab => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`flex-1 px-4 py-3 text-sm font-bold transition-colors border-b-2 ${
+                          activeTab === tab
+                            ? 'text-jways-blue border-jways-blue bg-white dark:bg-slate-900'
+                            : 'text-slate-400 border-transparent hover:text-slate-600 dark:hover:text-slate-300'
+                        }`}
+                        aria-selected={activeTab === tab}
+                        role="tab"
+                      >
+                        {tab === 'documents' ? '관련 문서' : '화물 상세'}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tab Content */}
+                  <div className="p-4 md:p-6" role="tabpanel">
+                    <AnimatePresence mode="wait">
+                      {activeTab === 'documents' ? (
+                        <motion.div key="documents" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                          <ShipmentDocuments documents={shipment.documents ?? []} />
+                        </motion.div>
+                      ) : (
+                        <motion.div key="cargo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                          {shipment.cargoDetails ? (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" aria-label="화물 상세 정보">
+                              <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                                <Scale size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
+                                <div>
+                                  <p className="text-[10px] text-slate-400">중량</p>
+                                  <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.weight}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                                <Box size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
+                                <div>
+                                  <p className="text-[10px] text-slate-400">부피</p>
+                                  <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.cbm}</p>
+                                </div>
+                              </div>
+                              {shipment.cargoDetails.containerType && (
+                                <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                                  <Layers size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
+                                  <div>
+                                    <p className="text-[10px] text-slate-400">컨테이너</p>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.containerType}</p>
+                                  </div>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                                <Package size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
+                                <div>
+                                  <p className="text-[10px] text-slate-400">포장 수</p>
+                                  <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.packages}건</p>
+                                </div>
+                              </div>
+                              {shipment.cargoDetails.hsCode && (
+                                <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                                  <div className="w-4 h-4 rounded bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
+                                    <span className="text-[8px] font-bold text-slate-500">HS</span>
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] text-slate-400">HS Code</p>
+                                    <p className="text-sm font-bold font-mono text-slate-900 dark:text-white">{shipment.cargoDetails.hsCode}</p>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="text-center py-8 text-sm text-slate-400">
+                              화물 상세 정보가 없습니다
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </motion.div>
             )}
