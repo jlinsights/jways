@@ -1,15 +1,18 @@
 import React from 'react';
 import { Bell, Search, User } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Topbar: React.FC = () => {
+  const { user } = useAuth();
+
   return (
     <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0">
       <div className="flex-1 max-w-md hidden md:flex items-center gap-2">
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-          <input 
-            type="text" 
-            placeholder="화물 번호 검색..." 
+          <input
+            type="text"
+            placeholder="화물 번호 검색..."
             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-10 pr-4 py-2 rounded-full text-sm outline-none focus:ring-2 focus:ring-jways-blue/20"
           />
         </div>
@@ -25,8 +28,8 @@ const Topbar: React.FC = () => {
         </button>
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-800">
           <div className="hidden md:block text-right">
-            <p className="text-sm font-bold text-slate-900 dark:text-white">홍길동 고객님</p>
-            <p className="text-xs text-slate-500">삼성전자 (주)</p>
+            <p className="text-sm font-bold text-slate-900 dark:text-white">{user?.name || '게스트'} 고객님</p>
+            <p className="text-xs text-slate-500">{user?.company || ''}</p>
           </div>
           <div className="w-9 h-9 bg-indigo-100 dark:bg-indigo-900/40 text-jways-blue rounded-full flex items-center justify-center font-bold">
             <User size={18} />

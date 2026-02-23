@@ -161,3 +161,108 @@ export interface QuoteModalState {
   isOpen: boolean;
   preSelectedService?: ServiceType;
 }
+
+// ─── Dashboard / Auth Types ───
+
+export interface DashboardUser {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  role: 'customer' | 'admin';
+}
+
+// ─── Shipment List Types ───
+
+export type ShipmentStatus = 'in-transit' | 'customs' | 'delivered' | 'delayed' | 'pending';
+
+export interface ShipmentListItem {
+  id: string;
+  blNumber: string;
+  origin: string;
+  destination: string;
+  status: ShipmentStatus;
+  mode: TransportMode;
+  departureDate: string;
+  estimatedArrival: string;
+  cargoType: string;
+  weight: string;
+  containerCount?: number;
+  progress: number;
+}
+
+// ─── Quote History Types ───
+
+export type QuoteStatus = 'pending' | 'approved' | 'expired' | 'rejected';
+
+export interface QuoteHistory {
+  id: string;
+  requestDate: string;
+  serviceType: ServiceType;
+  origin: string;
+  destination: string;
+  cargoType: string;
+  weight: string;
+  status: QuoteStatus;
+  estimatedPrice?: string;
+  validUntil?: string;
+  assignedManager?: string;
+}
+
+// ─── Document Types ───
+
+export type DocumentCategory = 'bl' | 'invoice' | 'packing-list' | 'co' | 'insurance' | 'other';
+
+export interface DashboardDocument {
+  id: string;
+  name: string;
+  category: DocumentCategory;
+  shipmentId: string;
+  shipmentBlNumber: string;
+  uploadDate: string;
+  fileSize: string;
+  status: 'issued' | 'pending' | 'draft';
+}
+
+// ─── Billing Types ───
+
+export type InvoiceStatus = 'paid' | 'unpaid' | 'overdue' | 'partial';
+
+export interface Invoice {
+  id: string;
+  invoiceNumber: string;
+  shipmentId: string;
+  blNumber: string;
+  issueDate: string;
+  dueDate: string;
+  amount: number;
+  currency: string;
+  status: InvoiceStatus;
+  description: string;
+}
+
+export interface BillingSummary {
+  totalOutstanding: number;
+  monthlySettled: number;
+  overdueCount: number;
+  currency: string;
+}
+
+// ─── Settings Types ───
+
+export interface NotificationSetting {
+  id: string;
+  label: string;
+  description: string;
+  emailEnabled: boolean;
+  smsEnabled: boolean;
+}
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  position?: string;
+}

@@ -1,12 +1,17 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { LayoutDashboard, Package, FileText, Leaf, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, FolderOpen, CreditCard, Leaf, Settings, LogOut } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar: React.FC = () => {
+  const { logout } = useAuth();
+
   const navItems = [
     { name: '대시보드 홈', path: '/dashboard', icon: LayoutDashboard },
     { name: '내 화물 관리', path: '/dashboard/shipments', icon: Package },
     { name: '견적 / 예약', path: '/dashboard/quotes', icon: FileText },
+    { name: '서류 관리', path: '/dashboard/documents', icon: FolderOpen },
+    { name: '정산 / 인보이스', path: '/dashboard/billing', icon: CreditCard },
     { name: 'ESG 탄소 리포트', path: '/dashboard/sustainability', icon: Leaf },
     { name: '환경 설정', path: '/dashboard/settings', icon: Settings },
   ];
@@ -28,10 +33,10 @@ const Sidebar: React.FC = () => {
              key={item.path}
              to={item.path}
              end={item.path === '/dashboard'}
-             className={({ isActive }) => 
+             className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
-                  isActive 
-                     ? 'bg-blue-50 dark:bg-blue-900/20 text-jways-blue dark:text-blue-400' 
+                  isActive
+                     ? 'bg-blue-50 dark:bg-blue-900/20 text-jways-blue dark:text-blue-400'
                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`
              }
@@ -43,7 +48,10 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className="p-4 shrink-0 border-t border-slate-200 dark:border-slate-800">
-        <button className="flex items-center gap-3 px-4 py-3 w-full rounded-xl transition-all font-medium text-slate-500 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl transition-all font-medium text-slate-500 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
+        >
           <LogOut size={20} />
           로그아웃
         </button>

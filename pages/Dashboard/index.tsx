@@ -4,10 +4,11 @@ import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import DashboardHome from './DashboardHome';
 import Sustainability from './Sustainability';
-
-const Shipments: React.FC = () => <div className="p-6">내 화물 관리 (준비 중)</div>;
-const Quotes: React.FC = () => <div className="p-6">견적 / 예약 (준비 중)</div>;
-const Settings: React.FC = () => <div className="p-6">환경 설정 (준비 중)</div>;
+import Shipments from './Shipments';
+import Quotes from './Quotes';
+import Documents from './Documents';
+import Billing from './Billing';
+import Settings from './Settings';
 
 const DashboardLayout: React.FC = () => {
   return (
@@ -26,6 +27,8 @@ const DashboardLayout: React.FC = () => {
             <Route path="/" element={<DashboardHome />} />
             <Route path="/shipments" element={<Shipments />} />
             <Route path="/quotes" element={<Quotes />} />
+            <Route path="/documents" element={<Documents />} />
+            <Route path="/billing" element={<Billing />} />
             <Route path="/sustainability" element={<Sustainability />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>

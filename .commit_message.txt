@@ -1,1 +1,1 @@
-♿ feat(a11y,ux): Medium Priority UI/UX 8건 개선 — aria-describedby, aria-hidden, 포커스링, 키보드접근성, 시맨틱HTML, 터치타겟, 반응형텍스트
+🏗️ feat(dashboard): Full Customer Portal 구현 — 인증시스템, 화물관리, 견적관리, 서류관리, 정산/빌링, 설정 페이지 + Mock API 레이어
