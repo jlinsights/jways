@@ -5,12 +5,13 @@
   "primaryFeature": "incoterms-guide",
   "features": {
     "incoterms-guide": {
-      "phase": "plan",
+      "phase": "design",
       "planPath": "docs/01-plan/features/incoterms-guide.plan.md",
+      "designPath": "docs/02-design/features/incoterms-guide.design.md",
       "matchRate": null,
       "iterations": 0,
       "createdAt": "2026-02-23T17:00:00.000Z",
-      "updatedAt": "2026-02-23T17:00:00.000Z"
+      "updatedAt": "2026-02-23T17:30:00.000Z"
     },
     "interactive-quote": {
       "phase": "archived",
@@ -220,6 +221,11 @@
       "action": "plan",
       "feature": "incoterms-guide",
       "timestamp": "2026-02-23T17:00:00.000Z"
+    },
+    {
+      "action": "design",
+      "feature": "incoterms-guide",
+      "timestamp": "2026-02-23T17:30:00.000Z"
     }
   ]
 }

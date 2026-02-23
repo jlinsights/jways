@@ -1,1 +1,1 @@
-docs(pdca): incoterms-guide Plan 문서 생성 (PDCA Cycle #5)
+docs(pdca): incoterms-guide Design 문서 생성 (PDCA Cycle #5)
