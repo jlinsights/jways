@@ -1,9 +1,20 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "lastUpdated": "2026-02-24T03:00:00.000Z",
+  "activeFeatures": ["ux-ui-medium-priority"],
+  "primaryFeature": "ux-ui-medium-priority",
   "features": {
+    "ux-ui-medium-priority": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/ux-ui-medium-priority.plan.md",
+      "designPath": null,
+      "analysisPath": null,
+      "reportPath": null,
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-24T03:00:00.000Z",
+      "updatedAt": "2026-02-24T03:00:00.000Z"
+    },
     "incoterms-guide": {
       "phase": "archived",
       "planPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.plan.md",
