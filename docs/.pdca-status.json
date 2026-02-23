@@ -1,19 +1,20 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-24T03:00:00.000Z",
-  "activeFeatures": ["ux-ui-medium-priority"],
-  "primaryFeature": "ux-ui-medium-priority",
+  "activeFeatures": [],
+  "primaryFeature": null,
   "features": {
     "ux-ui-medium-priority": {
-      "phase": "completed",
-      "planPath": "docs/01-plan/features/ux-ui-medium-priority.plan.md",
-      "designPath": "docs/02-design/features/ux-ui-medium-priority.design.md",
-      "analysisPath": "docs/03-analysis/ux-ui-medium-priority.analysis.md",
-      "reportPath": "docs/04-report/features/ux-ui-medium-priority.report.md",
+      "phase": "archived",
+      "planPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.plan.md",
+      "designPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.design.md",
+      "analysisPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.analysis.md",
+      "reportPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.report.md",
+      "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
       "matchRate": 100,
       "iterations": 0,
       "createdAt": "2026-02-24T03:00:00.000Z",
-      "updatedAt": "2026-02-24T03:00:00.000Z"
+      "updatedAt": "2026-02-24T04:00:00.000Z"
     },
     "incoterms-guide": {
       "phase": "archived",
@@ -354,6 +355,38 @@
       "feature": "advanced-tracking-tracing",
       "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
       "timestamp": "2026-02-24T02:30:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "ux-ui-medium-priority",
+      "timestamp": "2026-02-24T03:00:00.000Z"
+    },
+    {
+      "action": "design",
+      "feature": "ux-ui-medium-priority",
+      "timestamp": "2026-02-24T03:10:00.000Z"
+    },
+    {
+      "action": "do",
+      "feature": "ux-ui-medium-priority",
+      "timestamp": "2026-02-24T03:20:00.000Z"
+    },
+    {
+      "action": "check",
+      "feature": "ux-ui-medium-priority",
+      "matchRate": 100,
+      "timestamp": "2026-02-24T03:40:00.000Z"
+    },
+    {
+      "action": "report",
+      "feature": "ux-ui-medium-priority",
+      "timestamp": "2026-02-24T03:50:00.000Z"
+    },
+    {
+      "action": "archive",
+      "feature": "ux-ui-medium-priority",
+      "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
+      "timestamp": "2026-02-24T04:00:00.000Z"
     }
   ]
 }

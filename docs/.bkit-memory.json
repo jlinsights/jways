@@ -5,7 +5,6 @@
     "platform": "claude",
     "level": "Dynamic"
   },
-  "currentFeature": "ux-ui-medium-priority",
-  "phase": "completed",
-  "matchRate": 100
+  "currentFeature": null,
+  "phase": null
 }

@@ -9,6 +9,7 @@
 | incoterms-guide | 100% | 2026-02-23 | plan, design, analysis, report |
 | logistics-wiki | 100% | 2026-02-23 | plan, design, analysis, report |
 | advanced-tracking-tracing | 97% | 2026-02-24 | plan, design, analysis, report |
+| ux-ui-medium-priority | 100% | 2026-02-24 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -58,3 +59,10 @@
 - `advanced-tracking-tracing/advanced-tracking-tracing.design.md` — Design document
 - `advanced-tracking-tracing/advanced-tracking-tracing.analysis.md` — Gap analysis (97% match, 0 iterations)
 - `advanced-tracking-tracing/advanced-tracking-tracing.report.md` — Completion report
+
+## ux-ui-medium-priority
+
+- `ux-ui-medium-priority/ux-ui-medium-priority.plan.md` — Plan document
+- `ux-ui-medium-priority/ux-ui-medium-priority.design.md` — Design document
+- `ux-ui-medium-priority/ux-ui-medium-priority.analysis.md` — Gap analysis (100% match, 0 iterations)
+- `ux-ui-medium-priority/ux-ui-medium-priority.report.md` — Completion report
