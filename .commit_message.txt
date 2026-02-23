@@ -1,1 +1,1 @@
-🌿 feat(ESG-CO2): PDCA Cycle #11 Do — CO2 엔진, ESG 스코어, 저감 시뮬레이터, 탄소 상쇄 안내 구현
+🔍 chore(ESG-CO2): PDCA Cycle #11 Check — Gap Analysis 93% (4건 minor gap, 0건 critical)
