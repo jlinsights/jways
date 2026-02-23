@@ -1,1 +1,1 @@
-feat(QuoteModal): 3단계 인터랙티브 견적 위자드 구현 (서비스 선택 → 화물 정보 → 검토/제출)
+fix(QuoteModal): Escape 키 핸들러, StepIndicator 클릭 내비게이션, 데스크톱 사이즈, Summary max-height 접근성 개선

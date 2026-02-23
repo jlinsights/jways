@@ -48,13 +48,14 @@ const initialFormData: QuoteFormData = {
 
 // ─── Step Indicator ───
 
-const StepIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => (
+const StepIndicator: React.FC<{ currentStep: number; onStepClick: (step: number) => void }> = ({ currentStep, onStepClick }) => (
   <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700" role="tablist" aria-label="견적 요청 단계">
     <div className="flex items-center justify-center gap-0">
       {wizardSteps.map((step, idx) => {
         const stepNum = idx + 1;
         const isCompleted = stepNum < currentStep;
         const isCurrent = stepNum === currentStep;
+        const isClickable = isCompleted;
 
         return (
           <React.Fragment key={stepNum}>
@@ -68,10 +69,19 @@ const StepIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => (
                 />
               </div>
             )}
-            <div className="flex flex-col items-center gap-1" role="tab" aria-selected={isCurrent} aria-label={`${step.label} (${step.labelEn})`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+            <button
+              type="button"
+              className={`flex flex-col items-center gap-1 ${isClickable ? 'cursor-pointer' : ''}`}
+              role="tab"
+              aria-selected={isCurrent}
+              aria-label={`${step.label} (${step.labelEn})${isCompleted ? ' - 클릭하여 이동' : ''}`}
+              tabIndex={isClickable || isCurrent ? 0 : -1}
+              onClick={() => isClickable && onStepClick(stepNum)}
+              onKeyDown={(e) => { if (isClickable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onStepClick(stepNum); } }}
+            >
+              <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-bold transition-all duration-300 ${
                 isCompleted
-                  ? 'bg-jways-blue text-white'
+                  ? 'bg-jways-blue text-white hover:bg-blue-600'
                   : isCurrent
                     ? 'bg-jways-blue text-white ring-4 ring-jways-blue/20 dark:ring-blue-500/20'
                     : 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500'
@@ -79,11 +89,11 @@ const StepIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => (
                 {isCompleted ? <Check size={14} /> : stepNum}
               </div>
               <span className={`text-[10px] font-medium whitespace-nowrap ${
-                isCurrent ? 'text-jways-blue dark:text-blue-400' : 'text-slate-400 dark:text-slate-500'
+                isCurrent ? 'text-jways-blue dark:text-blue-400' : isCompleted ? 'text-jways-blue/70 dark:text-blue-400/70' : 'text-slate-400 dark:text-slate-500'
               }`}>
                 {step.label}
               </span>
-            </div>
+            </button>
           </React.Fragment>
         );
       })}
@@ -140,6 +150,17 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, preSelectedService]);
+
+  // Escape key handler
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   // ─── Validation ───
 
@@ -324,7 +345,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
               </div>
 
               {/* Step Indicator (hidden during success) */}
-              {!isSuccess && <StepIndicator currentStep={currentStep} />}
+              {!isSuccess && <StepIndicator currentStep={currentStep} onStepClick={goToStep} />}
 
               {/* Content Area */}
               <div className="flex-1 overflow-y-auto custom-scrollbar">
@@ -577,7 +598,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                       {currentStep === 3 && (
                         <div className="space-y-5">
                           {/* Summary Card */}
-                          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden max-h-[40vh] overflow-y-auto">
                             {/* Contact Section */}
                             <div className="px-5 py-3 bg-slate-100 dark:bg-slate-800 flex justify-between items-center">
                               <span className="text-sm font-bold text-slate-700 dark:text-slate-300">연락처 정보</span>
@@ -678,7 +699,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="px-5 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium flex items-center gap-2 transition-colors"
+                      className="px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium flex items-center gap-2 transition-colors"
                       aria-label="이전 단계로 이동"
                     >
                       <ChevronLeft size={18} />
