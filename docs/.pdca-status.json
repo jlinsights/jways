@@ -1,19 +1,19 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-02-24T07:30:00.000Z",
+  "lastUpdated": "2026-02-24T08:00:00.000Z",
   "activeFeatures": ["instant-quote"],
   "primaryFeature": "instant-quote",
   "features": {
     "instant-quote": {
-      "phase": "plan",
+      "phase": "design",
       "planPath": "docs/01-plan/features/instant-quote.plan.md",
-      "designPath": null,
+      "designPath": "docs/02-design/features/instant-quote.design.md",
       "analysisPath": null,
       "reportPath": null,
       "matchRate": null,
       "iterations": 0,
       "createdAt": "2026-02-24T07:30:00.000Z",
-      "updatedAt": "2026-02-24T07:30:00.000Z"
+      "updatedAt": "2026-02-24T08:00:00.000Z"
     },
     "customer-dashboard": {
       "phase": "archived",
@@ -447,6 +447,11 @@
       "action": "plan",
       "feature": "instant-quote",
       "timestamp": "2026-02-24T07:30:00.000Z"
+    },
+    {
+      "action": "design",
+      "feature": "instant-quote",
+      "timestamp": "2026-02-24T08:00:00.000Z"
     }
   ]
 }
