@@ -1,1 +1,1 @@
-🏗️ feat(dashboard): Full Customer Portal 구현 — 인증시스템, 화물관리, 견적관리, 서류관리, 정산/빌링, 설정 페이지 + Mock API 레이어
+✨ feat(instant-quote): 빠른 운임 조회 고도화 — Tariff Engine, 해상/항공 비교뷰, 견적이력, QuoteModal 연결, 접근성 개선
