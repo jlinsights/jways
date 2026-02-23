@@ -385,6 +385,14 @@ const Tracking: React.FC = () => {
                   setCompareIds(next);
                 }}
                 onClose={() => { setViewMode('single'); setCompareIds([]); }}
+                onAdd={() => {
+                  const allIds = Array.from(MOCK_SHIPMENTS.keys());
+                  const available = allIds.find(id => !compareIds.includes(id));
+                  if (available && compareIds.length < 3) {
+                    setCompareIds(prev => [...prev, available]);
+                  }
+                }}
+                maxShipments={3}
               />
             )}
           </AnimatePresence>
@@ -450,7 +458,7 @@ const Tracking: React.FC = () => {
                 {/* Bottom Tab Panels (FR-04, FR-08) */}
                 <div className="border-t border-slate-100 dark:border-slate-800">
                   {/* Tab Buttons */}
-                  <div className="flex gap-0 bg-slate-50 dark:bg-slate-950">
+                  <div className="flex gap-0 bg-slate-50 dark:bg-slate-950" role="tablist" aria-label="상세 정보 탭">
                     {(['documents', 'cargo'] as const).map(tab => (
                       <button
                         key={tab}
@@ -478,7 +486,7 @@ const Tracking: React.FC = () => {
                       ) : (
                         <motion.div key="cargo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                           {shipment.cargoDetails ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" aria-label="화물 상세 정보">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" role="region" aria-label="화물 상세 정보">
                               <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                                 <Scale size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
                                 <div>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plane, Ship, CheckCircle2, Clock, Loader2 } from 'lucide-react';
+import { X, Plane, Ship, CheckCircle2, Clock, Loader2, Plus } from 'lucide-react';
 import { ShipmentData, MilestoneCategory } from '../types';
 
 interface ShipmentCompareProps {
   shipments: ShipmentData[];
   onRemove: (id: string) => void;
   onClose: () => void;
+  onAdd?: () => void;
+  maxShipments?: number;
 }
 
 const CATEGORY_LABELS: Record<MilestoneCategory, string> = {
@@ -16,7 +18,7 @@ const CATEGORY_LABELS: Record<MilestoneCategory, string> = {
   arrival: '도착',
 };
 
-const ShipmentCompare: React.FC<ShipmentCompareProps> = ({ shipments, onRemove, onClose }) => {
+const ShipmentCompare: React.FC<ShipmentCompareProps> = ({ shipments, onRemove, onClose, onAdd, maxShipments = 3 }) => {
   if (shipments.length === 0) return null;
 
   return (
@@ -52,6 +54,18 @@ const ShipmentCompare: React.FC<ShipmentCompareProps> = ({ shipments, onRemove, 
               </button>
             </motion.span>
           ))}
+          {onAdd && shipments.length < maxShipments && (
+            <motion.button
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              onClick={onAdd}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold text-slate-500 border border-dashed border-slate-300 dark:border-slate-600 hover:border-jways-blue hover:text-jways-blue transition-colors"
+              aria-label="비교할 화물 추가"
+            >
+              <Plus size={10} />
+              추가
+            </motion.button>
+          )}
         </div>
         <button
           onClick={onClose}

@@ -189,10 +189,15 @@ const EventTimeline: React.FC<EventTimelineProps> = ({ categories, expandedIds, 
               return (
                 <React.Fragment key={step.id}>
                   {timeBetween && idx === 0 && (
-                    <div className="flex items-center gap-2 ml-[13px] md:ml-[17px] py-1" aria-hidden="true">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: groupIdx * 0.15 + 0.4 }}
+                      className="flex items-center gap-2 ml-[13px] md:ml-[17px] py-1" aria-hidden="true"
+                    >
                       <div className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
                       <span className="text-[9px] text-slate-400 font-mono">{timeBetween}</span>
-                    </div>
+                    </motion.div>
                   )}
                   <MilestoneRow
                     step={step}
@@ -205,10 +210,15 @@ const EventTimeline: React.FC<EventTimelineProps> = ({ categories, expandedIds, 
                     const nextStep = group.steps[idx + 1];
                     const gap = getTimeBetween(step, nextStep);
                     return gap ? (
-                      <div className="flex items-center gap-2 ml-[13px] md:ml-[17px] py-1" aria-hidden="true">
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: groupIdx * 0.15 + (idx + 1) * 0.1 + 0.4 }}
+                        className="flex items-center gap-2 ml-[13px] md:ml-[17px] py-1" aria-hidden="true"
+                      >
                         <div className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
                         <span className="text-[9px] text-slate-400 font-mono">{gap}</span>
-                      </div>
+                      </motion.div>
                     ) : null;
                   })()}
                 </React.Fragment>
