@@ -1,1 +1,1 @@
-docs(pdca): exchange-rate 완료 보고서 생성 (Match Rate 100%, PDCA Cycle #4)
+docs(pdca): exchange-rate 아카이브 완료 (PDCA Cycle #4, Match Rate 100%)

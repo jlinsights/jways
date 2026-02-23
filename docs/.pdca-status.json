@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": ["exchange-rate"],
-  "primaryFeature": "exchange-rate",
+  "activeFeatures": [],
+  "primaryFeature": null,
   "features": {
     "interactive-quote": {
       "phase": "archived",
@@ -29,15 +29,16 @@
       "updatedAt": "2026-02-22T17:00:00.000Z"
     },
     "exchange-rate": {
-      "phase": "completed",
-      "planPath": "docs/01-plan/features/exchange-rate.plan.md",
-      "designPath": "docs/02-design/features/exchange-rate.design.md",
-      "analysisPath": "docs/03-analysis/exchange-rate.analysis.md",
-      "reportPath": "docs/04-report/exchange-rate.report.md",
+      "phase": "archived",
+      "planPath": "docs/archive/2026-02/exchange-rate/exchange-rate.plan.md",
+      "designPath": "docs/archive/2026-02/exchange-rate/exchange-rate.design.md",
+      "analysisPath": "docs/archive/2026-02/exchange-rate/exchange-rate.analysis.md",
+      "reportPath": "docs/archive/2026-02/exchange-rate/exchange-rate.report.md",
+      "archivedTo": "docs/archive/2026-02/exchange-rate/",
       "matchRate": 100,
       "iterations": 1,
       "createdAt": "2026-02-23T13:00:00.000Z",
-      "updatedAt": "2026-02-23T16:00:00.000Z"
+      "updatedAt": "2026-02-23T16:30:00.000Z"
     },
     "milestone-tracking": {
       "phase": "archived",
@@ -200,6 +201,12 @@
       "action": "report",
       "feature": "exchange-rate",
       "timestamp": "2026-02-23T16:00:00.000Z"
+    },
+    {
+      "action": "archive",
+      "feature": "exchange-rate",
+      "archivedTo": "docs/archive/2026-02/exchange-rate/",
+      "timestamp": "2026-02-23T16:30:00.000Z"
     }
   ]
 }
