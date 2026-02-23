@@ -1,1 +1,1 @@
-docs(pdca): logistics-wiki Plan 문서 생성 (PDCA Cycle #6)
+docs(pdca): logistics-wiki Design 문서 생성 (PDCA Cycle #6)
