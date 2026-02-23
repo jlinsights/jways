@@ -1,1 +1,1 @@
-♿ fix(a11y,ux): High Priority UI/UX 6건 개선 — CTA 축소, 언어토글 제거, 가짜 로딩 제거, 네비 수정, reduced-motion, 포커스트랩+라벨
+♿ feat(a11y,ux): Medium Priority UI/UX 8건 개선 — aria-describedby, aria-hidden, 포커스링, 키보드접근성, 시맨틱HTML, 터치타겟, 반응형텍스트

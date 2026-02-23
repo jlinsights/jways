@@ -62,9 +62,10 @@ const Footer: React.FC = () => {
                   type="email" 
                   placeholder="이메일 주소를 입력해주세요" 
                   aria-label="Email address for newsletter"
+                  aria-describedby="newsletter-feedback"
                   className={`w-full pl-12 pr-4 py-3.5 bg-[#0a1120] border rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-all ${
-                    error 
-                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                    error
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                       : 'border-white/10 focus:border-jways-blue focus:ring-jways-blue'
                   }`}
                   value={email}
@@ -78,30 +79,34 @@ const Footer: React.FC = () => {
               </div>
               <button 
                 type="submit"
-                className="px-6 py-3.5 bg-jways-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 active:scale-95 whitespace-nowrap"
+                className="px-6 py-3.5 min-h-[44px] bg-jways-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 active:scale-95 whitespace-nowrap"
               >
                 구독하기 <Send size={18} aria-hidden="true" />
               </button>
             </form>
             <AnimatePresence>
                 {error && (
-                <motion.p 
+                <motion.p
+                    role="alert"
+                    id="newsletter-feedback"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute left-0 -bottom-6 text-xs text-red-500 font-medium ml-1 mt-1"
+                    className="absolute left-0 -bottom-7 text-xs text-red-500 font-medium ml-1 mt-1"
                 >
-                    {error}
+                    ⚠ {error}
                 </motion.p>
                 )}
                 {success && (
-                <motion.p 
+                <motion.p
+                    role="status"
+                    id="newsletter-feedback"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute left-0 -bottom-6 text-xs text-green-500 font-medium ml-1 mt-1"
+                    className="absolute left-0 -bottom-7 text-xs text-green-500 font-medium ml-1 mt-1"
                 >
-                    구독이 완료되었습니다!
+                    ✓ 구독이 완료되었습니다!
                 </motion.p>
                 )}
             </AnimatePresence>

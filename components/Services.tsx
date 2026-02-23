@@ -191,7 +191,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
                         className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"
                         aria-label="Clear search"
                     >
-                        <X size={16} />
+                        <X size={16} aria-hidden="true" />
                     </button>
                 )}
             </motion.div>
@@ -260,7 +260,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
                     }
                   }}
                   whileHover="hover"
-                  className="group relative h-[400px] overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+                  className="group relative h-[400px] overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-800 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 focus-visible:ring-2 focus-visible:ring-jways-blue focus-visible:ring-offset-2 focus-visible:outline-none"
                   role="button"
                   tabIndex={0}
                   aria-label={`View details for ${service.title}`}
@@ -399,7 +399,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
                     className="col-span-1 md:col-span-2 flex flex-col items-center justify-center py-20 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200"
                 >
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm text-slate-400">
-                        <Search size={32} />
+                        <Search size={32} aria-hidden="true" />
                     </div>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">검색 결과가 없습니다</h3>
                     <p className="text-slate-500 max-w-xs">

@@ -5,7 +5,7 @@
   "primaryFeature": "ux-ui-medium-priority",
   "features": {
     "ux-ui-medium-priority": {
-      "phase": "design",
+      "phase": "do",
       "planPath": "docs/01-plan/features/ux-ui-medium-priority.plan.md",
       "designPath": "docs/02-design/features/ux-ui-medium-priority.design.md",
       "analysisPath": null,

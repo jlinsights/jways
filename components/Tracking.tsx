@@ -233,7 +233,7 @@ const Tracking: React.FC = () => {
   }] : []);
 
   return (
-    <div id="track" className="relative -mt-20 z-20 px-6">
+    <section id="track" aria-label="화물 추적" className="relative -mt-20 z-20 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           layout
@@ -265,7 +265,7 @@ const Tracking: React.FC = () => {
                   <option value="booking">Booking No.</option>
                 </select>
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-                  <ChevronDown size={16} />
+                  <ChevronDown size={16} aria-hidden="true" />
                 </div>
               </div>
               <div className="relative flex-1">
@@ -299,7 +299,7 @@ const Tracking: React.FC = () => {
                       onClick={clearSearch}
                       className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors"
                   >
-                      <X size={16} />
+                      <X size={16} aria-hidden="true" />
                   </button>
                 )}
               </div>
@@ -318,7 +318,7 @@ const Tracking: React.FC = () => {
                         {searchStatus === 'loading' ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
-                            <>Track Shipment <ArrowRight size={20} /></>
+                            <>Track Shipment <ArrowRight size={20} aria-hidden="true" /></>
                         )}
                     </motion.button>
                 )}
@@ -363,7 +363,7 @@ const Tracking: React.FC = () => {
                 >
                     <div className="flex items-center gap-3 text-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-100 dark:border-red-800/50">
                         <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-800/30 flex items-center justify-center shrink-0">
-                            <X size={18} />
+                            <X size={18} aria-hidden="true" />
                         </div>
                         <p className="text-sm font-medium">{errorMessage}</p>
                     </div>
@@ -487,14 +487,14 @@ const Tracking: React.FC = () => {
                               <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                                 <Scale size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
                                 <div>
-                                  <p className="text-[10px] text-slate-400">중량</p>
+                                  <p className="text-xs sm:text-[10px] text-slate-400">중량</p>
                                   <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.weight}</p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                                 <Box size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
                                 <div>
-                                  <p className="text-[10px] text-slate-400">부피</p>
+                                  <p className="text-xs sm:text-[10px] text-slate-400">부피</p>
                                   <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.cbm}</p>
                                 </div>
                               </div>
@@ -502,7 +502,7 @@ const Tracking: React.FC = () => {
                                 <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                                   <Layers size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
                                   <div>
-                                    <p className="text-[10px] text-slate-400">컨테이너</p>
+                                    <p className="text-xs sm:text-[10px] text-slate-400">컨테이너</p>
                                     <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.containerType}</p>
                                   </div>
                                 </div>
@@ -510,7 +510,7 @@ const Tracking: React.FC = () => {
                               <div className="flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                                 <Package size={16} className="text-slate-400 shrink-0" aria-hidden="true" />
                                 <div>
-                                  <p className="text-[10px] text-slate-400">포장 수</p>
+                                  <p className="text-xs sm:text-[10px] text-slate-400">포장 수</p>
                                   <p className="text-sm font-bold text-slate-900 dark:text-white">{shipment.cargoDetails.packages}건</p>
                                 </div>
                               </div>
@@ -520,7 +520,7 @@ const Tracking: React.FC = () => {
                                     <span className="text-[8px] font-bold text-slate-500">HS</span>
                                   </div>
                                   <div>
-                                    <p className="text-[10px] text-slate-400">HS Code</p>
+                                    <p className="text-xs sm:text-[10px] text-slate-400">HS Code</p>
                                     <p className="text-sm font-bold font-mono text-slate-900 dark:text-white">{shipment.cargoDetails.hsCode}</p>
                                   </div>
                                 </div>
@@ -565,7 +565,7 @@ const Tracking: React.FC = () => {
            </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

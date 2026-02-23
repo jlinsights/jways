@@ -79,13 +79,22 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                 </svg>
 
                 {/* Origin Dot */}
-                <motion.div 
+                <motion.div
                     className="absolute z-10 cursor-pointer"
                     style={{ left: `${shipment.origin.x}%`, top: `${shipment.origin.y}%`, transform: 'translate(-50%, -50%)' }}
                     whileHover={{ scale: 1.2 }}
                     onHoverStart={() => setActiveTooltip('origin')}
                     onHoverEnd={() => setActiveTooltip(null)}
                     onClick={() => setActiveTooltip(activeTooltip === 'origin' ? null : 'origin')}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`출발지: ${shipment.origin.city} (${shipment.origin.code})`}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveTooltip(activeTooltip === 'origin' ? null : 'origin');
+                        }
+                    }}
                 >
                     <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-slate-900 shadow-[0_0_10px_#3b82f6]" />
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-blue-400 bg-slate-900/80 px-2 py-0.5 rounded backdrop-blur-sm">
@@ -109,13 +118,22 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                 </motion.div>
 
                 {/* Destination Dot */}
-                <motion.div 
+                <motion.div
                     className="absolute z-10 cursor-pointer"
                     style={{ left: `${shipment.destination.x}%`, top: `${shipment.destination.y}%`, transform: 'translate(-50%, -50%)' }}
                     whileHover={{ scale: 1.2 }}
                     onHoverStart={() => setActiveTooltip('destination')}
                     onHoverEnd={() => setActiveTooltip(null)}
                     onClick={() => setActiveTooltip(activeTooltip === 'destination' ? null : 'destination')}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`도착지: ${shipment.destination.city} (${shipment.destination.code})`}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveTooltip(activeTooltip === 'destination' ? null : 'destination');
+                        }
+                    }}
                 >
                     <div className="w-3 h-3 bg-slate-600 rounded-full border-2 border-slate-900" />
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-slate-500 bg-slate-900/80 px-2 py-0.5 rounded backdrop-blur-sm">
@@ -139,7 +157,7 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                 </motion.div>
 
                 {/* Current Location Beacon (Animated) */}
-                <motion.div 
+                <motion.div
                     className="absolute z-10 cursor-pointer"
                     style={{ left: `${shipment.current.x}%`, top: `${shipment.current.y}%` }}
                     initial={{ scale: 0, opacity: 0 }}
@@ -148,6 +166,15 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                     onHoverStart={() => setActiveTooltip('current')}
                     onHoverEnd={() => setActiveTooltip(null)}
                     onClick={() => setActiveTooltip(activeTooltip === 'current' ? null : 'current')}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`현재 위치: ${shipment.current.city} — ${shipment.status || 'In Transit'}`}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveTooltip(activeTooltip === 'current' ? null : 'current');
+                        }
+                    }}
                 >
                     <div className="relative -translate-x-1/2 -translate-y-1/2">
                         {/* Pulse Rings */}
@@ -183,7 +210,7 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                                     className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-white text-slate-900 px-3 py-2 rounded-lg text-xs font-bold shadow-xl whitespace-nowrap flex flex-col items-center gap-1 z-20 pointer-events-none"
                                 >
                                     <div className="flex items-center gap-1.5 text-jways-accent uppercase tracking-wider text-[10px]">
-                                        <Navigation size={10} />
+                                        <Navigation size={10} aria-hidden="true" />
                                         In Transit
                                     </div>
                                     <span className="text-sm">{shipment.current.city}</span>
@@ -206,7 +233,15 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ shipment }) => {
                         onHoverStart={() => setActiveTooltip(`wp-${wp.code}`)}
                         onHoverEnd={() => setActiveTooltip(null)}
                         onClick={() => setActiveTooltip(activeTooltip === `wp-${wp.code}` ? null : `wp-${wp.code}`)}
+                        role="button"
+                        tabIndex={0}
                         aria-label={`${wp.name} 경유지`}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setActiveTooltip(activeTooltip === `wp-${wp.code}` ? null : `wp-${wp.code}`);
+                            }
+                        }}
                     >
                         <div className="w-2.5 h-2.5 bg-sky-400 rotate-45 border border-slate-900 shadow-[0_0_6px_#38bdf8]" />
                         <div className="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold text-sky-400 bg-slate-900/80 px-1.5 py-0.5 rounded backdrop-blur-sm">

@@ -412,8 +412,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                                 type="text"
                                 className={inputClass('name')}
                                 placeholder="홍길동"
+                                aria-invalid={!!errors.name}
+                                aria-describedby={errors.name ? 'error-quote-name' : undefined}
                               />
-                              {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
+                              {errors.name && <p id="error-quote-name" role="alert" className="text-xs text-red-500">{errors.name}</p>}
                             </div>
                             <div className="space-y-2">
                               <label htmlFor="quote-email" className="text-sm font-bold text-slate-700 dark:text-slate-300">이메일 (Email)</label>
@@ -425,8 +427,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                                 type="email"
                                 className={inputClass('email')}
                                 placeholder="example@company.com"
+                                aria-invalid={!!errors.email}
+                                aria-describedby={errors.email ? 'error-quote-email' : undefined}
                               />
-                              {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+                              {errors.email && <p id="error-quote-email" role="alert" className="text-xs text-red-500">{errors.email}</p>}
                             </div>
                           </div>
 
@@ -483,8 +487,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                                 type="text"
                                 className={inputClass('origin')}
                                 placeholder="City, Country"
+                                aria-invalid={!!errors.origin}
+                                aria-describedby={errors.origin ? 'error-quote-origin' : undefined}
                               />
-                              {errors.origin && <p className="text-xs text-red-500">{errors.origin}</p>}
+                              {errors.origin && <p id="error-quote-origin" role="alert" className="text-xs text-red-500">{errors.origin}</p>}
                             </div>
                             <div className="space-y-2">
                               <label htmlFor="quote-destination" className="text-sm font-bold text-slate-700 dark:text-slate-300">도착지 (Destination)</label>
@@ -496,8 +502,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                                 type="text"
                                 className={inputClass('destination')}
                                 placeholder="City, Country"
+                                aria-invalid={!!errors.destination}
+                                aria-describedby={errors.destination ? 'error-quote-destination' : undefined}
                               />
-                              {errors.destination && <p className="text-xs text-red-500">{errors.destination}</p>}
+                              {errors.destination && <p id="error-quote-destination" role="alert" className="text-xs text-red-500">{errors.destination}</p>}
                             </div>
                             <div className="space-y-2">
                               <label htmlFor="quote-cargoType" className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 종류 (Cargo Type)</label>
@@ -530,22 +538,24 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                                   min="0"
                                   className={inputClass('weight')}
                                   placeholder="0"
+                                  aria-invalid={!!errors.weight}
+                                  aria-describedby={errors.weight ? 'error-quote-weight' : undefined}
                                 />
                                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">kg</span>
                               </div>
-                              {errors.weight && <p className="text-xs text-red-500">{errors.weight}</p>}
+                              {errors.weight && <p id="error-quote-weight" role="alert" className="text-xs text-red-500">{errors.weight}</p>}
                             </div>
                           </div>
 
                           {/* Dimensions */}
                           <div className="space-y-2">
                             <label id="quote-dimensions-label" className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 규격 (Dimensions - cm)</label>
-                            <div className="grid grid-cols-3 gap-2 sm:gap-4" role="group" aria-labelledby="quote-dimensions-label">
-                              <input id="quote-length" name="length" value={formData.length} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="가로 (L)" aria-label="가로 길이 (Length)" />
-                              <input id="quote-width" name="width" value={formData.width} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="세로 (W)" aria-label="세로 길이 (Width)" />
-                              <input id="quote-height" name="height" value={formData.height} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="높이 (H)" aria-label="높이 (Height)" />
+                            <div className="grid grid-cols-3 gap-2 sm:gap-4" role="group" aria-labelledby="quote-dimensions-label" aria-describedby={errors.dimensions ? 'error-quote-dimensions' : undefined}>
+                              <input id="quote-length" name="length" value={formData.length} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="가로 (L)" aria-label="가로 길이 (Length)" aria-invalid={!!errors.dimensions} />
+                              <input id="quote-width" name="width" value={formData.width} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="세로 (W)" aria-label="세로 길이 (Width)" aria-invalid={!!errors.dimensions} />
+                              <input id="quote-height" name="height" value={formData.height} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="높이 (H)" aria-label="높이 (Height)" aria-invalid={!!errors.dimensions} />
                             </div>
-                            {errors.dimensions && <p className="text-xs text-red-500 mt-1">{errors.dimensions}</p>}
+                            {errors.dimensions && <p id="error-quote-dimensions" role="alert" className="text-xs text-red-500 mt-1">{errors.dimensions}</p>}
 
                             {/* CBM Preview */}
                             <AnimatePresence mode="popLayout">
@@ -606,8 +616,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                               type="date"
                               min={new Date().toISOString().split('T')[0]}
                               className={`${inputClass('targetDate')} text-slate-600 dark:text-slate-300`}
+                              aria-invalid={!!errors.targetDate}
+                              aria-describedby={errors.targetDate ? 'error-quote-targetDate' : undefined}
                             />
-                            {errors.targetDate && <p className="text-xs text-red-500">{errors.targetDate}</p>}
+                            {errors.targetDate && <p id="error-quote-targetDate" role="alert" className="text-xs text-red-500">{errors.targetDate}</p>}
                           </div>
                         </div>
                       )}
