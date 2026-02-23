@@ -1,19 +1,20 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": ["interactive-quote"],
-  "primaryFeature": "interactive-quote",
+  "activeFeatures": [],
+  "primaryFeature": null,
   "features": {
     "interactive-quote": {
-      "phase": "completed",
-      "planPath": "docs/01-plan/features/interactive-quote.plan.md",
-      "designPath": "docs/02-design/features/interactive-quote.design.md",
-      "analysisPath": "docs/03-analysis/interactive-quote.analysis.md",
-      "reportPath": "docs/04-report/interactive-quote.report.md",
+      "phase": "archived",
+      "planPath": "docs/archive/2026-02/interactive-quote/interactive-quote.plan.md",
+      "designPath": "docs/archive/2026-02/interactive-quote/interactive-quote.design.md",
+      "analysisPath": "docs/archive/2026-02/interactive-quote/interactive-quote.analysis.md",
+      "reportPath": "docs/archive/2026-02/interactive-quote/interactive-quote.report.md",
+      "archivedTo": "docs/archive/2026-02/interactive-quote/",
       "matchRate": 97,
       "iterations": 1,
       "createdAt": "2026-02-23T06:00:00.000Z",
-      "updatedAt": "2026-02-23T11:00:00.000Z"
+      "updatedAt": "2026-02-23T12:00:00.000Z"
     },
     "CBM-Calculator": {
       "phase": "archived",
@@ -154,6 +155,12 @@
       "action": "report",
       "feature": "interactive-quote",
       "timestamp": "2026-02-23T11:00:00.000Z"
+    },
+    {
+      "action": "archive",
+      "feature": "interactive-quote",
+      "archivedTo": "docs/archive/2026-02/interactive-quote/",
+      "timestamp": "2026-02-23T12:00:00.000Z"
     }
   ]
 }

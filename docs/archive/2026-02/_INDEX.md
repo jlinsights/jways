@@ -4,6 +4,7 @@
 |---------|:----------:|----------|-----------|
 | CBM-Calculator | 97% | 2026-02-22 | plan, design, analysis, report |
 | milestone-tracking | 94% | 2026-02-23 | plan, design, analysis, report |
+| interactive-quote | 97% | 2026-02-23 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -18,3 +19,10 @@
 - `milestone-tracking/milestone-tracking.design.md` — Design document
 - `milestone-tracking/milestone-tracking.analysis.md` — Gap analysis (94% match, 1 iteration)
 - `milestone-tracking/milestone-tracking.report.md` — Completion report
+
+## interactive-quote
+
+- `interactive-quote/interactive-quote.plan.md` — Plan document
+- `interactive-quote/interactive-quote.design.md` — Design document
+- `interactive-quote/interactive-quote.analysis.md` — Gap analysis (97% match, 1 iteration)
+- `interactive-quote/interactive-quote.report.md` — Completion report
