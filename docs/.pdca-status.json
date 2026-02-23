@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "activeFeatures": ["exchange-rate"],
+  "primaryFeature": "exchange-rate",
   "features": {
     "interactive-quote": {
       "phase": "archived",
@@ -27,6 +27,14 @@
       "iterations": 0,
       "createdAt": "2026-02-22T12:00:00.000Z",
       "updatedAt": "2026-02-22T17:00:00.000Z"
+    },
+    "exchange-rate": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/exchange-rate.plan.md",
+      "matchRate": 0,
+      "iterations": 0,
+      "createdAt": "2026-02-23T13:00:00.000Z",
+      "updatedAt": "2026-02-23T13:00:00.000Z"
     },
     "milestone-tracking": {
       "phase": "archived",
@@ -161,6 +169,11 @@
       "feature": "interactive-quote",
       "archivedTo": "docs/archive/2026-02/interactive-quote/",
       "timestamp": "2026-02-23T12:00:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "exchange-rate",
+      "timestamp": "2026-02-23T13:00:00.000Z"
     }
   ]
 }

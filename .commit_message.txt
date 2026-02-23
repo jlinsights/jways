@@ -1,1 +1,1 @@
-docs(pdca): interactive-quote PDCA 사이클 완료 및 아카이브 (Match Rate 97%)
+docs(pdca): exchange-rate Plan 문서 생성 (실시간 고시 환율 위젯)

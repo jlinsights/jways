@@ -3,6 +3,9 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Tracking from './components/Tracking';
 import CBMCalculator from './components/CBMCalculator';
+import ExchangeRate from './components/ExchangeRate';
+import IncotermsGuide from './components/IncotermsGuide';
+import LogisticsWiki from './components/LogisticsWiki';
 import Services from './components/Services';
 import WhyUs from './components/WhyUs';
 import Footer from './components/Footer';
@@ -56,6 +59,22 @@ function App() {
                </button>
              </div>
            </div>
+        </section>
+
+        {/* Trade Knowledge & Resources Section */}
+        <section className="bg-slate-50 dark:bg-slate-950 py-24 px-6 transition-colors duration-300 border-t border-slate-200 dark:border-slate-800">
+          <div className="max-w-6xl mx-auto space-y-16">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">무역 백과사전 & 리소스</h2>
+              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">초보 화주부터 수출입 전문가까지, 효율적이고 안전한 무역 업무를 위한 필수 정보와 가이드를 제공합니다.</p>
+            </div>
+            
+            <ExchangeRate />
+            
+            <IncotermsGuide />
+            
+            <LogisticsWiki />
+          </div>
         </section>
 
         <WhyUs />
