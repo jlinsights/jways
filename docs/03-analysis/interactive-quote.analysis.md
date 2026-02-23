@@ -275,7 +275,7 @@ Design 문서에 명세된 3단계 인터랙티브 견적 위자드의 구현 �
 - [x] ~~Fix Summary max-height (Gap 3)~~ ✅ v0.2
 - [x] ~~Fix StepIndicator desktop size (Gap 4)~~ ✅ v0.2
 - [x] ~~Re-run analysis → target ≥95%~~ ✅ **97% 달성**
-- [ ] Generate completion report (`/pdca report interactive-quote`)
+- [x] ~~Generate completion report~~ ✅ `docs/04-report/interactive-quote.report.md`
 
 ---
 
