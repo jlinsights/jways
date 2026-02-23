@@ -1,9 +1,20 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-24T08:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "activeFeatures": ["ESG-CO2"],
+  "primaryFeature": "ESG-CO2",
   "features": {
+    "ESG-CO2": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/ESG-CO2.plan.md",
+      "designPath": null,
+      "analysisPath": null,
+      "reportPath": null,
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-24T12:00:00.000Z",
+      "updatedAt": "2026-02-24T12:00:00.000Z"
+    },
     "instant-quote": {
       "phase": "archived",
       "planPath": "docs/archive/2026-02/instant-quote/instant-quote.plan.md",
@@ -475,6 +486,11 @@
       "feature": "instant-quote",
       "archivedTo": "docs/archive/2026-02/instant-quote/",
       "timestamp": "2026-02-24T11:30:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "ESG-CO2",
+      "timestamp": "2026-02-24T12:00:00.000Z"
     }
   ]
 }
