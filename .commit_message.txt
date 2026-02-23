@@ -1,1 +1,1 @@
-docs(pdca): incoterms-guide PDCA 사이클 완료 및 아카이브 (Match Rate 100%)
+docs(pdca): logistics-wiki Plan 문서 생성 (PDCA Cycle #6)

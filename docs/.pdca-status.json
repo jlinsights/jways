@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "activeFeatures": ["logistics-wiki"],
+  "primaryFeature": "logistics-wiki",
   "features": {
     "incoterms-guide": {
       "phase": "archived",
@@ -63,6 +63,14 @@
       "iterations": 1,
       "createdAt": "2026-02-22T18:00:00.000Z",
       "updatedAt": "2026-02-23T00:00:00.000Z"
+    },
+    "logistics-wiki": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/logistics-wiki.plan.md",
+      "matchRate": 0,
+      "iterations": 0,
+      "createdAt": "2026-02-23T19:30:00.000Z",
+      "updatedAt": "2026-02-23T19:30:00.000Z"
     }
   },
   "pipeline": {
@@ -253,6 +261,11 @@
       "feature": "incoterms-guide",
       "archivedTo": "docs/archive/2026-02/incoterms-guide/",
       "timestamp": "2026-02-23T19:30:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "logistics-wiki",
+      "timestamp": "2026-02-23T20:00:00.000Z"
     }
   ]
 }
