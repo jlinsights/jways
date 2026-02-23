@@ -1,9 +1,9 @@
 # Gap Analysis: incoterms-guide
 
-> **Match Rate: 82% (47/57 items)**
+> **Match Rate: 100% (57/57 items)** — Act Iteration 1 완료
 >
 > **Project**: jways-logistics
-> **Analyst**: Claude Code (gap-detector)
+> **Analyst**: Claude Code (gap-detector + pdca-iterator)
 > **Date**: 2026-02-23
 > **Design Doc**: [incoterms-guide.design.md](../02-design/features/incoterms-guide.design.md)
 > **Implementation**: [IncotermsGuide.tsx](../../components/IncotermsGuide.tsx)
@@ -12,7 +12,7 @@
 
 ## Summary
 
-Implementation closely follows the design document across data model, UI structure, animations, responsive design, dark mode color mappings, and App.tsx integration. The primary gap is the complete absence of accessibility (a11y) attributes specified in Design Section 8 -- all 10 accessibility items (5 Must-Have, 3 Should-Have, 2 Nice-to-Have) are unimplemented. No `role`, `aria-selected`, `aria-label`, `aria-labelledby`, or `aria-hidden` attributes exist in the implementation.
+Implementation now fully matches the design document across all 10 sections including accessibility. Act Iteration 1 resolved all 10 accessibility gaps (5 Must-Have, 3 Should-Have, 2 Nice-to-Have) by adding ARIA tab pattern, step item labels, progress bar description, icon hiding, keyboard arrow navigation, and disclaimer semantic role.
 
 ---
 
@@ -65,23 +65,23 @@ Implementation closely follows the design document across data model, UI structu
 - [x] Mobile padding: p-6
 - [x] Step labels: text-[10px], short field used
 
-### Section 8: Accessibility (0/10 - 0%) -- GAP
+### Section 8: Accessibility (10/10 - 100%) -- FIXED in Act Iteration 1
 
-#### 8.1 Must Have (0/5)
-- [ ] `role="tab"` on Incoterms tab buttons --> **Gap #1**
-- [ ] `role="tablist"` on tab group container --> **Gap #2**
-- [ ] `aria-selected="true"` on active tab --> **Gap #3**
-- [ ] `role="tabpanel"` on content area --> **Gap #4**
-- [ ] `aria-labelledby` on tabpanel referencing active tab button id --> **Gap #5**
+#### 8.1 Must Have (5/5)
+- [x] `role="tab"` on Incoterms tab buttons -- Fixed: Added to each button element
+- [x] `role="tablist"` on tab group container -- Fixed: Added to flex wrapper div
+- [x] `aria-selected="true"` on active tab -- Fixed: Dynamic based on selectedTerm
+- [x] `role="tabpanel"` on content area -- Fixed: Added to motion.div
+- [x] `aria-labelledby` on tabpanel referencing active tab button id -- Fixed: Dynamic reference
 
-#### 8.2 Should Have (0/3)
-- [ ] `aria-label` on each step grid item --> **Gap #6**
-- [ ] `role="img"` + `aria-label` on progress bar --> **Gap #7**
-- [ ] `aria-hidden="true"` on Check/X icons --> **Gap #8**
+#### 8.2 Should Have (3/3)
+- [x] `aria-label` on each step grid item -- Fixed: "{step.name}: 수출자/수입자 부담"
+- [x] `role="img"` + `aria-label` on progress bar -- Fixed: Dynamic seller/buyer step counts
+- [x] `aria-hidden="true"` on Check/X icons -- Fixed: Added to both icons
 
-#### 8.3 Nice to Have (0/2)
-- [ ] Keyboard arrow navigation between tabs --> **Gap #9**
-- [ ] `role="note"` on disclaimer --> **Gap #10**
+#### 8.3 Nice to Have (2/2)
+- [x] Keyboard arrow navigation between tabs -- Fixed: handleTabKeyDown with ArrowLeft/Right
+- [x] `role="note"` on disclaimer -- Fixed: Added to disclaimer div
 
 ### Section 9: Dark Mode Color Map (20/20 - 100%)
 
@@ -99,7 +99,7 @@ All 20 element color mappings match exactly between design and implementation.
 
 ```
 +-------------------------------------------------+
-|  Overall Match Rate: 82% (47/57 items)          |
+|  Overall Match Rate: 100% (57/57 items)         |
 +-------------------------------------------------+
 |  Section 1  (Component Overview):   4/4  (100%) |
 |  Section 2  (Data Model):          3/3  (100%) |
@@ -108,7 +108,7 @@ All 20 element color mappings match exactly between design and implementation.
 |  Section 5  (Import Dependencies): 3/3  (100%) |
 |  Section 6  (Animation Spec):      3/3  (100%) |
 |  Section 7  (Responsive Design):   4/4  (100%) |
-|  Section 8  (Accessibility):       0/10 (  0%) |
+|  Section 8  (Accessibility):      10/10 (100%) |
 |  Section 9  (Dark Mode):          20/20 (100%) |
 |  Section 10 (Integration):         3/3  (100%) |
 +-------------------------------------------------+
@@ -116,25 +116,32 @@ All 20 element color mappings match exactly between design and implementation.
 
 ---
 
-## Gap List
+## Gap List (Resolved)
 
-| # | Section | Item | Priority | Description |
-|---|---------|------|----------|-------------|
-| 1 | 8.1 | `role="tab"` on tab buttons | Must | Tab buttons (L78-88) lack ARIA tab role |
-| 2 | 8.1 | `role="tablist"` on container | Must | Tab container (L76) lacks tablist role |
-| 3 | 8.1 | `aria-selected` on active tab | Must | Active tab (L82) lacks selected state |
-| 4 | 8.1 | `role="tabpanel"` on content | Must | Content area (L97) lacks tabpanel role |
-| 5 | 8.1 | `aria-labelledby` on tabpanel | Must | Tabpanel not linked to controlling tab |
-| 6 | 8.2 | `aria-label` on step items | Should | Step grid items (L171) missing labels |
-| 7 | 8.2 | `role="img"` + `aria-label` on progress bar | Should | Progress bar (L130) not described |
-| 8 | 8.2 | `aria-hidden="true"` on icons | Should | Check/X icons (L177) not hidden from AT |
-| 9 | 8.3 | Keyboard arrow navigation | Nice | No keyboard tab navigation support |
-| 10 | 8.3 | `role="note"` on disclaimer | Nice | Disclaimer (L193) lacks semantic role |
+| # | Section | Item | Priority | Status | Fix Applied |
+|---|---------|------|----------|--------|-------------|
+| 1 | 8.1 | `role="tab"` on tab buttons | Must | ✅ Fixed | Added role="tab" to each button |
+| 2 | 8.1 | `role="tablist"` on container | Must | ✅ Fixed | Added role="tablist" + aria-label to wrapper |
+| 3 | 8.1 | `aria-selected` on active tab | Must | ✅ Fixed | Dynamic aria-selected={selectedTerm === term.code} |
+| 4 | 8.1 | `role="tabpanel"` on content | Must | ✅ Fixed | Added role="tabpanel" to motion.div |
+| 5 | 8.1 | `aria-labelledby` on tabpanel | Must | ✅ Fixed | Dynamic aria-labelledby referencing active tab id |
+| 6 | 8.2 | `aria-label` on step items | Should | ✅ Fixed | "{step.name}: 수출자/수입자 부담" |
+| 7 | 8.2 | `role="img"` + `aria-label` on progress bar | Should | ✅ Fixed | Dynamic seller/buyer step count description |
+| 8 | 8.2 | `aria-hidden="true"` on icons | Should | ✅ Fixed | Added to both Check and X icons |
+| 9 | 8.3 | Keyboard arrow navigation | Nice | ✅ Fixed | handleTabKeyDown with ArrowLeft/Right + focus management |
+| 10 | 8.3 | `role="note"` on disclaimer | Nice | ✅ Fixed | Added role="note" to disclaimer div |
 
 ---
 
+## Act Iteration 1 Summary
+
+**Previous Match Rate**: 82% (47/57) → **New Match Rate**: 100% (57/57)
+
+- **Gaps Fixed**: 10/10 (all accessibility items)
+- **Build Status**: ✅ Passed (`npm run build` — 2.17s)
+- **Approach**: 6 targeted edits to IncotermsGuide.tsx — ARIA attribute additions only, no structural changes
+- **Iteration Count**: 1 (threshold ≥90% met on first iteration)
+
 ## Recommendation
 
-**Match Rate: 82% -- Below 90% threshold. `/pdca iterate` recommended.**
-
-Implementing the 5 Must-Have items brings rate to 91% (52/57). All gaps are concentrated in Accessibility section -- no structural changes needed, only ARIA attribute additions.
+**Match Rate: 100% -- Above 90% threshold. `/pdca report` recommended.**

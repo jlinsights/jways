@@ -1,1 +1,1 @@
-docs(pdca): incoterms-guide Gap Analysis 완료 (Match Rate 82%, 10 gaps)
+feat(a11y): IncotermsGuide 접근성 10개 Gap 수정 완료 (Match Rate 82% → 100%)

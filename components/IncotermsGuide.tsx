@@ -55,6 +55,17 @@ const IncotermsGuide: React.FC = () => {
 
   const currentTermInfo = incotermsList.find(t => t.code === selectedTerm);
 
+  const handleTabKeyDown = (e: React.KeyboardEvent, idx: number) => {
+    let nextIdx = idx;
+    if (e.key === 'ArrowRight') nextIdx = (idx + 1) % incotermsList.length;
+    else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + incotermsList.length) % incotermsList.length;
+    else return;
+    e.preventDefault();
+    setSelectedTerm(incotermsList[nextIdx].code);
+    const nextBtn = document.getElementById(`incoterm-tab-${incotermsList[nextIdx].code}`);
+    nextBtn?.focus();
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col">
       <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-6 sm:p-8 text-white relative overflow-hidden">
@@ -73,14 +84,20 @@ const IncotermsGuide: React.FC = () => {
             </p>
           </div>
           
-          <div className="flex flex-wrap gap-2 md:justify-end">
-            {incotermsList.map((term) => (
+          <div className="flex flex-wrap gap-2 md:justify-end" role="tablist" aria-label="Incoterms 조건 선택">
+            {incotermsList.map((term, idx) => (
               <button
                 key={term.code}
+                id={`incoterm-tab-${term.code}`}
+                role="tab"
+                aria-selected={selectedTerm === term.code}
+                aria-controls="incoterm-tabpanel"
+                tabIndex={selectedTerm === term.code ? 0 : -1}
+                onKeyDown={(e) => handleTabKeyDown(e, idx)}
                 onClick={() => setSelectedTerm(term.code)}
                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all border ${
-                  selectedTerm === term.code 
-                  ? 'bg-jways-blue border-jways-blue text-white shadow-lg shadow-blue-500/30 -translate-y-0.5' 
+                  selectedTerm === term.code
+                  ? 'bg-jways-blue border-jways-blue text-white shadow-lg shadow-blue-500/30 -translate-y-0.5'
                   : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-white/20'
                 }`}
               >
@@ -96,6 +113,9 @@ const IncotermsGuide: React.FC = () => {
           {currentTermInfo && (
             <motion.div
               key={currentTermInfo.code}
+              id="incoterm-tabpanel"
+              role="tabpanel"
+              aria-labelledby={`incoterm-tab-${currentTermInfo.code}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -127,7 +147,10 @@ const IncotermsGuide: React.FC = () => {
                   </div>
                   
                   {/* Progress Bar Track */}
-                  <div className="relative h-6 bg-slate-200 dark:bg-slate-800 rounded-full flex overflow-hidden mb-6 mx-4">
+                  <div
+                    role="img"
+                    aria-label={`${currentTermInfo.code} 조건: 수출자 ${currentTermInfo.code === 'DAP' ? '7/9' : `${currentTermInfo.sellerSteps}/9`}단계, 수입자 ${currentTermInfo.code === 'DAP' ? '2/9' : `${steps.length - currentTermInfo.sellerSteps}/9`}단계 부담`}
+                    className="relative h-6 bg-slate-200 dark:bg-slate-800 rounded-full flex overflow-hidden mb-6 mx-4">
                     <div 
                       className="absolute left-0 top-0 bottom-0 bg-jways-blue transition-all duration-700 ease-in-out z-10"
                       style={{ 
@@ -168,13 +191,13 @@ const IncotermsGuide: React.FC = () => {
                       }
 
                       return (
-                        <div key={step.id} className="flex flex-col items-center">
+                        <div key={step.id} className="flex flex-col items-center" aria-label={`${step.name}: ${isSeller ? '수출자 부담' : '수입자 부담'}`}>
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-3 z-30 shadow-sm transition-colors duration-500 ${
-                            isSeller 
-                            ? 'bg-jways-blue text-white ring-4 ring-blue-100 dark:ring-blue-900/30' 
+                            isSeller
+                            ? 'bg-jways-blue text-white ring-4 ring-blue-100 dark:ring-blue-900/30'
                             : 'bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 ring-4 ring-teal-50 dark:ring-teal-900/20'
                           }`}>
-                            {isSeller ? <Check size={14} strokeWidth={3} /> : <X size={14} strokeWidth={3} />}
+                            {isSeller ? <Check size={14} strokeWidth={3} aria-hidden="true" /> : <X size={14} strokeWidth={3} aria-hidden="true" />}
                           </div>
                           
                           <div className="text-center relative">
@@ -190,7 +213,7 @@ const IncotermsGuide: React.FC = () => {
                 </div>
               </div>
               
-              <div className="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-4 text-xs text-slate-500 dark:text-slate-400">
+              <div role="note" className="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-4 text-xs text-slate-500 dark:text-slate-400">
                 <ul className="list-disc list-inside space-y-1">
                   <li>실제 거래 시 당사자 간의 합의나 특약에 따라 위험 및 비용의 분기점이 변경될 수 있습니다.</li>
                   <li>본 표는 가장 대표적인 기준을 보여주는 인포그래픽이며 법적 효력을 갖지 않습니다.</li>
