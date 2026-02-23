@@ -1,1 +1,1 @@
-docs(pdca): logistics-wiki 완료 보고서 생성 (PDCA Cycle #6)
+docs(pdca): logistics-wiki 아카이브 완료 (PDCA Cycle #6 종료)

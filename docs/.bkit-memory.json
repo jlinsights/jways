@@ -5,6 +5,6 @@
     "platform": "claude",
     "level": "Dynamic"
   },
-  "currentFeature": "logistics-wiki",
-  "phase": "completed"
+  "currentFeature": null,
+  "phase": "archived"
 }

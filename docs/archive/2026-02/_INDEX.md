@@ -7,6 +7,7 @@
 | interactive-quote | 97% | 2026-02-23 | plan, design, analysis, report |
 | exchange-rate | 100% | 2026-02-23 | plan, design, analysis, report |
 | incoterms-guide | 100% | 2026-02-23 | plan, design, analysis, report |
+| logistics-wiki | 100% | 2026-02-23 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -42,3 +43,10 @@
 - `incoterms-guide/incoterms-guide.design.md` — Design document
 - `incoterms-guide/incoterms-guide.analysis.md` — Gap analysis (100% match, 1 iteration)
 - `incoterms-guide/incoterms-guide.report.md` — Completion report
+
+## logistics-wiki
+
+- `logistics-wiki/logistics-wiki.plan.md` — Plan document
+- `logistics-wiki/logistics-wiki.design.md` — Design document
+- `logistics-wiki/logistics-wiki.analysis.md` — Gap analysis (100% match, 1 iteration)
+- `logistics-wiki/logistics-wiki.report.md` — Completion report
