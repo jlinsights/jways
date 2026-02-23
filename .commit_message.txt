@@ -1,1 +1,1 @@
-docs(pdca): exchange-rate Plan 문서 생성 (실시간 고시 환율 위젯)
+docs(pdca): exchange-rate Design 문서 생성 (환율 위젯 UI/접근성 상세 명세)
