@@ -5,6 +5,6 @@
     "platform": "claude",
     "level": "Dynamic"
   },
-  "currentFeature": null,
-  "phase": null
+  "currentFeature": "customer-dashboard",
+  "phase": "plan"
 }

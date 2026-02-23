@@ -1,9 +1,20 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-02-24T03:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "lastUpdated": "2026-02-24T04:30:00.000Z",
+  "activeFeatures": ["customer-dashboard"],
+  "primaryFeature": "customer-dashboard",
   "features": {
+    "customer-dashboard": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/customer-dashboard.plan.md",
+      "designPath": null,
+      "analysisPath": null,
+      "reportPath": null,
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-24T04:30:00.000Z",
+      "updatedAt": "2026-02-24T04:30:00.000Z"
+    },
     "ux-ui-medium-priority": {
       "phase": "archived",
       "planPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.plan.md",
