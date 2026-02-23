@@ -1,1 +1,1 @@
-docs(pdca): exchange-rate Gap Analysis 완료 (Match Rate 95%, 접근성 Gap 5건)
+feat(ExchangeRate): 접근성 개선 — aria-label, role, aria-live 추가 (Match Rate 95%→100%)

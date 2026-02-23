@@ -209,13 +209,45 @@ Design 문서(`exchange-rate.design.md`) 대비 구현 코드(`ExchangeRate.tsx`
 
 ---
 
-## 6. Next Steps
+## 6. Act Phase — Iteration 1 결과
 
-- [x] Gap Analysis 완료 (Match Rate: 95%)
-- [ ] 접근성 Gap 5건 수정 (`/pdca iterate exchange-rate`)
-- [ ] 또는 Match Rate ≥ 90%이므로 완료 보고서 (`/pdca report exchange-rate`)
+### 6.1 수정 사항
 
-> **Note**: Match Rate가 95%로 90% 임계값을 초과하나, 접근성(Section 8)이 17%로 매우 낮습니다. 접근성 개선 후 보고서 작성을 권장합니다.
+| # | Gap | 수정 내용 | 위치 | Status |
+|---|-----|----------|------|--------|
+| 1 | 새로고침 aria-label | `aria-label="환율 정보 새로고침"` 추가 | L107 | ✅ Fixed |
+| 2 | 트렌드 뱃지 aria-label | `aria-label={상승/하락/보합 + change}` 추가 | L140 | ✅ Fixed |
+| 3 | 카드 role="group" | `role="group"` + `aria-label` 추가 | L122-123 | ✅ Fixed |
+| 4 | 로딩 aria-live | `aria-live="polite" aria-atomic="true"` 추가 | L98 | ✅ Fixed |
+| 5 | 시간 aria-live | Gap #4와 통합 (동일 div에 적용) | L98 | ✅ Fixed |
+
+### 6.2 재검증 결과
+
+```
+┌─────────────────────────────────────────────┐
+│  Post-Iteration Match Rate: 100%             │
+├─────────────────────────────────────────────┤
+│  Section 3 (Data Model):     3/3   (100%)   │
+│  Section 4 (UI/UX):        12/12  (100%)   │
+│  Section 5 (Animation):     3/3   (100%)   │
+│  Section 6 (Responsive):    2/2   (100%)   │
+│  Section 7 (Dark Mode):    21/21  (100%)   │
+│  Section 8 (Accessibility):  6/6  (100%)   │
+│  Sections 9-10 (File/Conv):  5/5  (100%)   │
+├─────────────────────────────────────────────┤
+│  ✅ Match: 52 items  │  ❌ Gap: 0 items     │
+│  Build: ✅ vite build 성공                   │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## 7. Next Steps
+
+- [x] Gap Analysis 완료 (Initial Match Rate: 95%)
+- [x] Act Iteration 1: 접근성 Gap 5건 수정 (Match Rate: 100%)
+- [x] 빌드 검증 통과 (`npm run build`)
+- [ ] 완료 보고서 작성 (`/pdca report exchange-rate`)
 
 ---
 
@@ -223,4 +255,5 @@ Design 문서(`exchange-rate.design.md`) 대비 구현 코드(`ExchangeRate.tsx`
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
-| 0.1 | 2026-02-23 | Initial analysis | Claude Code |
+| 0.1 | 2026-02-23 | Initial analysis (95%) | Claude Code |
+| 0.2 | 2026-02-23 | Act iteration 1 — 접근성 5건 수정 (100%) | Claude Code |

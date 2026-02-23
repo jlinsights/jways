@@ -33,10 +33,10 @@
       "planPath": "docs/01-plan/features/exchange-rate.plan.md",
       "designPath": "docs/02-design/features/exchange-rate.design.md",
       "analysisPath": "docs/03-analysis/exchange-rate.analysis.md",
-      "matchRate": 95,
-      "iterations": 0,
+      "matchRate": 100,
+      "iterations": 1,
       "createdAt": "2026-02-23T13:00:00.000Z",
-      "updatedAt": "2026-02-23T15:00:00.000Z"
+      "updatedAt": "2026-02-23T15:30:00.000Z"
     },
     "milestone-tracking": {
       "phase": "archived",
@@ -187,6 +187,13 @@
       "feature": "exchange-rate",
       "matchRate": 95,
       "timestamp": "2026-02-23T15:00:00.000Z"
+    },
+    {
+      "action": "act",
+      "feature": "exchange-rate",
+      "matchRate": 100,
+      "iteration": 1,
+      "timestamp": "2026-02-23T15:30:00.000Z"
     }
   ]
 }

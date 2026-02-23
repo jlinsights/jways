@@ -95,7 +95,7 @@ const ExchangeRate: React.FC = () => {
           </div>
           <div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">실시간 고시 환율</h3>
-            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5" aria-live="polite" aria-atomic="true">
               <Clock size={12} />
               <span>{lastUpdated ? `${formatTime(lastUpdated)} 기준` : '업데이트 중...'}</span>
             </div>
@@ -104,6 +104,7 @@ const ExchangeRate: React.FC = () => {
         <button
           onClick={fetchRates}
           disabled={isLoading}
+          aria-label="환율 정보 새로고침"
           className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
         >
           <RefreshCw size={14} className={isLoading ? 'animate-spin' : ''} />
@@ -118,6 +119,8 @@ const ExchangeRate: React.FC = () => {
             {rates.map((rate, idx) => (
               <motion.div
                 key={rate.id}
+                role="group"
+                aria-label={`${rate.currency} 환율 정보`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: idx * 0.1 }}
@@ -133,9 +136,11 @@ const ExchangeRate: React.FC = () => {
                       <span className="text-[10px] text-slate-500 dark:text-slate-400">{rate.name}</span>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
-                    rate.trend === 'up' ? 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20' : 
-                    rate.trend === 'down' ? 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' : 
+                  <div
+                    aria-label={`${rate.trend === 'up' ? '상승' : rate.trend === 'down' ? '하락' : '보합'} ${rate.change}`}
+                    className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
+                    rate.trend === 'up' ? 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20' :
+                    rate.trend === 'down' ? 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' :
                     'text-slate-600 bg-slate-100 dark:text-slate-400 dark:bg-slate-800'
                   }`}>
                     {rate.trend === 'up' ? <TrendingUp size={12} /> : rate.trend === 'down' ? <TrendingDown size={12} /> : null}
