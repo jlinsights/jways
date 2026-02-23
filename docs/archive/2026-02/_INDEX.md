@@ -11,6 +11,7 @@
 | advanced-tracking-tracing | 97% | 2026-02-24 | plan, design, analysis, report |
 | ux-ui-medium-priority | 100% | 2026-02-24 | plan, design, analysis, report |
 | customer-dashboard | 93% | 2026-02-24 | plan, design, analysis, report |
+| instant-quote | 96% | 2026-02-24 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -74,3 +75,10 @@
 - `customer-dashboard/customer-dashboard.design.md` — Design document
 - `customer-dashboard/customer-dashboard.analysis.md` — Gap analysis (93% match, 0 iterations)
 - `customer-dashboard/customer-dashboard.report.md` — Completion report
+
+## instant-quote
+
+- `instant-quote/instant-quote.plan.md` — Plan document
+- `instant-quote/instant-quote.design.md` — Design document
+- `instant-quote/instant-quote.analysis.md` — Gap analysis (96% match, 0 iterations)
+- `instant-quote/instant-quote.report.md` — Completion report
