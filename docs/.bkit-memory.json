@@ -5,6 +5,6 @@
     "platform": "claude",
     "level": "Dynamic"
   },
-  "currentFeature": "milestone-tracking",
-  "phase": "completed"
+  "currentFeature": null,
+  "phase": "idle"
 }
