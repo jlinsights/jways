@@ -12,6 +12,7 @@
 | ux-ui-medium-priority | 100% | 2026-02-24 | plan, design, analysis, report |
 | customer-dashboard | 93% | 2026-02-24 | plan, design, analysis, report |
 | instant-quote | 96% | 2026-02-24 | plan, design, analysis, report |
+| ESG-CO2 | 93% | 2026-02-24 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -82,3 +83,10 @@
 - `instant-quote/instant-quote.design.md` — Design document
 - `instant-quote/instant-quote.analysis.md` — Gap analysis (96% match, 0 iterations)
 - `instant-quote/instant-quote.report.md` — Completion report
+
+## ESG-CO2
+
+- `ESG-CO2/ESG-CO2.plan.md` — Plan document
+- `ESG-CO2/ESG-CO2.design.md` — Design document
+- `ESG-CO2/ESG-CO2.analysis.md` — Gap analysis (93% match, 0 iterations)
+- `ESG-CO2/ESG-CO2.report.md` — Completion report
