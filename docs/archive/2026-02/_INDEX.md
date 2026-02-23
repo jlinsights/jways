@@ -6,6 +6,7 @@
 | milestone-tracking | 94% | 2026-02-23 | plan, design, analysis, report |
 | interactive-quote | 97% | 2026-02-23 | plan, design, analysis, report |
 | exchange-rate | 100% | 2026-02-23 | plan, design, analysis, report |
+| incoterms-guide | 100% | 2026-02-23 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -34,3 +35,10 @@
 - `exchange-rate/exchange-rate.design.md` — Design document
 - `exchange-rate/exchange-rate.analysis.md` — Gap analysis (100% match, 1 iteration)
 - `exchange-rate/exchange-rate.report.md` — Completion report
+
+## incoterms-guide
+
+- `incoterms-guide/incoterms-guide.plan.md` — Plan document
+- `incoterms-guide/incoterms-guide.design.md` — Design document
+- `incoterms-guide/incoterms-guide.analysis.md` — Gap analysis (100% match, 1 iteration)
+- `incoterms-guide/incoterms-guide.report.md` — Completion report

@@ -1,19 +1,20 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": ["incoterms-guide"],
-  "primaryFeature": "incoterms-guide",
+  "activeFeatures": [],
+  "primaryFeature": null,
   "features": {
     "incoterms-guide": {
-      "phase": "completed",
-      "planPath": "docs/01-plan/features/incoterms-guide.plan.md",
-      "designPath": "docs/02-design/features/incoterms-guide.design.md",
-      "analysisPath": "docs/03-analysis/incoterms-guide.analysis.md",
-      "reportPath": "docs/04-report/incoterms-guide.report.md",
+      "phase": "archived",
+      "planPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.plan.md",
+      "designPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.design.md",
+      "analysisPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.analysis.md",
+      "reportPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.report.md",
+      "archivedTo": "docs/archive/2026-02/incoterms-guide/",
       "matchRate": 100,
       "iterations": 1,
       "createdAt": "2026-02-23T17:00:00.000Z",
-      "updatedAt": "2026-02-23T19:00:00.000Z"
+      "updatedAt": "2026-02-23T19:30:00.000Z"
     },
     "interactive-quote": {
       "phase": "archived",
@@ -246,6 +247,12 @@
       "action": "report",
       "feature": "incoterms-guide",
       "timestamp": "2026-02-23T19:00:00.000Z"
+    },
+    {
+      "action": "archive",
+      "feature": "incoterms-guide",
+      "archivedTo": "docs/archive/2026-02/incoterms-guide/",
+      "timestamp": "2026-02-23T19:30:00.000Z"
     }
   ]
 }
