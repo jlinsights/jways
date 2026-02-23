@@ -65,14 +65,15 @@
       "updatedAt": "2026-02-23T00:00:00.000Z"
     },
     "logistics-wiki": {
-      "phase": "check",
+      "phase": "completed",
       "planPath": "docs/01-plan/features/logistics-wiki.plan.md",
       "designPath": "docs/02-design/features/logistics-wiki.design.md",
       "analysisPath": "docs/03-analysis/logistics-wiki.analysis.md",
+      "reportPath": "docs/04-report/logistics-wiki.report.md",
       "matchRate": 100,
       "iterations": 1,
       "createdAt": "2026-02-23T19:30:00.000Z",
-      "updatedAt": "2026-02-23T21:30:00.000Z"
+      "updatedAt": "2026-02-23T22:00:00.000Z"
     }
   },
   "pipeline": {
@@ -286,6 +287,11 @@
       "matchRate": 100,
       "iteration": 1,
       "timestamp": "2026-02-23T21:30:00.000Z"
+    },
+    {
+      "action": "report",
+      "feature": "logistics-wiki",
+      "timestamp": "2026-02-23T22:00:00.000Z"
     }
   ]
 }

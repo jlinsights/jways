@@ -1,1 +1,1 @@
-feat(a11y): logistics-wiki 접근성 11개 Gap 수정 - 100% (PDCA Cycle #6)
+docs(pdca): logistics-wiki 완료 보고서 생성 (PDCA Cycle #6)
