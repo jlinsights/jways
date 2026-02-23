@@ -1,1 +1,1 @@
-docs(pdca): advanced-tracking-tracing Plan 문서 생성 (PDCA Cycle #7 시작)
+docs(pdca): advanced-tracking-tracing Design 문서 생성 (PDCA Cycle #7)
