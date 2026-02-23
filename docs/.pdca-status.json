@@ -1,9 +1,17 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "activeFeatures": ["incoterms-guide"],
+  "primaryFeature": "incoterms-guide",
   "features": {
+    "incoterms-guide": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/incoterms-guide.plan.md",
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-23T17:00:00.000Z",
+      "updatedAt": "2026-02-23T17:00:00.000Z"
+    },
     "interactive-quote": {
       "phase": "archived",
       "planPath": "docs/archive/2026-02/interactive-quote/interactive-quote.plan.md",
@@ -207,6 +215,11 @@
       "feature": "exchange-rate",
       "archivedTo": "docs/archive/2026-02/exchange-rate/",
       "timestamp": "2026-02-23T16:30:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "incoterms-guide",
+      "timestamp": "2026-02-23T17:00:00.000Z"
     }
   ]
 }

@@ -1,1 +1,1 @@
-docs(pdca): exchange-rate 아카이브 완료 (PDCA Cycle #4, Match Rate 100%)
+docs(pdca): incoterms-guide Plan 문서 생성 (PDCA Cycle #5)
