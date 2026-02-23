@@ -74,7 +74,7 @@ const LogisticsWiki: React.FC = () => {
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm text-indigo-100">
-              <BookOpen size={20} />
+              <BookOpen size={20} aria-hidden="true" />
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-bold">물류 백과사전 & FAQ</h3>
@@ -84,11 +84,13 @@ const LogisticsWiki: React.FC = () => {
 
           <div className="relative mt-6 max-w-xl">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300">
-              <Search size={18} />
+              <Search size={18} aria-hidden="true" />
             </div>
-            <input 
-              type="text" 
-              placeholder="FCL, 적하보험, 관세 등 검색어 입력..." 
+            <input
+              type="text"
+              role="searchbox"
+              aria-label="물류 용어 검색"
+              placeholder="FCL, 적하보험, 관세 등 검색어 입력..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-white/10 border border-white/20 hover:border-white/40 focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder:text-indigo-200/70 rounded-2xl py-3 pl-12 pr-4 transition-all"
@@ -98,7 +100,7 @@ const LogisticsWiki: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="p-6 md:p-8 max-h-[600px] overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-slate-950">
+      <div className="p-6 md:p-8 max-h-[600px] overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-slate-950" aria-live="polite">
         {filteredData.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-slate-500 dark:text-slate-400">"{searchTerm}"에 대한 검색 결과가 없습니다.</p>
@@ -107,35 +109,40 @@ const LogisticsWiki: React.FC = () => {
           <div className="space-y-8">
             {filteredData.map((category, cIdx) => (
               <div key={cIdx} className="space-y-4">
-                <h4 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
-                  <Hash size={16} className="text-jways-blue" />
+                <h4 className="text-lg font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2" role="heading" aria-level={4}>
+                  <Hash size={16} className="text-jways-blue" aria-hidden="true" />
                   {category.category}
                 </h4>
-                
+
                 <div className="space-y-3">
                   {category.items.map((item) => {
-                    const isExpanded = expandedItems.includes(item.term) || searchTerm.trim().length > 0;
-                    
+                    const isOpen = expandedItems.includes(item.term) || searchTerm.trim().length > 0;
+                    const contentId = `wiki-content-${item.term.replace(/[^a-zA-Z0-9가-힣]/g, '-')}`;
+
                     return (
-                      <div 
-                        key={item.term} 
+                      <div
+                        key={item.term}
                         className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden transition-all hover:border-jways-blue/30"
                       >
-                        <button 
+                        <button
                           onClick={() => toggleItem(item.term)}
+                          aria-expanded={isOpen}
+                          aria-controls={contentId}
                           className="w-full flex items-center justify-between p-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-jways-blue/50"
                         >
                           <span className="font-bold text-slate-900 dark:text-white text-sm md:text-base pr-4">
                             {item.term}
                           </span>
-                          <span className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
-                            <ChevronDown size={18} />
+                          <span className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                            <ChevronDown size={18} aria-hidden="true" />
                           </span>
                         </button>
-                        
+
                         <AnimatePresence>
-                          {isExpanded && (
+                          {isOpen && (
                             <motion.div
+                              id={contentId}
+                              role="region"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}

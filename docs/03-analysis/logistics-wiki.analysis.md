@@ -9,11 +9,11 @@
 
 | Metric | Value |
 |--------|-------|
-| **Match Rate** | **82.8%** (53/64) |
+| **Match Rate** | **100%** (64/64) |
 | **Total Items** | 64 |
-| **Matched** | 53 |
-| **Gaps** | 11 |
-| **Status** | Needs Improvement (< 90%) |
+| **Matched** | 64 |
+| **Gaps** | 0 |
+| **Status** | Passed |
 
 ## Section-by-Section Results
 
@@ -79,23 +79,23 @@
 - [x] Desktop text size (md:text-base)
 - [x] Full width layout on all screens
 
-### Section 8: Accessibility (0/10) - 0%
+### Section 8: Accessibility (10/10) - 100%
 
-#### Must Have (0/5)
-- [ ] Search input `aria-label="물류 용어 검색"`
-- [ ] Accordion button `aria-expanded={isExpanded(key)}`
-- [ ] Accordion button `aria-controls={contentId}`
-- [ ] Accordion content `id={contentId}`
-- [ ] Accordion content `role="region"`
+#### Must Have (5/5)
+- [x] Search input `aria-label="물류 용어 검색"` (L92)
+- [x] Accordion button `aria-expanded={isOpen}` (L129)
+- [x] Accordion button `aria-controls={contentId}` (L130)
+- [x] Accordion content `id={contentId}` (L144)
+- [x] Accordion content `role="region"` (L145)
 
-#### Should Have (0/3)
-- [ ] Search input `role="searchbox"`
-- [ ] Search results area `aria-live="polite"` for dynamic updates
-- [ ] Category heading with explicit ARIA (e.g., `role="heading"`)
+#### Should Have (3/3)
+- [x] Search input `role="searchbox"` (L91)
+- [x] Search results area `aria-live="polite"` (L103)
+- [x] Category heading `role="heading" aria-level={4}` (L112)
 
-#### Nice to Have (0/2)
-- [ ] Decorative icons (Hash, BookOpen) `aria-hidden="true"`
-- [ ] Search icon `aria-hidden="true"`
+#### Nice to Have (2/2)
+- [x] Decorative icons (Hash L113, BookOpen L77) `aria-hidden="true"`
+- [x] Search icon (L87) and ChevronDown (L137) `aria-hidden="true"`
 
 ### Section 9: Dark Mode (5/5) - 100%
 - [x] Background colors with dark: variants
@@ -109,27 +109,27 @@
 
 ## Gap Summary
 
-| # | Section | Item | Priority | Status |
-|---|---------|------|----------|--------|
-| 1 | 8. Accessibility | Search input `aria-label` | Must | Missing |
-| 2 | 8. Accessibility | Accordion `aria-expanded` | Must | Missing |
-| 3 | 8. Accessibility | Accordion `aria-controls` | Must | Missing |
-| 4 | 8. Accessibility | Content `id` for aria-controls | Must | Missing |
-| 5 | 8. Accessibility | Content `role="region"` | Must | Missing |
-| 6 | 8. Accessibility | Search `role="searchbox"` | Should | Missing |
-| 7 | 8. Accessibility | Results `aria-live="polite"` | Should | Missing |
-| 8 | 8. Accessibility | Category heading ARIA | Should | Missing |
-| 9 | 8. Accessibility | Decorative icons `aria-hidden` | Nice | Missing |
-| 10 | 8. Accessibility | Search icon `aria-hidden` | Nice | Missing |
+All gaps resolved. No remaining items.
 
-## Recommendations
+## Act Iteration 1 Summary
 
-1. **Immediate**: Add all 5 Must Have accessibility attributes to accordion and search
-2. **High Priority**: Add 3 Should Have items (role="searchbox", aria-live, heading ARIA)
-3. **Nice to Have**: Add aria-hidden to decorative icons (Hash, BookOpen, Search, ChevronDown)
-4. All non-accessibility sections are at 100% - implementation matches design well
+| Metric | Before | After |
+|--------|--------|-------|
+| Match Rate | 82.8% (53/64) | **100% (64/64)** |
+| Gaps | 11 | **0** |
+| Build | Pass | **Pass** |
 
-## Next Steps
+### Changes Made (Iteration 1)
+1. Added `aria-label="물류 용어 검색"` to search input
+2. Added `role="searchbox"` to search input
+3. Added `aria-expanded={isOpen}` to accordion buttons
+4. Added `aria-controls={contentId}` to accordion buttons
+5. Added `id={contentId}` to accordion content panels
+6. Added `role="region"` to accordion content panels
+7. Added `aria-live="polite"` to search results container
+8. Added `role="heading" aria-level={4}` to category headings
+9. Added `aria-hidden="true"` to decorative icons (BookOpen, Hash)
+10. Added `aria-hidden="true"` to functional icons (Search, ChevronDown)
+11. Generated stable `contentId` via term string sanitization
 
-- Match Rate 82.8% < 90% threshold
-- Run `/pdca iterate logistics-wiki` for automatic improvement
+All 11 accessibility gaps fixed in a single iteration.

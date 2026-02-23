@@ -1,1 +1,1 @@
-docs(pdca): logistics-wiki Gap Analysis 완료 - 82.8% (PDCA Cycle #6)
+feat(a11y): logistics-wiki 접근성 11개 Gap 수정 - 100% (PDCA Cycle #6)
