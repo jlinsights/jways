@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, MapPin, Package, ArrowRight, Truck, CheckCircle2, Clock,
-  X, Loader2, Plane, Ship, FileCheck, ChevronDown, Timer,
+  X, Loader2, Plane, Ship, FileCheck, ChevronDown, Timer, Bell,
 } from 'lucide-react';
 import { ShipmentData, TrackingStep, MilestoneCategory, MilestoneCategoryGroup, TransportMode } from '../types';
 import ShipmentMap from './ShipmentMap';
@@ -260,6 +260,8 @@ const Tracking: React.FC = () => {
   const [shipment, setShipment] = useState<ShipmentData | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [searchType, setSearchType] = useState('bl');
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -288,6 +290,7 @@ const Tracking: React.FC = () => {
     setTrackingId('');
     setErrorMessage('');
     setExpandedIds(new Set());
+    setIsSubscribed(false);
   };
 
   const toggleExpand = (id: string) => {
@@ -327,19 +330,37 @@ const Tracking: React.FC = () => {
           <div className={`flex flex-col md:flex-row items-center gap-2 transition-all duration-500 ${
              searchStatus === 'success' ? 'bg-slate-50 dark:bg-slate-950 p-4 md:p-6 border-b border-slate-100 dark:border-slate-800' : ''
           }`}>
-            <div className={`flex-1 w-full relative transition-all ${searchStatus === 'success' ? 'md:max-w-md' : ''}`}>
-              <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-jways-blue' : 'text-slate-400'}`}>
-                <Search size={20} aria-hidden="true" />
+            <div className={`flex-1 w-full relative transition-all flex gap-2 ${searchStatus === 'success' ? 'md:max-w-md' : ''}`}>
+              <div className="relative shrink-0">
+                <select 
+                  value={searchType}
+                  onChange={(e) => setSearchType(e.target.value)}
+                  className={`appearance-none bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl pl-4 pr-8 focus:outline-none focus:ring-2 focus:ring-jways-blue/20 transition-all font-bold cursor-pointer ${
+                    searchStatus === 'success' ? 'h-12 text-sm' : 'h-14 md:h-16 text-sm md:text-base'
+                  }`}
+                  aria-label="Search Type"
+                >
+                  <option value="bl">B/L No.</option>
+                  <option value="container">Container No.</option>
+                  <option value="booking">Booking No.</option>
+                </select>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                  <ChevronDown size={16} />
+                </div>
               </div>
-              <form onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  aria-label="Tracking Number Input"
-                  placeholder="운송장 번호 입력 (예: JW-8839-KR, JW-2201-SEA)"
-                  className={`w-full pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 outline-none focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-jways-blue/20 transition-all font-medium ${
-                    searchStatus === 'success' ? 'h-12 text-base border border-slate-200 dark:border-slate-700' : 'h-14 md:h-16 text-lg'
-                  } ${searchStatus === 'error' ? 'border-red-500 ring-2 ring-red-500/20' : ''}`}
-                  value={trackingId}
+              <div className="relative flex-1">
+                <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-jways-blue' : 'text-slate-400'}`}>
+                  <Search size={20} aria-hidden="true" />
+                </div>
+                <form onSubmit={handleSearch} className="w-full">
+                  <input
+                    type="text"
+                    aria-label="Tracking Number Input"
+                    placeholder="번호 입력 (예: JW-8839-KR)"
+                    className={`w-full pl-12 pr-10 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-400 outline-none focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-jways-blue/20 transition-all font-medium border ${
+                      searchStatus === 'success' ? 'h-12 text-base border-slate-200 dark:border-slate-700' : 'h-14 md:h-16 text-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'
+                    } ${searchStatus === 'error' ? 'border-red-500 ring-2 ring-red-500/20' : ''}`}
+                    value={trackingId}
                   onChange={(e) => {
                     setTrackingId(e.target.value);
                     if (searchStatus === 'error') {
@@ -350,17 +371,18 @@ const Tracking: React.FC = () => {
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   readOnly={searchStatus === 'loading'}
-                />
-              </form>
-              {trackingId && (
-                <button
-                    type="button"
-                    onClick={clearSearch}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors"
-                >
-                    <X size={16} />
-                </button>
-              )}
+                  />
+                </form>
+                {trackingId && (
+                  <button
+                      type="button"
+                      onClick={clearSearch}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors"
+                  >
+                      <X size={16} />
+                  </button>
+                )}
+              </div>
             </div>
 
             <AnimatePresence mode='popLayout'>
@@ -449,14 +471,27 @@ const Tracking: React.FC = () => {
                                   >
                                     {shipment.mode === 'air' ? <Plane size={12} /> : <Ship size={12} />}
                                     {shipment.mode === 'air' ? 'Air Freight' : 'Sea Freight'}
-                                  </motion.span>
-                                )}
-                            </div>
-                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-3">
+                              </motion.span>
+                            )}
+                        </div>
+                        <div className="flex items-center justify-between mb-3">
+                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
                               Tracking ID: <span className="font-mono text-slate-700 dark:text-slate-300">{shipment.id}</span>
                             </p>
+                            <button
+                              onClick={() => setIsSubscribed(!isSubscribed)}
+                              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${
+                                isSubscribed 
+                                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
+                                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                              }`}
+                            >
+                              <Bell size={14} className={isSubscribed ? "fill-blue-500" : ""} />
+                              {isSubscribed ? '알림 설정됨' : '알림 받기'}
+                            </button>
+                        </div>
 
-                            {/* Progress Bar */}
+                        {/* Progress Bar */}
                             <div
                               role="progressbar"
                               aria-valuenow={shipment.totalProgress ?? 0}

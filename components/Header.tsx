@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, Globe, ChevronRight, Sun, Moon } from 'lucide-react';
 import { NavItem } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -146,6 +147,12 @@ const Header: React.FC = () => {
           >
             Contact Us
           </a>
+          <Link
+            to="/dashboard"
+            className="px-4 py-2 text-sm font-medium text-white border border-jways-blue bg-jways-blue/20 rounded-full hover:bg-jways-blue transition-all"
+          >
+            화주 포털
+          </Link>
           <a
             href="#track"
             onClick={(e) => handleNavClick(e, '#track')}
@@ -277,6 +284,13 @@ const Header: React.FC = () => {
                 ))}
               </ul>
               <div className="h-px bg-white/10 w-full my-2" aria-hidden="true" />
+              <Link
+                to="/dashboard"
+                className="flex items-center justify-center w-full py-3 bg-white/10 text-white rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-jways-navy mb-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                화주 전용 포털
+              </Link>
               <a
                 href="#track"
                 className="flex items-center justify-center w-full py-3 bg-jways-blue text-white rounded-lg font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-jways-navy"

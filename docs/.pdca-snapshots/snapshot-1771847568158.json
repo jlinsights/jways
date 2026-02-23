@@ -1,0 +1,308 @@
+{
+  "timestamp": "2026-02-23T11:52:48.152Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-02-22T18:00:00.000Z",
+    "activeFeatures": [],
+    "primaryFeature": null,
+    "features": {
+      "incoterms-guide": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.plan.md",
+        "designPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.design.md",
+        "analysisPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.analysis.md",
+        "reportPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.report.md",
+        "archivedTo": "docs/archive/2026-02/incoterms-guide/",
+        "matchRate": 100,
+        "iterations": 1,
+        "createdAt": "2026-02-23T17:00:00.000Z",
+        "updatedAt": "2026-02-23T19:30:00.000Z"
+      },
+      "interactive-quote": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/interactive-quote/interactive-quote.plan.md",
+        "designPath": "docs/archive/2026-02/interactive-quote/interactive-quote.design.md",
+        "analysisPath": "docs/archive/2026-02/interactive-quote/interactive-quote.analysis.md",
+        "reportPath": "docs/archive/2026-02/interactive-quote/interactive-quote.report.md",
+        "archivedTo": "docs/archive/2026-02/interactive-quote/",
+        "matchRate": 97,
+        "iterations": 1,
+        "createdAt": "2026-02-23T06:00:00.000Z",
+        "updatedAt": "2026-02-23T12:00:00.000Z"
+      },
+      "CBM-Calculator": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.plan.md",
+        "designPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.design.md",
+        "analysisPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.analysis.md",
+        "reportPath": "docs/archive/2026-02/CBM-Calculator/CBM-Calculator.report.md",
+        "archivedTo": "docs/archive/2026-02/CBM-Calculator/",
+        "matchRate": 97,
+        "iterations": 0,
+        "createdAt": "2026-02-22T12:00:00.000Z",
+        "updatedAt": "2026-02-22T17:00:00.000Z"
+      },
+      "exchange-rate": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/exchange-rate/exchange-rate.plan.md",
+        "designPath": "docs/archive/2026-02/exchange-rate/exchange-rate.design.md",
+        "analysisPath": "docs/archive/2026-02/exchange-rate/exchange-rate.analysis.md",
+        "reportPath": "docs/archive/2026-02/exchange-rate/exchange-rate.report.md",
+        "archivedTo": "docs/archive/2026-02/exchange-rate/",
+        "matchRate": 100,
+        "iterations": 1,
+        "createdAt": "2026-02-23T13:00:00.000Z",
+        "updatedAt": "2026-02-23T16:30:00.000Z"
+      },
+      "milestone-tracking": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/milestone-tracking/milestone-tracking.plan.md",
+        "designPath": "docs/archive/2026-02/milestone-tracking/milestone-tracking.design.md",
+        "analysisPath": "docs/archive/2026-02/milestone-tracking/milestone-tracking.analysis.md",
+        "reportPath": "docs/archive/2026-02/milestone-tracking/milestone-tracking.report.md",
+        "archivedTo": "docs/archive/2026-02/milestone-tracking/",
+        "matchRate": 94,
+        "iterations": 1,
+        "createdAt": "2026-02-22T18:00:00.000Z",
+        "updatedAt": "2026-02-23T00:00:00.000Z"
+      },
+      "logistics-wiki": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.plan.md",
+        "designPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.design.md",
+        "analysisPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.analysis.md",
+        "reportPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.report.md",
+        "archivedTo": "docs/archive/2026-02/logistics-wiki/",
+        "matchRate": 100,
+        "iterations": 1,
+        "createdAt": "2026-02-23T19:30:00.000Z",
+        "updatedAt": "2026-02-23T22:30:00.000Z"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-02-22T07:19:35.727Z",
+      "onboardingCompleted": true,
+      "lastActivity": "2026-02-23T11:00:00.000Z"
+    },
+    "history": [
+      {
+        "action": "plan",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T12:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T13:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T14:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "CBM-Calculator",
+        "matchRate": 97,
+        "timestamp": "2026-02-22T15:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "CBM-Calculator",
+        "timestamp": "2026-02-22T16:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "CBM-Calculator",
+        "archivedTo": "docs/archive/2026-02/CBM-Calculator/",
+        "timestamp": "2026-02-22T17:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T18:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T19:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T20:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "milestone-tracking",
+        "matchRate": 87,
+        "timestamp": "2026-02-22T21:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "milestone-tracking",
+        "matchRate": 94,
+        "iteration": 1,
+        "timestamp": "2026-02-22T22:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "milestone-tracking",
+        "timestamp": "2026-02-22T22:30:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "milestone-tracking",
+        "archivedTo": "docs/archive/2026-02/milestone-tracking/",
+        "timestamp": "2026-02-23T00:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "interactive-quote",
+        "timestamp": "2026-02-23T06:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "interactive-quote",
+        "timestamp": "2026-02-23T07:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "interactive-quote",
+        "timestamp": "2026-02-23T08:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "interactive-quote",
+        "matchRate": 91,
+        "timestamp": "2026-02-23T09:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "interactive-quote",
+        "matchRate": 97,
+        "iteration": 1,
+        "timestamp": "2026-02-23T10:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "interactive-quote",
+        "timestamp": "2026-02-23T11:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "interactive-quote",
+        "archivedTo": "docs/archive/2026-02/interactive-quote/",
+        "timestamp": "2026-02-23T12:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "exchange-rate",
+        "timestamp": "2026-02-23T13:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "exchange-rate",
+        "timestamp": "2026-02-23T14:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "exchange-rate",
+        "matchRate": 95,
+        "timestamp": "2026-02-23T15:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "exchange-rate",
+        "matchRate": 100,
+        "iteration": 1,
+        "timestamp": "2026-02-23T15:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "exchange-rate",
+        "timestamp": "2026-02-23T16:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "exchange-rate",
+        "archivedTo": "docs/archive/2026-02/exchange-rate/",
+        "timestamp": "2026-02-23T16:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "incoterms-guide",
+        "timestamp": "2026-02-23T17:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "incoterms-guide",
+        "timestamp": "2026-02-23T17:30:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "incoterms-guide",
+        "matchRate": 82,
+        "timestamp": "2026-02-23T18:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "incoterms-guide",
+        "matchRate": 100,
+        "iteration": 1,
+        "timestamp": "2026-02-23T18:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "incoterms-guide",
+        "timestamp": "2026-02-23T19:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "incoterms-guide",
+        "archivedTo": "docs/archive/2026-02/incoterms-guide/",
+        "timestamp": "2026-02-23T19:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T20:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T20:30:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "logistics-wiki",
+        "matchRate": 83,
+        "timestamp": "2026-02-23T21:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "logistics-wiki",
+        "matchRate": 100,
+        "iteration": 1,
+        "timestamp": "2026-02-23T21:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T22:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "logistics-wiki",
+        "archivedTo": "docs/archive/2026-02/logistics-wiki/",
+        "timestamp": "2026-02-23T22:30:00.000Z"
+      }
+    ]
+  }
+}

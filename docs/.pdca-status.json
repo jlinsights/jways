@@ -1,8 +1,8 @@
 {
   "version": "2.0",
   "lastUpdated": "2026-02-22T18:00:00.000Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
+  "activeFeatures": ["advanced-tracking-tracing"],
+  "primaryFeature": "advanced-tracking-tracing",
   "features": {
     "incoterms-guide": {
       "phase": "archived",
@@ -75,6 +75,14 @@
       "iterations": 1,
       "createdAt": "2026-02-23T19:30:00.000Z",
       "updatedAt": "2026-02-23T22:30:00.000Z"
+    },
+    "advanced-tracking-tracing": {
+      "phase": "plan",
+      "planPath": "docs/01-plan/features/advanced-tracking-tracing.plan.md",
+      "matchRate": null,
+      "iterations": 0,
+      "createdAt": "2026-02-23T23:00:00.000Z",
+      "updatedAt": "2026-02-23T23:00:00.000Z"
     }
   },
   "pipeline": {
@@ -299,6 +307,11 @@
       "feature": "logistics-wiki",
       "archivedTo": "docs/archive/2026-02/logistics-wiki/",
       "timestamp": "2026-02-23T22:30:00.000Z"
+    },
+    {
+      "action": "plan",
+      "feature": "advanced-tracking-tracing",
+      "timestamp": "2026-02-23T23:00:00.000Z"
     }
   ]
 }
