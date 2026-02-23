@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Package, Truck, FileCheck, CheckCircle2, TrendingUp, TrendingDown, Leaf } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getShipments } from '../../lib/api';
+import { calculateAllShipmentsCO2, calculateESGScore } from '../../lib/co2';
 
 const mockData = [
   { name: '1월', imports: 4000, exports: 2400 },
@@ -13,6 +15,19 @@ const mockData = [
 ];
 
 const DashboardHome: React.FC = () => {
+  const [monthlyCO2, setMonthlyCO2] = useState<number>(2450);
+  const [esgGrade, setEsgGrade] = useState<string>('A');
+
+  useEffect(() => {
+    getShipments().then(shipments => {
+      const co2s = calculateAllShipmentsCO2(shipments);
+      const total = co2s.reduce((sum, s) => sum + s.co2Kg, 0);
+      setMonthlyCO2(Math.round(total));
+      const score = calculateESGScore(co2s);
+      setEsgGrade(score.grade);
+    });
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Welcome & Stats */}
@@ -82,14 +97,17 @@ const DashboardHome: React.FC = () => {
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">ESG 탄소 배출량 리포트</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">이번 달 귀사의 화물 운송으로 발생한 예상 탄소 배출량입니다.</p>
             
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="flex items-end gap-2 mb-1">
-                <span className="text-4xl font-black text-teal-700 dark:text-teal-400">2,450</span>
+                <span className="text-4xl font-black text-teal-700 dark:text-teal-400">{monthlyCO2.toLocaleString()}</span>
                 <span className="text-slate-500 font-bold mb-1">kg CO₂e</span>
               </div>
               <div className="flex items-center gap-1 text-sm font-medium text-green-600">
-                <TrendingDown size={14} /> 지난달 대비 12% 감소
+                <TrendingDown size={14} /> Tariff Engine 기반 산출
               </div>
+            </div>
+            <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-sm font-bold">
+              ESG 등급: {esgGrade}
             </div>
           </div>
 

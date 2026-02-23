@@ -330,3 +330,68 @@ export interface InstantQuoteFormData {
   incoterms: Incoterms;
   containerType: ContainerType;
 }
+
+// ─── ESG & CO2 Types ───
+
+export interface ShipmentCO2 {
+  shipmentId: string;
+  blNumber: string;
+  origin: string;
+  destination: string;
+  mode: TransportMode;
+  weightKg: number;
+  co2Kg: number;
+  co2PerKg: number;
+  routeKey: string;
+  departureDate: string;
+}
+
+export interface MonthlyCO2 {
+  month: string;
+  emissions: number;
+  target: number;
+  shipmentCount: number;
+}
+
+export interface ModeCO2 {
+  name: string;
+  value: number;
+  shipmentCount: number;
+  avgCO2PerKg: number;
+}
+
+export interface ESGScore {
+  environmental: number;
+  social: number;
+  governance: number;
+  overall: number;
+  grade: 'A+' | 'A' | 'B+' | 'B' | 'C' | 'D';
+}
+
+export interface ReductionScenario {
+  shipmentId: string;
+  currentMode: TransportMode;
+  currentCO2: number;
+  alternativeMode: TransportMode;
+  alternativeCO2: number;
+  savedCO2: number;
+  savedPercent: number;
+  additionalDays: string;
+  costDifference: string;
+}
+
+export interface CarbonOffsetProgram {
+  name: string;
+  description: string;
+  priceRange: string;
+  certification: string;
+}
+
+export interface CarbonOffsetEstimate {
+  totalCO2Kg: number;
+  totalCO2Tonnes: number;
+  pricePerTonne: { min: number; max: number };
+  estimatedCost: { min: number; max: number };
+  currency: string;
+  programs: CarbonOffsetProgram[];
+}

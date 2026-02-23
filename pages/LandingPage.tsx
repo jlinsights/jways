@@ -11,6 +11,7 @@ import Services from '../components/Services';
 import WhyUs from '../components/WhyUs';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
+import ESGSection from '../components/ESGSection';
 import QuoteModal from '../components/QuoteModal';
 import { ServiceType, QuoteModalState } from '../types';
 
@@ -86,6 +87,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
+        <ESGSection />
         <WhyUs />
       </main>
       <Footer />
