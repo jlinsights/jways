@@ -10,6 +10,7 @@
 | logistics-wiki | 100% | 2026-02-23 | plan, design, analysis, report |
 | advanced-tracking-tracing | 97% | 2026-02-24 | plan, design, analysis, report |
 | ux-ui-medium-priority | 100% | 2026-02-24 | plan, design, analysis, report |
+| customer-dashboard | 93% | 2026-02-24 | plan, design, analysis, report |
 
 ## CBM-Calculator
 
@@ -66,3 +67,10 @@
 - `ux-ui-medium-priority/ux-ui-medium-priority.design.md` — Design document
 - `ux-ui-medium-priority/ux-ui-medium-priority.analysis.md` — Gap analysis (100% match, 0 iterations)
 - `ux-ui-medium-priority/ux-ui-medium-priority.report.md` — Completion report
+
+## customer-dashboard
+
+- `customer-dashboard/customer-dashboard.plan.md` — Plan document
+- `customer-dashboard/customer-dashboard.design.md` — Design document
+- `customer-dashboard/customer-dashboard.analysis.md` — Gap analysis (93% match, 0 iterations)
+- `customer-dashboard/customer-dashboard.report.md` — Completion report
