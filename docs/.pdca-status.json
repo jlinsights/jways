@@ -5,15 +5,15 @@
   "primaryFeature": "ESG-CO2",
   "features": {
     "ESG-CO2": {
-      "phase": "plan",
+      "phase": "design",
       "planPath": "docs/01-plan/features/ESG-CO2.plan.md",
-      "designPath": null,
+      "designPath": "docs/02-design/features/ESG-CO2.design.md",
       "analysisPath": null,
       "reportPath": null,
       "matchRate": null,
       "iterations": 0,
       "createdAt": "2026-02-24T12:00:00.000Z",
-      "updatedAt": "2026-02-24T12:00:00.000Z"
+      "updatedAt": "2026-02-24T13:00:00.000Z"
     },
     "instant-quote": {
       "phase": "archived",
@@ -491,6 +491,11 @@
       "action": "plan",
       "feature": "ESG-CO2",
       "timestamp": "2026-02-24T12:00:00.000Z"
+    },
+    {
+      "action": "design",
+      "feature": "ESG-CO2",
+      "timestamp": "2026-02-24T13:00:00.000Z"
     }
   ]
 }

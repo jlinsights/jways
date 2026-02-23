@@ -1,1 +1,1 @@
-📋 docs(ESG-CO2): PDCA Cycle #11 Plan — ESG 탄소 배출량 대시보드 고도화 계획서
+📐 docs(ESG-CO2): PDCA Cycle #11 Design — ESG CO2 대시보드 고도화 설계서
