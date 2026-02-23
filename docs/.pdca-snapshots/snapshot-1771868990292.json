@@ -1,23 +1,48 @@
 {
-  "timestamp": "2026-02-23T08:30:33.398Z",
+  "timestamp": "2026-02-23T17:49:50.291Z",
   "reason": "compaction",
   "status": {
     "version": "2.0",
-    "lastUpdated": "2026-02-22T18:00:00.000Z",
+    "lastUpdated": "2026-02-24T05:00:00.000Z",
     "activeFeatures": [
-      "incoterms-guide"
+      "customer-dashboard"
     ],
-    "primaryFeature": "incoterms-guide",
+    "primaryFeature": "customer-dashboard",
     "features": {
-      "incoterms-guide": {
-        "phase": "check",
-        "planPath": "docs/01-plan/features/incoterms-guide.plan.md",
-        "designPath": "docs/02-design/features/incoterms-guide.design.md",
-        "analysisPath": "docs/03-analysis/incoterms-guide.analysis.md",
-        "matchRate": 82,
+      "customer-dashboard": {
+        "phase": "do",
+        "planPath": "docs/01-plan/features/customer-dashboard.plan.md",
+        "designPath": "docs/02-design/features/customer-dashboard.design.md",
+        "analysisPath": null,
+        "reportPath": null,
+        "matchRate": null,
         "iterations": 0,
+        "createdAt": "2026-02-24T04:30:00.000Z",
+        "updatedAt": "2026-02-24T05:00:00.000Z"
+      },
+      "ux-ui-medium-priority": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.plan.md",
+        "designPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.design.md",
+        "analysisPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.analysis.md",
+        "reportPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.report.md",
+        "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
+        "matchRate": 100,
+        "iterations": 0,
+        "createdAt": "2026-02-24T03:00:00.000Z",
+        "updatedAt": "2026-02-24T04:00:00.000Z"
+      },
+      "incoterms-guide": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.plan.md",
+        "designPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.design.md",
+        "analysisPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.analysis.md",
+        "reportPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.report.md",
+        "archivedTo": "docs/archive/2026-02/incoterms-guide/",
+        "matchRate": 100,
+        "iterations": 1,
         "createdAt": "2026-02-23T17:00:00.000Z",
-        "updatedAt": "2026-02-23T18:00:00.000Z"
+        "updatedAt": "2026-02-23T19:30:00.000Z"
       },
       "interactive-quote": {
         "phase": "archived",
@@ -66,6 +91,30 @@
         "iterations": 1,
         "createdAt": "2026-02-22T18:00:00.000Z",
         "updatedAt": "2026-02-23T00:00:00.000Z"
+      },
+      "logistics-wiki": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.plan.md",
+        "designPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.design.md",
+        "analysisPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.analysis.md",
+        "reportPath": "docs/archive/2026-02/logistics-wiki/logistics-wiki.report.md",
+        "archivedTo": "docs/archive/2026-02/logistics-wiki/",
+        "matchRate": 100,
+        "iterations": 1,
+        "createdAt": "2026-02-23T19:30:00.000Z",
+        "updatedAt": "2026-02-23T22:30:00.000Z"
+      },
+      "advanced-tracking-tracing": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.plan.md",
+        "designPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.design.md",
+        "analysisPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.analysis.md",
+        "reportPath": "docs/archive/2026-02/advanced-tracking-tracing/advanced-tracking-tracing.report.md",
+        "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
+        "matchRate": 97,
+        "iterations": 0,
+        "createdAt": "2026-02-23T23:00:00.000Z",
+        "updatedAt": "2026-02-24T02:30:00.000Z"
       }
     },
     "pipeline": {
@@ -238,6 +287,132 @@
         "feature": "incoterms-guide",
         "matchRate": 82,
         "timestamp": "2026-02-23T18:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "incoterms-guide",
+        "matchRate": 100,
+        "iteration": 1,
+        "timestamp": "2026-02-23T18:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "incoterms-guide",
+        "timestamp": "2026-02-23T19:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "incoterms-guide",
+        "archivedTo": "docs/archive/2026-02/incoterms-guide/",
+        "timestamp": "2026-02-23T19:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T20:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T20:30:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "logistics-wiki",
+        "matchRate": 83,
+        "timestamp": "2026-02-23T21:00:00.000Z"
+      },
+      {
+        "action": "act",
+        "feature": "logistics-wiki",
+        "matchRate": 100,
+        "iteration": 1,
+        "timestamp": "2026-02-23T21:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "logistics-wiki",
+        "timestamp": "2026-02-23T22:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "logistics-wiki",
+        "archivedTo": "docs/archive/2026-02/logistics-wiki/",
+        "timestamp": "2026-02-23T22:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "advanced-tracking-tracing",
+        "timestamp": "2026-02-23T23:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "advanced-tracking-tracing",
+        "timestamp": "2026-02-23T23:30:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "advanced-tracking-tracing",
+        "timestamp": "2026-02-24T00:30:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "advanced-tracking-tracing",
+        "matchRate": 97,
+        "timestamp": "2026-02-24T01:30:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "advanced-tracking-tracing",
+        "timestamp": "2026-02-24T02:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "advanced-tracking-tracing",
+        "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
+        "timestamp": "2026-02-24T02:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:10:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:20:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "ux-ui-medium-priority",
+        "matchRate": 100,
+        "timestamp": "2026-02-24T03:40:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:50:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "ux-ui-medium-priority",
+        "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
+        "timestamp": "2026-02-24T04:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T04:30:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T05:00:00.000Z"
       }
     ]
   }

@@ -412,96 +412,16 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
             <div className="absolute inset-0 bg-gradient-to-tr from-jways-blue/20 to-transparent rounded-3xl rotate-6 border border-white/10 backdrop-blur-sm" />
             
             {/* Main Container */}
-            <div className="absolute inset-0 bg-slate-900 rounded-3xl -rotate-3 border border-white/10 shadow-2xl overflow-hidden relative">
+            <div className="absolute inset-0 bg-slate-900 rounded-3xl -rotate-3 border border-white/10 shadow-2xl overflow-hidden relative group">
                
-               {/* 1. Technical Grid Background */}
-               <div className="absolute inset-0 opacity-20" 
-                    style={{ 
-                      backgroundImage: 'radial-gradient(#3b82f6 1.5px, transparent 1.5px)', 
-                      backgroundSize: '24px 24px' 
-                    }} 
+               {/* Premium Logistics Image */}
+               <img 
+                 src="https://images.unsplash.com/photo-1586528116311-ad8ed7c6a9cb?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Global Logistics Network"
+                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                />
-               <div className="absolute inset-0 bg-gradient-to-br from-jways-navy/80 via-transparent to-black/60 pointer-events-none" />
-
-               {/* 2. Central 3D Globe Visualization - ENHANCED */}
-               <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: '1000px' }}>
-                  <div className="relative w-64 h-64 md:w-80 md:h-80" style={{ transformStyle: 'preserve-3d' }}>
-                     
-                     {/* Core Sphere Construct */}
-                     <motion.div
-                        animate={prefersReducedMotion ? {} : { rotateY: 360, rotateX: 10 }}
-                        transition={prefersReducedMotion ? {} : { duration: 25, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0"
-                        style={{ transformStyle: 'preserve-3d' }}
-                     >
-                        {/* Wireframe Longitudes */}
-                        {[0, 45, 90, 135].map((deg) => (
-                           <div key={deg} 
-                                className="absolute inset-0 rounded-full border border-blue-500/20"
-                                style={{ transform: `rotateY(${deg}deg)` }} 
-                           />
-                        ))}
-                        {/* Wireframe Latitudes */}
-                        <div className="absolute inset-0 rounded-full border border-blue-500/30 border-dashed" style={{ transform: 'rotateX(90deg)' }} />
-                        <div className="absolute inset-0 rounded-full border border-blue-500/10" style={{ transform: 'rotateX(45deg)' }} />
-                        <div className="absolute inset-0 rounded-full border border-blue-500/10" style={{ transform: 'rotateX(-45deg)' }} />
-                        
-                        {/* Inner Core Glow */}
-                        <div className="absolute inset-[20%] rounded-full bg-blue-600/20 blur-2xl" />
-                        
-                        {/* Center Globe Icon (Floating) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'translateZ(20px)' }}>
-                             <Globe className="w-12 h-12 text-white/90 drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" strokeWidth={1} />
-                        </div>
-                     </motion.div>
-
-                     {/* Orbit Ring 1 - Plane */}
-                     <motion.div
-                        animate={prefersReducedMotion ? {} : { rotateZ: 360, rotateX: 65 }}
-                        transition={prefersReducedMotion ? {} : { duration: 12, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-15%]"
-                        style={{ transformStyle: 'preserve-3d' }}
-                     >
-                        <div className="absolute inset-0 rounded-full border border-white/5 border-dashed" />
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'rotateX(-90deg)' }}>
-                            <div className="bg-slate-900/80 p-2 rounded-lg border border-cyan-400/50 shadow-[0_0_15px_rgba(34,211,238,0.4)] backdrop-blur-md">
-                                <Plane className="w-5 h-5 text-cyan-400" />
-                            </div>
-                        </div>
-                     </motion.div>
-
-                     {/* Orbit Ring 2 - Ship */}
-                     <motion.div
-                        animate={prefersReducedMotion ? {} : { rotateZ: -360, rotateX: -60 }}
-                        transition={prefersReducedMotion ? {} : { duration: 18, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-30%]"
-                        style={{ transformStyle: 'preserve-3d' }}
-                     >
-                        <div className="absolute inset-0 rounded-full border border-white/5 border-dashed" />
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" style={{ transform: 'rotateX(90deg)' }}>
-                             <div className="bg-slate-900/80 p-2 rounded-lg border border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.4)] backdrop-blur-md">
-                                <Ship className="w-5 h-5 text-indigo-400" />
-                            </div>
-                        </div>
-                     </motion.div>
-
-                     {/* Orbit Ring 3 - Truck */}
-                     <motion.div
-                        animate={prefersReducedMotion ? {} : { rotateY: 360, rotateZ: 15 }}
-                        transition={prefersReducedMotion ? {} : { duration: 22, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[10%]"
-                        style={{ transformStyle: 'preserve-3d' }}
-                     >
-                        <div className="absolute inset-0 rounded-full border border-jways-accent/20 border-dotted" />
-                        <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2" style={{ transform: 'rotateY(-90deg)' }}>
-                             <div className="bg-slate-900/80 p-1.5 rounded-lg border border-jways-accent/50 shadow-[0_0_15px_rgba(249,115,22,0.4)] backdrop-blur-md">
-                                <Truck className="w-4 h-4 text-jways-accent" />
-                            </div>
-                        </div>
-                     </motion.div>
-
-                  </div>
-               </div>
+               <div className="absolute inset-0 bg-gradient-to-tr from-jways-navy/80 via-jways-navy/20 to-transparent pointer-events-none mix-blend-multiply" />
+               <div className="absolute inset-0 bg-jways-blue/10 mix-blend-overlay pointer-events-none" />
 
                {/* 3. Floating UI Overlays */}
                <div className="absolute bottom-0 left-0 right-0 p-8 w-full z-20 pointer-events-none">
