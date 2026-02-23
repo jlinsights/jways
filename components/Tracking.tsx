@@ -193,21 +193,18 @@ const Tracking: React.FC = () => {
     e.preventDefault();
     if (!trackingId) return;
 
-    setSearchStatus('loading');
     setErrorMessage('');
     setExpandedIds(new Set());
 
-    setTimeout(() => {
-      const found = MOCK_SHIPMENTS.get(trackingId.toUpperCase());
-      if (found) {
-        setShipment(found);
-        setSearchStatus('success');
-      } else {
-        setShipment(null);
-        setSearchStatus('error');
-        setErrorMessage('운송장 번호를 찾을 수 없습니다. 올바른 번호를 입력해주세요.');
-      }
-    }, 1500);
+    const found = MOCK_SHIPMENTS.get(trackingId.toUpperCase());
+    if (found) {
+      setShipment(found);
+      setSearchStatus('success');
+    } else {
+      setShipment(null);
+      setSearchStatus('error');
+      setErrorMessage('운송장 번호를 찾을 수 없습니다. 올바른 번호를 입력해주세요.');
+    }
   };
 
   const clearSearch = () => {

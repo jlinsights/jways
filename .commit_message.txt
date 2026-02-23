@@ -1,1 +1,1 @@
-chore(pdca): advanced-tracking-tracing 아카이브 완료 — PDCA Cycle #7 Archived (97% Match Rate)
+♿ fix(a11y,ux): High Priority UI/UX 6건 개선 — CTA 축소, 언어토글 제거, 가짜 로딩 제거, 네비 수정, reduced-motion, 포커스트랩+라벨

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Calculator, CheckCircle2, Box, ChevronLeft, ChevronRight, Plane, Ship, Truck, Warehouse, Check } from 'lucide-react';
 import { ServiceType, QuoteFormData } from '../types';
@@ -128,6 +128,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
   const [calculatedCBM, setCalculatedCBM] = useState<number | null>(null);
   const [formData, setFormData] = useState<QuoteFormData>({ ...initialFormData });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // Reset state when modal opens
   useEffect(() => {
@@ -151,10 +152,23 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
     };
   }, [isOpen, preSelectedService]);
 
-  // Escape key handler
+  // Escape key + focus trap
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
     };
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
@@ -261,11 +275,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
   // ─── Submit ───
 
   const handleSubmit = () => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
+    setIsSuccess(true);
   };
 
   const handleClose = () => {
@@ -315,6 +325,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
           {/* Modal Container */}
           <div className="fixed inset-0 z-[101] flex items-center justify-center px-4 pointer-events-none">
             <motion.div
+              ref={modalRef}
               key="modal"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -392,8 +403,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                         <div className="space-y-5">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">이름 (Name)</label>
+                              <label htmlFor="quote-name" className="text-sm font-bold text-slate-700 dark:text-slate-300">이름 (Name)</label>
                               <input
+                                id="quote-name"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleInputChange}
@@ -404,8 +416,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                               {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
                             </div>
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">이메일 (Email)</label>
+                              <label htmlFor="quote-email" className="text-sm font-bold text-slate-700 dark:text-slate-300">이메일 (Email)</label>
                               <input
+                                id="quote-email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
@@ -461,8 +474,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                         <div className="space-y-4">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">출발지 (Origin)</label>
+                              <label htmlFor="quote-origin" className="text-sm font-bold text-slate-700 dark:text-slate-300">출발지 (Origin)</label>
                               <input
+                                id="quote-origin"
                                 name="origin"
                                 value={formData.origin}
                                 onChange={handleInputChange}
@@ -473,8 +487,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                               {errors.origin && <p className="text-xs text-red-500">{errors.origin}</p>}
                             </div>
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">도착지 (Destination)</label>
+                              <label htmlFor="quote-destination" className="text-sm font-bold text-slate-700 dark:text-slate-300">도착지 (Destination)</label>
                               <input
+                                id="quote-destination"
                                 name="destination"
                                 value={formData.destination}
                                 onChange={handleInputChange}
@@ -485,9 +500,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                               {errors.destination && <p className="text-xs text-red-500">{errors.destination}</p>}
                             </div>
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 종류 (Cargo Type)</label>
+                              <label htmlFor="quote-cargoType" className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 종류 (Cargo Type)</label>
                               <div className="relative">
                                 <select
+                                  id="quote-cargoType"
                                   name="cargoType"
                                   value={formData.cargoType}
                                   onChange={handleInputChange}
@@ -503,9 +519,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
                               </div>
                             </div>
                             <div className="space-y-2">
-                              <label className="text-sm font-bold text-slate-700 dark:text-slate-300">예상 중량 (Weight)</label>
+                              <label htmlFor="quote-weight" className="text-sm font-bold text-slate-700 dark:text-slate-300">예상 중량 (Weight)</label>
                               <div className="relative">
                                 <input
+                                  id="quote-weight"
                                   name="weight"
                                   value={formData.weight}
                                   onChange={handleInputChange}
@@ -522,11 +539,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
 
                           {/* Dimensions */}
                           <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 규격 (Dimensions - cm)</label>
-                            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                              <input name="length" value={formData.length} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="가로 (L)" />
-                              <input name="width" value={formData.width} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="세로 (W)" />
-                              <input name="height" value={formData.height} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="높이 (H)" />
+                            <label id="quote-dimensions-label" className="text-sm font-bold text-slate-700 dark:text-slate-300">화물 규격 (Dimensions - cm)</label>
+                            <div className="grid grid-cols-3 gap-2 sm:gap-4" role="group" aria-labelledby="quote-dimensions-label">
+                              <input id="quote-length" name="length" value={formData.length} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="가로 (L)" aria-label="가로 길이 (Length)" />
+                              <input id="quote-width" name="width" value={formData.width} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="세로 (W)" aria-label="세로 길이 (Width)" />
+                              <input id="quote-height" name="height" value={formData.height} onChange={handleInputChange} type="number" min="0" className={inputClass('dimensions')} placeholder="높이 (H)" aria-label="높이 (Height)" />
                             </div>
                             {errors.dimensions && <p className="text-xs text-red-500 mt-1">{errors.dimensions}</p>}
 
@@ -580,8 +597,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
 
                           {/* Target Date */}
                           <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">희망 배송일 (Target Date)</label>
+                            <label htmlFor="quote-targetDate" className="text-sm font-bold text-slate-700 dark:text-slate-300">희망 배송일 (Target Date)</label>
                             <input
+                              id="quote-targetDate"
                               name="targetDate"
                               value={formData.targetDate}
                               onChange={handleInputChange}
@@ -675,8 +693,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, preSelectedSer
 
                           {/* Message */}
                           <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">추가 요청사항 (Message)</label>
+                            <label htmlFor="quote-message" className="text-sm font-bold text-slate-700 dark:text-slate-300">추가 요청사항 (Message)</label>
                             <textarea
+                              id="quote-message"
                               name="message"
                               value={formData.message}
                               onChange={handleInputChange}

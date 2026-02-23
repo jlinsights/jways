@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Container, Play, Pause, RefreshCw } from 'lucide-react';
+import { Box, Calculator, Plane, Ship, Globe, Search, Loader2, Wand2, Truck, Play, Pause, RefreshCw } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 interface HeroProps {
@@ -8,13 +8,21 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
-  const [isQuoteLoading, setIsQuoteLoading] = useState(false);
-  const [isTrackLoading, setIsTrackLoading] = useState(false);
   const [videoUri, setVideoUri] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [generationStatus, setGenerationStatus] = useState('');
   const [isPlaying, setIsPlaying] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Check prefers-reduced-motion
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   const { scrollY } = useScroll();
   
@@ -45,6 +53,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
 
   // Canvas Particle Animation
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -154,7 +164,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY, currentTarget } = e;
@@ -248,20 +258,11 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
     }
   };
 
-  const handleQuoteClick = async () => {
-    setIsQuoteLoading(true);
-    // Simulate data preparation
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setIsQuoteLoading(false);
+  const handleQuoteClick = () => {
     onOpenQuote();
   };
 
-  const handleTrackClick = async () => {
-    setIsTrackLoading(true);
-    // Simulate system check
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setIsTrackLoading(false);
-
+  const handleTrackClick = () => {
     const element = document.getElementById('track');
     if (element) {
       const headerOffset = 80;
@@ -309,17 +310,17 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
                         className="absolute inset-0 z-0"
                     />
                     {/* Animated Gradient Orbs - Only show if no video to save performance */}
-                    <motion.div 
-                      style={{ x: moveX1, y: moveY1 }}
-                      className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-jways-blue/20 rounded-full blur-[120px] mix-blend-screen" 
+                    <motion.div
+                      style={prefersReducedMotion ? {} : { x: moveX1, y: moveY1 }}
+                      className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-jways-blue/20 rounded-full blur-[120px] mix-blend-screen"
                     />
-                    <motion.div 
-                      style={{ x: moveX2, y: moveY2 }}
-                      className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-jways-accent/15 rounded-full blur-[100px] mix-blend-screen" 
+                    <motion.div
+                      style={prefersReducedMotion ? {} : { x: moveX2, y: moveY2 }}
+                      className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-jways-accent/15 rounded-full blur-[100px] mix-blend-screen"
                     />
-                    <motion.div 
-                      style={{ x: moveX1, y: moveY2 }}
-                      className="absolute top-[20%] left-[30%] w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[90px] mix-blend-screen opacity-60" 
+                    <motion.div
+                      style={prefersReducedMotion ? {} : { x: moveX1, y: moveY2 }}
+                      className="absolute top-[20%] left-[30%] w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[90px] mix-blend-screen opacity-60"
                     />
                 </>
             )}
@@ -362,88 +363,28 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
               비즈니스의 경계를 확장하세요.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mb-6">
-              <motion.button 
-                whileHover={{ 
-                  scale: 1.05, 
-                  backgroundColor: "#1e40af", // blue-800
-                  boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.4)",
-                  y: -2
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className="w-full sm:w-auto px-8 py-4 bg-jways-blue text-white rounded-full font-semibold flex items-center justify-center gap-2 group transition-all"
-              >
-                서비스 시작하기
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-              
-              <motion.button 
-                whileHover={{ 
-                  scale: 1.05, 
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  borderColor: "rgba(255, 255, 255, 0.3)",
-                  y: -2
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 text-white rounded-full font-semibold transition-all backdrop-blur-sm"
-              >
-                상담 문의
-              </motion.button>
-            </div>
-
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
-              <motion.button 
+              <motion.button
                 onClick={handleQuoteClick}
-                disabled={isQuoteLoading}
-                className={`w-full sm:w-auto px-10 py-4 bg-jways-accent text-white rounded-full font-bold shadow-lg shadow-orange-500/20 flex items-center justify-center gap-3 text-lg z-10 ${isQuoteLoading ? 'cursor-not-allowed opacity-90' : ''}`}
-                whileHover={!isQuoteLoading ? { 
-                  scale: 1.08, 
+                className="w-full sm:w-auto px-10 py-4 bg-jways-accent text-white rounded-full font-bold shadow-lg shadow-orange-500/20 flex items-center justify-center gap-3 text-lg z-10"
+                whileHover={{
+                  scale: 1.08,
                   y: -4,
-                  backgroundColor: '#c2410c', // orange-700
+                  backgroundColor: '#c2410c',
                   boxShadow: "0 20px 25px -5px rgba(234, 88, 12, 0.5)"
-                } : {}}
-                whileTap={!isQuoteLoading ? { scale: 0.95 } : {}}
+                }}
+                whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                {isQuoteLoading ? (
-                    <Loader2 className="w-6 h-6 animate-spin" />
-                ) : (
-                    <>
-                        <Calculator className="w-6 h-6" />
-                        Request a Quote
-                    </>
-                )}
-              </motion.button>
-              
-              <motion.button 
-                onClick={handleTrackClick}
-                disabled={isTrackLoading}
-                className={`w-full sm:w-auto px-10 py-4 border border-white/20 text-white rounded-full font-bold flex items-center justify-center gap-2 text-lg transition-colors ${isTrackLoading ? 'cursor-not-allowed opacity-80' : ''}`}
-                whileHover={!isTrackLoading ? { 
-                  scale: 1.05, 
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  borderColor: "rgba(255, 255, 255, 0.5)",
-                  y: -2
-                } : {}}
-                whileTap={!isTrackLoading ? { scale: 0.95 } : {}}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              >
-                {isTrackLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                    <>
-                        <Search className="w-5 h-5" />
-                        Track Shipment
-                    </>
-                )}
+                <Calculator className="w-6 h-6" />
+                Request a Quote
               </motion.button>
 
-              <motion.button 
+              <motion.button
+                onClick={handleTrackClick}
                 className="w-full sm:w-auto px-10 py-4 border border-white/20 text-white rounded-full font-bold flex items-center justify-center gap-2 text-lg transition-colors"
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   backgroundColor: "rgba(255, 255, 255, 0.15)",
                   borderColor: "rgba(255, 255, 255, 0.5)",
                   y: -2
@@ -451,7 +392,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                Learn More
+                <Search className="w-5 h-5" />
+                Track Shipment
               </motion.button>
             </div>
           </motion.div>
@@ -486,9 +428,9 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
                   <div className="relative w-64 h-64 md:w-80 md:h-80" style={{ transformStyle: 'preserve-3d' }}>
                      
                      {/* Core Sphere Construct */}
-                     <motion.div 
-                        animate={{ rotateY: 360, rotateX: 10 }} 
-                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                     <motion.div
+                        animate={prefersReducedMotion ? {} : { rotateY: 360, rotateX: 10 }}
+                        transition={prefersReducedMotion ? {} : { duration: 25, repeat: Infinity, ease: "linear" }}
                         className="absolute inset-0"
                         style={{ transformStyle: 'preserve-3d' }}
                      >
@@ -515,8 +457,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
 
                      {/* Orbit Ring 1 - Plane */}
                      <motion.div
-                        animate={{ rotateZ: 360, rotateX: 65 }}
-                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                        animate={prefersReducedMotion ? {} : { rotateZ: 360, rotateX: 65 }}
+                        transition={prefersReducedMotion ? {} : { duration: 12, repeat: Infinity, ease: "linear" }}
                         className="absolute inset-[-15%]"
                         style={{ transformStyle: 'preserve-3d' }}
                      >
@@ -530,8 +472,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
 
                      {/* Orbit Ring 2 - Ship */}
                      <motion.div
-                        animate={{ rotateZ: -360, rotateX: -60 }}
-                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                        animate={prefersReducedMotion ? {} : { rotateZ: -360, rotateX: -60 }}
+                        transition={prefersReducedMotion ? {} : { duration: 18, repeat: Infinity, ease: "linear" }}
                         className="absolute inset-[-30%]"
                         style={{ transformStyle: 'preserve-3d' }}
                      >
@@ -545,8 +487,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenQuote }) => {
 
                      {/* Orbit Ring 3 - Truck */}
                      <motion.div
-                        animate={{ rotateY: 360, rotateZ: 15 }}
-                        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+                        animate={prefersReducedMotion ? {} : { rotateY: 360, rotateZ: 15 }}
+                        transition={prefersReducedMotion ? {} : { duration: 22, repeat: Infinity, ease: "linear" }}
                         className="absolute inset-[10%]"
                         style={{ transformStyle: 'preserve-3d' }}
                      >

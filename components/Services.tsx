@@ -81,6 +81,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
   
   // Ref to store the element that had focus before modal opened
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const filteredServices = services.filter(service => {
     const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
@@ -91,28 +92,38 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
     return matchesCategory && matchesSearch;
   });
 
-  // Handle Modal Interactions: Scroll Lock, Escape Key, Focus Management
+  // Handle Modal Interactions: Scroll Lock, Escape Key, Focus Trap
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setSelectedService(null);
+        return;
+      }
+      // Focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
       }
     };
 
     if (selectedService) {
       // Save current focus
       lastFocusedElementRef.current = document.activeElement as HTMLElement;
-      
+
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
-      
-      // Simulate data fetching
-      setIsLoading(true);
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 800);
+      setIsLoading(false);
+
       return () => {
-          clearTimeout(timer);
           window.removeEventListener('keydown', handleKeyDown);
       }
     } else {
@@ -423,6 +434,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenQuote }) => {
             
             {/* Modal Card */}
             <motion.div
+              ref={modalRef}
               layoutId={`card-${selectedService.id}`}
               className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row"
             >

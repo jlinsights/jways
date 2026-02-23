@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Globe, ChevronRight, Sun, Moon } from 'lucide-react';
+import { Menu, X, ChevronRight, Sun, Moon } from 'lucide-react';
 import { NavItem } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems: NavItem[] = [
   { label: '서비스', href: '#services' },
   { label: '회사소개', href: '#about' },
-  { label: '솔루션', href: '#solutions' },
+  { label: '솔루션', href: '#services' },
   { label: '고객지원', href: '#contact' },
 ];
 
@@ -15,9 +15,6 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [language, setLanguage] = useState<'ko' | 'en'>('ko');
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
-  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -161,40 +158,6 @@ const Header: React.FC = () => {
             화물 추적
             <ChevronRight size={16} aria-hidden="true" />
           </a>
-          <div className="relative">
-            <button 
-              onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className="flex items-center gap-1 text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-              aria-label="Select Language"
-              aria-expanded={isLangMenuOpen}
-            >
-              <Globe size={20} aria-hidden="true" />
-              <span className="text-sm font-medium">{language === 'ko' ? 'KR' : 'EN'}</span>
-            </button>
-            <AnimatePresence>
-              {isLangMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden z-[60]"
-                >
-                  <button
-                    onClick={() => { setLanguage('ko'); setIsLangMenuOpen(false); }}
-                    className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'ko' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    한국어
-                  </button>
-                  <button
-                    onClick={() => { setLanguage('en'); setIsLangMenuOpen(false); }}
-                    className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'en' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    English
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
           <button 
             onClick={toggleTheme}
             className="text-slate-300 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
@@ -206,40 +169,6 @@ const Header: React.FC = () => {
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 md:hidden">
-            <div className="relative">
-              <button 
-                onClick={() => setIsMobileLangMenuOpen(!isMobileLangMenuOpen)}
-                className="flex items-center gap-1 text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
-                aria-label="Select Language"
-                aria-expanded={isMobileLangMenuOpen}
-              >
-                <Globe size={20} aria-hidden="true" />
-                <span className="text-sm font-medium">{language === 'ko' ? 'KR' : 'EN'}</span>
-              </button>
-              <AnimatePresence>
-                {isMobileLangMenuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden z-[60]"
-                  >
-                    <button
-                      onClick={() => { setLanguage('ko'); setIsMobileLangMenuOpen(false); }}
-                      className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'ko' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
-                    >
-                      한국어
-                    </button>
-                    <button
-                      onClick={() => { setLanguage('en'); setIsMobileLangMenuOpen(false); }}
-                      className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 ${language === 'en' ? 'text-jways-blue font-semibold' : 'text-slate-700 dark:text-slate-300'}`}
-                    >
-                      English
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
             <button
             className="text-white p-2 rounded-lg hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-jways-blue"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
