@@ -7,6 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2026-02-24] - Advanced Tracking & Tracing Feature Complete
+
+### Added
+- ETA 예측 카드 (`components/ETACard.tsx`)
+  - D-day 카운트다운 (getDDayString)
+  - 신뢰도 뱃지 (high/medium/low)
+  - 지연 표시기, 마지막 업데이트 시간
+- 추적 대시보드 요약 (`components/TrackingDashboard.tsx`)
+  - SVG 원형 진행률 차트 (stroke-dasharray)
+  - 현재 단계 라벨, 운송 모드 뱃지
+  - 지연 경고 배너 (role="alert")
+- 이벤트 타임라인 (`components/EventTimeline.tsx`)
+  - 세로 타임라인 + 카테고리 그룹 헤더
+  - 시간 간격 시각화 (getTimeBetween)
+  - MilestoneRow 서브컴포넌트 추출
+- 관련 문서 뷰어 (`components/ShipmentDocuments.tsx`)
+  - 문서 카드 그리드 (B/L, Invoice, PL, Certificate)
+  - 상태 뱃지 (issued/pending/draft)
+- 다중 화물 비교 (`components/ShipmentCompare.tsx`)
+  - 최대 3건 병렬 비교 그리드
+  - "+" 추가 버튼 + 최대 제한 적용
+  - 카테고리별 진행 상태 비교
+- ShipmentMap 경유지 마커 (diamond markers + tooltips)
+  - 다중 세그먼트 SVG 경로
+  - spring 애니메이션 경유지 표시
+- 화물 상세 패널 (Tracking.tsx 인라인)
+  - 중량, 부피(CBM), 컨테이너 타입, 포장 수, HS Code
+- Mock 데이터 확장
+  - JW-8839-KR: ETA(high), 4 documents, 1 waypoint(ANC), cargo 450kg
+  - JW-2201-SEA: ETA(medium, +2d), 4 documents, 3 waypoints, cargo 8,500kg
+- 탭 패널 UI (문서 / 화물상세 전환)
+- WCAG 2.1 AA 접근성 전수 적용
+  - role="tablist"/"tab"/"tabpanel", aria-selected
+  - role="list"/"listitem", role="img", role="alert", role="region"
+  - 키보드 네비게이션 (Tab, Enter, Space)
+
+### Changed
+- Tracking.tsx: 598줄 → ~570줄 (서브컴포넌트 분리로 책임 분산, 기능은 대폭 확장)
+- ShipmentMap.tsx: 경유지 조건부 렌더링 추가
+- types.ts: ETAInfo, ShipmentDocument, Waypoint, CargoDetails 인터페이스 추가
+
+### Quality Metrics
+- Design Match Rate: 95% → 97% (5 minor gaps resolved)
+- Build Status: Passed (6.75s)
+- Bundle Size: 1,603.74 kB (gzip: 409.82 kB)
+- New Components: 5
+- Modified Components: 3 (Tracking, ShipmentMap, types)
+- Iteration Count: 0 (Check phase fixes only)
+- Accessibility: WCAG 2.1 AA compliant (all ARIA attributes applied)
+
+---
+
+## [2026-02-23] - Logistics Wiki Feature Complete (Archived)
+
+### Added
+- 물류 용어 백과사전 위젯
+- 카테고리별 용어 분류
+- 검색/필터 기능
+
+### Details
+- Status: Archived to `docs/archive/2026-02/logistics-wiki/`
+- PDCA Cycle: #6
+- Match Rate: 100% (after 1 iteration)
+
+---
+
 ## [2026-02-23] - Incoterms Guide Feature Complete
 
 ### Added
@@ -131,6 +197,8 @@ All completed PDCA cycles are archived in `docs/archive/YYYY-MM/` with full docu
 - `milestone-tracking/` (Cycle #2)
 - `interactive-quote/` (Cycle #3)
 - `exchange-rate/` (Cycle #4)
+- `incoterms-guide/` (Cycle #5)
+- `logistics-wiki/` (Cycle #6)
 
 ## Contact
 
@@ -138,6 +206,6 @@ For questions or issues related to this project, refer to the PDCA documentation
 
 ---
 
-**Last Updated**: 2026-02-23
+**Last Updated**: 2026-02-24
 **Report Generator**: bkit PDCA Report Generator v1.4.7
 **Location**: `/Users/jaehong/Developer/Projects/jways/docs/04-report/changelog.md`
