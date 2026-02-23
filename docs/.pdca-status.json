@@ -5,13 +5,14 @@
   "primaryFeature": "interactive-quote",
   "features": {
     "interactive-quote": {
-      "phase": "do",
+      "phase": "check",
       "planPath": "docs/01-plan/features/interactive-quote.plan.md",
       "designPath": "docs/02-design/features/interactive-quote.design.md",
-      "matchRate": null,
+      "analysisPath": "docs/03-analysis/interactive-quote.analysis.md",
+      "matchRate": 91,
       "iterations": 0,
       "createdAt": "2026-02-23T06:00:00.000Z",
-      "updatedAt": "2026-02-23T08:00:00.000Z"
+      "updatedAt": "2026-02-23T09:00:00.000Z"
     },
     "CBM-Calculator": {
       "phase": "archived",
@@ -134,6 +135,12 @@
       "action": "do",
       "feature": "interactive-quote",
       "timestamp": "2026-02-23T08:00:00.000Z"
+    },
+    {
+      "action": "check",
+      "feature": "interactive-quote",
+      "matchRate": 91,
+      "timestamp": "2026-02-23T09:00:00.000Z"
     }
   ]
 }
