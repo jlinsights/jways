@@ -1,12 +1,60 @@
 {
-  "timestamp": "2026-02-23T16:02:42.019Z",
+  "timestamp": "2026-02-23T23:58:55.034Z",
   "reason": "compaction",
   "status": {
     "version": "2.0",
-    "lastUpdated": "2026-02-22T18:00:00.000Z",
+    "lastUpdated": "2026-02-24T08:00:00.000Z",
     "activeFeatures": [],
     "primaryFeature": null,
     "features": {
+      "ESG-CO2": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/ESG-CO2/ESG-CO2.plan.md",
+        "designPath": "docs/archive/2026-02/ESG-CO2/ESG-CO2.design.md",
+        "analysisPath": "docs/archive/2026-02/ESG-CO2/ESG-CO2.analysis.md",
+        "reportPath": "docs/archive/2026-02/ESG-CO2/ESG-CO2.report.md",
+        "archivedTo": "docs/archive/2026-02/ESG-CO2/",
+        "matchRate": 93,
+        "iterations": 0,
+        "createdAt": "2026-02-24T12:00:00.000Z",
+        "updatedAt": "2026-02-24T16:00:00.000Z"
+      },
+      "instant-quote": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/instant-quote/instant-quote.plan.md",
+        "designPath": "docs/archive/2026-02/instant-quote/instant-quote.design.md",
+        "analysisPath": "docs/archive/2026-02/instant-quote/instant-quote.analysis.md",
+        "reportPath": "docs/archive/2026-02/instant-quote/instant-quote.report.md",
+        "archivedTo": "docs/archive/2026-02/instant-quote/",
+        "matchRate": 96,
+        "iterations": 0,
+        "createdAt": "2026-02-24T07:30:00.000Z",
+        "updatedAt": "2026-02-24T11:30:00.000Z"
+      },
+      "customer-dashboard": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/customer-dashboard/customer-dashboard.plan.md",
+        "designPath": "docs/archive/2026-02/customer-dashboard/customer-dashboard.design.md",
+        "analysisPath": "docs/archive/2026-02/customer-dashboard/customer-dashboard.analysis.md",
+        "reportPath": "docs/archive/2026-02/customer-dashboard/customer-dashboard.report.md",
+        "archivedTo": "docs/archive/2026-02/customer-dashboard/",
+        "matchRate": 93,
+        "iterations": 0,
+        "createdAt": "2026-02-24T04:30:00.000Z",
+        "updatedAt": "2026-02-24T07:00:00.000Z"
+      },
+      "ux-ui-medium-priority": {
+        "phase": "archived",
+        "planPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.plan.md",
+        "designPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.design.md",
+        "analysisPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.analysis.md",
+        "reportPath": "docs/archive/2026-02/ux-ui-medium-priority/ux-ui-medium-priority.report.md",
+        "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
+        "matchRate": 100,
+        "iterations": 0,
+        "createdAt": "2026-02-24T03:00:00.000Z",
+        "updatedAt": "2026-02-24T04:00:00.000Z"
+      },
       "incoterms-guide": {
         "phase": "archived",
         "planPath": "docs/archive/2026-02/incoterms-guide/incoterms-guide.plan.md",
@@ -346,6 +394,134 @@
         "feature": "advanced-tracking-tracing",
         "archivedTo": "docs/archive/2026-02/advanced-tracking-tracing/",
         "timestamp": "2026-02-24T02:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:10:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:20:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "ux-ui-medium-priority",
+        "matchRate": 100,
+        "timestamp": "2026-02-24T03:40:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "ux-ui-medium-priority",
+        "timestamp": "2026-02-24T03:50:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "ux-ui-medium-priority",
+        "archivedTo": "docs/archive/2026-02/ux-ui-medium-priority/",
+        "timestamp": "2026-02-24T04:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T04:30:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T05:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T05:30:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "customer-dashboard",
+        "matchRate": 93,
+        "timestamp": "2026-02-24T06:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "customer-dashboard",
+        "timestamp": "2026-02-24T06:30:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "customer-dashboard",
+        "archivedTo": "docs/archive/2026-02/customer-dashboard/",
+        "timestamp": "2026-02-24T07:00:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "instant-quote",
+        "timestamp": "2026-02-24T07:30:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "instant-quote",
+        "timestamp": "2026-02-24T08:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "instant-quote",
+        "timestamp": "2026-02-24T09:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "instant-quote",
+        "matchRate": 96,
+        "timestamp": "2026-02-24T10:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "instant-quote",
+        "timestamp": "2026-02-24T11:00:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "instant-quote",
+        "archivedTo": "docs/archive/2026-02/instant-quote/",
+        "timestamp": "2026-02-24T11:30:00.000Z"
+      },
+      {
+        "action": "plan",
+        "feature": "ESG-CO2",
+        "timestamp": "2026-02-24T12:00:00.000Z"
+      },
+      {
+        "action": "design",
+        "feature": "ESG-CO2",
+        "timestamp": "2026-02-24T13:00:00.000Z"
+      },
+      {
+        "action": "do",
+        "feature": "ESG-CO2",
+        "timestamp": "2026-02-24T14:00:00.000Z"
+      },
+      {
+        "action": "check",
+        "feature": "ESG-CO2",
+        "matchRate": 93,
+        "timestamp": "2026-02-24T15:00:00.000Z"
+      },
+      {
+        "action": "report",
+        "feature": "ESG-CO2",
+        "timestamp": "2026-02-24T15:30:00.000Z"
+      },
+      {
+        "action": "archive",
+        "feature": "ESG-CO2",
+        "archivedTo": "docs/archive/2026-02/ESG-CO2/",
+        "timestamp": "2026-02-24T16:00:00.000Z"
       }
     ]
   }

@@ -1,1 +1,1 @@
-📦 chore(ESG-CO2): PDCA Cycle #11 Archive — 전체 PDCA 문서 아카이브 완료 (11/11 cycles archived)
+📝 docs: CLAUDE.md & README.md 전면 업데이트 — 멀티페이지 라우팅, 대시보드, lib 모듈, 전체 프로젝트 구조 반영
